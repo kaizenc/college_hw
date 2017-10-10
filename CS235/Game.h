@@ -18,10 +18,10 @@ class Tractor{
     Activity getActivity();
     
     //mutators
-    void const setX(int x_);
-    void const setY(int y_);
-    void const setSize(int size_);
-    void const setActivity(Activity activity_);
+    void setX(int const x_);
+    void setY(int const y_);
+    void setSize(int const size_);
+    void setActivity(Activity const activity_);
 };
 
 class Game{
@@ -31,12 +31,15 @@ class Game{
   public:
     //constructor
     Game(unsigned int new_size);
+    //select tractors
     int GetTractor(int x, int y);
     void SelectTractor(int x, int y);
     void SelectTractors(int x1, int y1, int x2, int y2);
+    //change tractors
     void AddTractor(Tractor new_unit);
     bool MoveTractors(int i, int new_x, int new_y);
     void AssignTractorsActivity(Activity new_activity);
+    //print tractors
     void PrintTractor(int i);
     void PrintSelectedTractors();
     void PrintAllTractors();

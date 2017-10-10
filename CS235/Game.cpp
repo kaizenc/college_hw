@@ -1,9 +1,17 @@
+/**
+    CS-235 Assignment 1, Game.cpp
+
+    @author Kaizen Castanos
+    @version 1.0 10/31/2017
+*/
+
 #include <iostream>
 #include <vector>
 #include "Game.h"
 using namespace std;
 
 //------------Tractor Class Definitions-----------//
+//Constructors
 Tractor::Tractor(){
     x = y = 0;
     size = 1;
@@ -15,7 +23,7 @@ Tractor::Tractor(int x_, int y_, unsigned short size_, Activity activity_){
     size = size_;
     activity = activity_;
 }
-//accessors
+//Accessors
 int Tractor::getX(){
     return x;
 }
@@ -28,22 +36,31 @@ int Tractor::getSize(){
 Activity Tractor::getActivity(){
     return activity;
 }
-//mutators
-void const Tractor::setX(int x_){
+//Mutators
+void Tractor::setX(int const x_){
     x = x_;
 }
-void const Tractor::setY(int y_){
+void Tractor::setY(int const y_){
     y = y_;
 }
-void const Tractor::setSize(int size_){
+void Tractor::setSize(int const size_){
     size = size_;
 }
-void const Tractor::setActivity(Activity activity_){
+void Tractor::setActivity(Activity const activity_){
     activity = activity_;
 }
 
 //------------Game Class Definitions-----------//
-
+Game::Game(unsigned int new_size){
+    map_size = new_size;
+}
+//Returns index of a tractor in "all" at the specified location, returns -1 if doesn't exist
+int GetTractor(int x, int y){
+    //loop through "all" 
+    //return index in "all" of Tractor
+    //else return -1
+    return -1;
+}
 
 
 int main(){
