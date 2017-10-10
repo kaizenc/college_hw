@@ -1,5 +1,4 @@
-makefile:
-game: Game.cpp Game.h
+all:
 	g++ Game.cpp -o Game.o
 run: 
 	./Game.o
