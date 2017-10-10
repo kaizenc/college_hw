@@ -24,16 +24,16 @@ Tractor::Tractor(int x_, int y_, unsigned short size_, Activity activity_){
     activity = activity_;
 }
 //Accessors
-int Tractor::getX(){
+int Tractor::getX() const{
     return x;
 }
-int Tractor::getY(){
+int Tractor::getY() const{
     return y;
 }
-int Tractor::getSize(){
+int Tractor::getSize() const{
     return size;
 }
-Activity Tractor::getActivity(){
+Activity Tractor::getActivity() const{
     return activity;
 }
 //Mutators
