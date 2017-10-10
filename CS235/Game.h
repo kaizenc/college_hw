@@ -33,7 +33,7 @@ class Game{
     Game(unsigned int const new_size);
     //select tractors
     int GetTractor(int x, int y) const; //returns index
-    void SelectTractor(int x, int y); //throw into selected vector (clean selected or no?)
+    void SelectTractor(int const x, int const y); //throw into selected vector (clean selected or no?)
     void SelectTractors(int x1, int y1, int x2, int y2); //rectangle drag and select
     //change tractors
     void AddTractor(Tractor new_unit);

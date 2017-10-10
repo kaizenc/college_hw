@@ -1,9 +1,10 @@
 /**
     CS-235 Assignment 1, Game.cpp
+    Framework for RTS-style "Little Farm" game
 
     @author Kaizen Castanos
     @version 1.0 10/31/2017
-*/
+**/
 
 #include <iostream>
 #include <vector>
@@ -51,15 +52,28 @@ void Tractor::setActivity(Activity const activity_){
 }
 
 //------------Game Class Definitions-----------//
+//----Constructor----//
 Game::Game(unsigned int new_size){
     map_size = new_size;
 }
+//----Select Tractors----//
 //Returns index of a tractor in "all" at the specified location, returns -1 if doesn't exist
-int GetTractor(int x, int y){
-    //loop through "all" 
-    //return index in "all" of Tractor
-    //else return -1
+int Game::GetTractor(int x, int y) const{
+    for(int i = 0;i<all.size();i++){
+        if(all[i].getX() == x and all[i].getY() == y){
+            return i;
+        }
+    }
     return -1;
+}
+void Game::SelectTractor(int const x, int const y){
+    int trac = GetTractor(x,y);
+    if(trac != -1) selected.push_back(trac);
+}
+//----Change Tractors----//
+//Adds tractor to all, check position?
+void Game::AddTractor(Tractor new_unit){
+    all.push_back(new_unit);
 }
 
 
@@ -68,8 +82,11 @@ int GetTractor(int x, int y){
 int main(){
     Tractor trac;
     Tractor trac2(1, 1, 2, MOVING);
-    cout << trac.getX() << endl;
-    cout << trac2.getSize() << endl;
-    trac2.setSize(4);
-    cout << trac2.getSize() << endl;
+    Tractor trac3(1, 2, 2, MOVING);
+    Game game1(4);
+
+    game1.AddTractor(trac);
+    game1.AddTractor(trac2);
+    game1.AddTractor(trac3);
+    cout << game1.GetTractor(1, 1) << endl;
 }
