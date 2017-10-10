@@ -32,16 +32,16 @@ class Game{
     //constructor
     Game(unsigned int const new_size);
     //select tractors
-    int GetTractor(int x, int y) const;
-    void SelectTractor(int x, int y);
-    void SelectTractors(int x1, int y1, int x2, int y2);
+    int GetTractor(int x, int y) const; //returns index
+    void SelectTractor(int x, int y); //throw into selected vector (clean selected or no?)
+    void SelectTractors(int x1, int y1, int x2, int y2); //rectangle drag and select
     //change tractors
     void AddTractor(Tractor new_unit);
-    bool MoveTractors(int i, int new_x, int new_y);
+    bool MoveTractors(int i, int new_x, int new_y); //takes index, changes coords to new_x, new_y
     void AssignTractorsActivity(Activity new_activity);
     //print tractors
-    void PrintTractor(int i);
-    void PrintSelectedTractors();
-    void PrintAllTractors();
+    void PrintTractor(int i); //takes index, prints out ???
+    void PrintSelectedTractors(); //take a look at selected vector
+    void PrintAllTractors(); //what do you think this means
 };
 #endif

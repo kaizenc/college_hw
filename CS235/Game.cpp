@@ -63,8 +63,9 @@ int GetTractor(int x, int y){
 }
 
 
+
+//------------Main Function-----------//
 int main(){
-    cout << "C L O U T" << endl;
     Tractor trac;
     Tractor trac2(1, 1, 2, MOVING);
     cout << trac.getX() << endl;
