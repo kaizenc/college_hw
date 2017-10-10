@@ -32,7 +32,7 @@ class Game{
     //constructor
     Game(unsigned int const new_size);
     //select tractors
-    int GetTractor(int x, int y);
+    int GetTractor(int x, int y) const;
     void SelectTractor(int x, int y);
     void SelectTractors(int x1, int y1, int x2, int y2);
     //change tractors
