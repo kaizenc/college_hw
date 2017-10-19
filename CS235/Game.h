@@ -38,7 +38,7 @@ class Game{
     //change tractors
     void AddTractor(Tractor new_unit);
     bool MoveTractor(int i, int new_x, int new_y); //takes index, changes coords to new_x, new_y
-    void AssignTractorsActivity(Activity new_activity);
+    void AssignTractorsActivity(Activity &new_activity);
     //print tractors
     void PrintTractor(int const &i); //takes index, prints out ???
     void PrintSelectedTractors(); //take a look at selected vector

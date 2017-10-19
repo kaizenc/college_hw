@@ -85,19 +85,20 @@ void Game::SelectTractors(int const &x1, int const &y1, int const &x2, int const
         y_2 = y1;
         y_1 = y2;
     }
-    /*
+    
     for(int i = x_1;i < x_2;i++){
         for(int j = y_1;j<y_2;j++){
             int trac = GetTractor(i,j);
             if(trac != -1) selected.push_back(trac);
         }
     }
-    */
-    for(item = all.begin(); item != all.end(); item++){
+    /*
+    for(Tractor item = all.begin(); item != all.end(); item++){
         if(true){//check if tractor is in range
             selected.push_back(trac);
         }
     }
+    */
 }
 //----Change Tractors----//
 //Adds tractor to all, check position?
@@ -105,14 +106,34 @@ void Game::AddTractor(Tractor new_unit){
     all.push_back(new_unit);
 }
 //Move i to coordinates if possible, returns true if successful, false otherwise
-bool MoveTractor(int i, int new_x, int new_y){
+bool Game::MoveTractor(int i, int new_x, int new_y){
     return true;
 }
-//----Print Tractors----//
-void PrintTractor(int const &i){
-    cout << endl;
+//Assigns Activity to Tractors
+void Game::AssignTractorsActivity(Activity &new_activity){
+    for(vector<Tractor>::iterator item = all.begin();item != all.end(); item++){
+        (*item).setActivity(new_activity);
+    }
 }
-
+//----Print Tractors----//
+void Game::PrintTractor(int const &i){
+    Tractor & trac = all[i];
+    cout << "Coords: (" << trac.getX() << ", " << trac.getY() << ") | ";
+    cout << "Size: " << trac.getSize() << " | ";
+    cout << "Activity: " << trac.getActivity() << endl;
+}
+void Game::PrintSelectedTractors(){
+    for(vector<int>::iterator item = selected.begin();item != selected.end(); item++){
+        PrintTractor(*item);
+    }
+}
+void Game::PrintAllTractors(){
+    int i = 0;
+    for(vector<Tractor>::iterator item = all.begin();item != all.end(); item++){
+        PrintTractor(i);
+        i++;
+    }
+}
 
 
 
@@ -127,4 +148,6 @@ int main(){
     game1.AddTractor(trac2);
     game1.AddTractor(trac3);
     cout << game1.GetTractor(1, 2) << endl;
+    game1.PrintTractor(2);
+    game1.PrintAllTractors();
 }
