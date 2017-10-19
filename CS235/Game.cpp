@@ -18,7 +18,7 @@ Tractor::Tractor(){
     size = 1;
     activity = IDLE;
 }
-Tractor::Tractor(int x_, int y_, unsigned short size_, Activity activity_){
+Tractor::Tractor(int const &x_, int const &y_, unsigned short const &size_, Activity const &activity_){
     x = x_;
     y = y_;
     size = size_;
@@ -38,22 +38,22 @@ Activity Tractor::getActivity() const{
     return activity;
 }
 //Mutators
-void Tractor::setX(int const x_){
+void Tractor::setX(int const &x_){
     x = x_;
 }
-void Tractor::setY(int const y_){
+void Tractor::setY(int const &y_){
     y = y_;
 }
-void Tractor::setSize(int const size_){
+void Tractor::setSize(int const &size_){
     size = size_;
 }
-void Tractor::setActivity(Activity const activity_){
+void Tractor::setActivity(Activity const &activity_){
     activity = activity_;
 }
 
 //------------Game Class Definitions-----------//
 //----Constructor----//
-Game::Game(unsigned int new_size){
+Game::Game(unsigned int const &new_size){
     map_size = new_size;
 }
 //----Select Tractors----//
@@ -66,12 +66,14 @@ int Game::GetTractor(int x, int y) const{
     }
     return -1;
 }
-void Game::SelectTractor(int const &x, int const &y){ //delete all in selected vector
+//Puts the index of the Tractor at the given coordinates into the selected vector
+void Game::SelectTractor(int const &x, int const &y){
     selected.clear();
     int trac = GetTractor(x,y);
     if(trac != -1) selected.push_back(trac);
 }
-void Game::SelectTractors(int const &x1, int const &y1, int const &x2, int const &y2){ //delete all in selected vector
+//Puts the index of the Tractors within the given coordinates into the selected vector
+void Game::SelectTractors(int const &x1, int const &y1, int const &x2, int const &y2){
     selected.clear();
     int x_1 = x1;
     int y_1 = y1;
@@ -101,7 +103,7 @@ void Game::SelectTractors(int const &x1, int const &y1, int const &x2, int const
     */
 }
 //----Change Tractors----//
-//Adds tractor to all, check position?
+//Adds tractor to the all vector
 void Game::AddTractor(Tractor new_unit){
     all.push_back(new_unit);
 }
@@ -109,10 +111,12 @@ void Game::AddTractor(Tractor new_unit){
 bool Game::MoveTractor(int i, int new_x, int new_y){
     return true;
 }
-//Assigns Activity to Tractors
+//Assigns Activity to selected tractors
 void Game::AssignTractorsActivity(Activity &new_activity){
-    for(vector<Tractor>::iterator item = all.begin();item != all.end(); item++){
-        (*item).setActivity(new_activity);
+    int i = 0;
+    for(vector<int>::iterator item = selected.begin();item != selected.end(); item++){
+        all[*item].setActivity(new_activity);
+        i++;
     }
 }
 //----Print Tractors----//

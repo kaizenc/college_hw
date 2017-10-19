@@ -9,7 +9,7 @@ class Tractor{
   public:
     //constructors
     Tractor();
-    Tractor(int x_, int y_, unsigned short size_, Activity activity_);
+    Tractor(int const &x_, int const &y_, unsigned short const &size_, Activity const &activity_);
     
     //accessors
     int getX() const; //read-only function, use const
@@ -18,10 +18,10 @@ class Tractor{
     Activity getActivity() const;
     
     //mutators
-    void setX(int const x_); //take care not to change parameter, use const
-    void setY(int const y_);
-    void setSize(int const size_);
-    void setActivity(Activity const activity_);
+    void setX(int const &x_); //take care not to change parameter, use const &    
+    void setY(int const &y_);
+    void setSize(int const &size_);
+    void setActivity(Activity const &activity_);
 };
 
 class Game{
@@ -30,7 +30,7 @@ class Game{
     std::vector<int> selected;
   public:
     //constructor
-    Game(unsigned int const new_size);
+    Game(unsigned int const &new_size);
     //select tractors
     int GetTractor(int x, int y) const; //returns index, -1 if not found
     void SelectTractor(int const &x, int const &y); //throw into selected vector
