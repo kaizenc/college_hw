@@ -58,21 +58,21 @@ Game::Game(unsigned int new_size){
 }
 //----Select Tractors----//
 //Returns index of a tractor in "all" at the specified location, returns -1 if doesn't exist
-int & Game::GetTractor(int x, int y) const{
+int Game::GetTractor(int x, int y) const{
     for(int i = 0;i<all.size();i++){
         if(all[i].getX() == x and all[i].getY() == y){
             return i;
         }
     }
-    static int r = -1;
-    return r;
+    return -1;
 }
-void Game::SelectTractor(int const x, int const y){ //delete all in selected vector
+void Game::SelectTractor(int const &x, int const &y){ //delete all in selected vector
     selected.clear();
-    int & trac = GetTractor(x,y);
+    int trac = GetTractor(x,y);
     if(trac != -1) selected.push_back(trac);
 }
-void Game::SelectTractors(int x1, int y1, int x2, int y2){ //delete all in selected vector
+void Game::SelectTractors(int const &x1, int const &y1, int const &x2, int const &y2){ //delete all in selected vector
+    selected.clear();
     int x_1 = x1;
     int y_1 = y1;
     int x_2 = x2;
@@ -85,11 +85,17 @@ void Game::SelectTractors(int x1, int y1, int x2, int y2){ //delete all in selec
         y_2 = y1;
         y_1 = y2;
     }
-
+    /*
     for(int i = x_1;i < x_2;i++){
         for(int j = y_1;j<y_2;j++){
             int trac = GetTractor(i,j);
             if(trac != -1) selected.push_back(trac);
+        }
+    }
+    */
+    for(item = all.begin(); item != all.end(); item++){
+        if(true){//check if tractor is in range
+            selected.push_back(trac);
         }
     }
 }
@@ -98,6 +104,15 @@ void Game::SelectTractors(int x1, int y1, int x2, int y2){ //delete all in selec
 void Game::AddTractor(Tractor new_unit){
     all.push_back(new_unit);
 }
+//Move i to coordinates if possible, returns true if successful, false otherwise
+bool MoveTractor(int i, int new_x, int new_y){
+    return true;
+}
+//----Print Tractors----//
+void PrintTractor(int const &i){
+    cout << endl;
+}
+
 
 
 
@@ -111,5 +126,5 @@ int main(){
     game1.AddTractor(trac);
     game1.AddTractor(trac2);
     game1.AddTractor(trac3);
-    cout << &game1.GetTractor(1, 2) << endl;
+    cout << game1.GetTractor(1, 2) << endl;
 }
