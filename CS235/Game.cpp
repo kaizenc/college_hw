@@ -100,7 +100,7 @@ void Game::SelectTractors(int const &x1, int const &y1, int const &x2, int const
 }
 //----Change Tractors----//
 //Adds tractor to the all vector
-void Game::AddTractor(Tractor new_unit){
+void Game::AddTractor(Tractor const &new_unit){
     all.push_back(new_unit);
 }
 //Move i to coordinates if possible, returns true if successful, false otherwise
@@ -131,6 +131,7 @@ void Game::AssignTractorsActivity(Activity &new_activity){
 //----Print Tractors----//
 void Game::PrintTractor(int const &i){
     Tractor & trac = all[i];
+    cout << "Index: " << i << " | ";
     cout << "Coords: (" << trac.getX() << ", " << trac.getY() << ") | ";
     cout << "Size: " << trac.getSize() << " | ";
     cout << "Activity: " << trac.getActivity() << endl;

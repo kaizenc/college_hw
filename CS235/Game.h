@@ -36,11 +36,11 @@ class Game{
     void SelectTractor(int const &x, int const &y); 
     void SelectTractors(int const &x1, int const &y1, int const &x2, int const &y2); 
     //change tractors
-    void AddTractor(Tractor new_unit);
+    void AddTractor(Tractor const &new_unit);
     bool MoveTractor(int i, int new_x, int new_y); 
     void AssignTractorsActivity(Activity &new_activity);
     //print tractors
-    void PrintTractor(int const &i); 
+    void PrintTractor(int const &i);//make const function? 
     void PrintSelectedTractors(); 
     void PrintAllTractors(); 
 };
