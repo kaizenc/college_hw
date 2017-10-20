@@ -88,19 +88,15 @@ void Game::SelectTractors(int const &x1, int const &y1, int const &x2, int const
         y_1 = y2;
     }
     
-    for(int i = x_1;i < x_2;i++){
-        for(int j = y_1;j<y_2;j++){
-            int trac = GetTractor(i,j);
-            if(trac != -1) selected.push_back(trac);
+    for(int i = 0;i<all.size();i++){
+        Tractor & trac = all[i];
+        if(x_1 < trac.getX() + trac.getSize() &&
+           x_2 > trac.getX() - trac.getSize() &&
+           y_2 > trac.getY() - trac.getSize() &&
+           y_1 < trac.getY() + trac.getSize()){
+               selected.push_back(i);
         }
     }
-    /*
-    for(Tractor item = all.begin(); item != all.end(); item++){
-        if(true){//check if tractor is in range
-            selected.push_back(trac);
-        }
-    }
-    */
 }
 //----Change Tractors----//
 //Adds tractor to the all vector
@@ -109,6 +105,19 @@ void Game::AddTractor(Tractor new_unit){
 }
 //Move i to coordinates if possible, returns true if successful, false otherwise
 bool Game::MoveTractor(int i, int new_x, int new_y){
+    Tractor & trac1 = all[i];
+    for(int j = 0;j<all.size();j++){
+        if (j == i) continue;
+        Tractor & trac2 = all[j];
+        if(new_x - trac1.getSize() < trac2.getX() + trac2.getSize() &&
+           new_x + trac1.getSize() > trac2.getX() - trac2.getSize() &&
+           new_y + trac1.getSize() > trac2.getY() - trac2.getSize() &&
+           new_y - trac1.getSize() < trac2.getY() + trac2.getSize()){
+               return false;
+        }
+    }
+    trac1.setX(new_x);
+    trac1.setY(new_y);
     return true;
 }
 //Assigns Activity to selected tractors
