@@ -12,13 +12,13 @@ class Tractor{
     Tractor(int const &x_, int const &y_, unsigned short const &size_, Activity const &activity_);
     
     //accessors
-    int getX() const; //read-only function, use const
+    int getX() const; //read-only function
     int getY() const;
     int getSize() const;
     Activity getActivity() const;
     
     //mutators
-    void setX(int const &x_); //take care not to change parameter, use const &    
+    void setX(int const &x_); //take care not to change parameter
     void setY(int const &y_);
     void setSize(int const &size_);
     void setActivity(Activity const &activity_);
@@ -40,7 +40,7 @@ class Game{
     bool MoveTractor(int i, int new_x, int new_y); 
     void AssignTractorsActivity(Activity new_activity);
     //print tractors
-    void PrintTractor(int const &i);//make const function? 
+    void PrintTractor(int const &i);
     void PrintSelectedTractors(); 
     void PrintAllTractors(); 
 };
