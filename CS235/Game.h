@@ -38,7 +38,7 @@ class Game{
     //change tractors
     void AddTractor(Tractor const &new_unit);
     bool MoveTractor(int i, int new_x, int new_y); 
-    void AssignTractorsActivity(Activity &new_activity);
+    void AssignTractorsActivity(Activity new_activity);
     //print tractors
     void PrintTractor(int const &i);//make const function? 
     void PrintSelectedTractors(); 

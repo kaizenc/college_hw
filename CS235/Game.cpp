@@ -60,7 +60,8 @@ Game::Game(unsigned int const &new_size){
 //Returns index of a tractor in "all" at the specified location, returns -1 if doesn't exist
 int Game::GetTractor(int x, int y) const{
     for(int i = 0;i<all.size();i++){
-        if(all[i].getX() == x and all[i].getY() == y){
+        if(all[i].getX() + all[i].getSize() >= x and all[i].getX() - all[i].getSize() <= x and 
+           all[i].getY() + all[i].getSize() >= y and all[i].getY() - all[i].getSize() <= y){
             return i;
         }
     }
@@ -121,11 +122,10 @@ bool Game::MoveTractor(int i, int new_x, int new_y){
     return true;
 }
 //Assigns Activity to selected tractors
-void Game::AssignTractorsActivity(Activity &new_activity){
+void Game::AssignTractorsActivity(Activity new_activity){
     int i = 0;
-    for(vector<int>::iterator item = selected.begin();item != selected.end(); item++){
-        all[*item].setActivity(new_activity);
-        i++;
+    for(int i = 0;i<selected.size();i++){
+        all[selected[i]].setActivity(new_activity);
     }
 }
 //----Print Tractors----//
@@ -134,7 +134,15 @@ void Game::PrintTractor(int const &i){
     cout << "Index: " << i << " | ";
     cout << "Coords: (" << trac.getX() << ", " << trac.getY() << ") | ";
     cout << "Size: " << trac.getSize() << " | ";
-    cout << "Activity: " << trac.getActivity() << endl;
+
+    cout << "Activity: ";
+    switch(trac.getActivity()){
+        case 0: cout << "SEEDING";
+        case 1: cout << "HARVESTING";
+        case 2: cout << "MOVING";
+        case 3: cout << "IDLE";
+    }
+    cout << endl;
 }
 void Game::PrintSelectedTractors(){
     for(vector<int>::iterator item = selected.begin();item != selected.end(); item++){
@@ -153,15 +161,34 @@ void Game::PrintAllTractors(){
 
 //------------Main Function-----------//
 int main(){
-    Tractor trac;
-    Tractor trac2(1, 1, 2, MOVING);
-    Tractor trac3(1, 2, 2, MOVING);
-    Game game1(4);
+    Game g(100);
+    Tractor trt1(10,10,4,IDLE);
+    Tractor trt2(50,50,4,IDLE);
+    Tractor trt3(90,90,4,IDLE);
 
-    game1.AddTractor(trac);
-    game1.AddTractor(trac2);
-    game1.AddTractor(trac3);
-    cout << game1.GetTractor(1, 2) << endl;
-    game1.PrintTractor(2);
-    game1.PrintAllTractors();
+    g.AddTractor(trt1);
+    g.AddTractor(trt2);
+    g.AddTractor(trt3);
+
+    g.PrintAllTractors(); // all three tractors should be printed out
+
+    //cout<<"Clicking (9,9) found the tractor number "<<g.GetTractor(9,9)<<endl; // should be tractor number 0
+    //g.SelectTractor(89,90);
+    //g.PrintSelectedTractors(); // should print 2
+
+    //g.PrintSelectedTractors(); // should print 2
+
+    g.SelectTractors(11,49,49,11);
+    //g.PrintSelectedTractors(); // should print 0 1
+
+    g.AssignTractorsActivity(HARVESTING);
+    g.PrintAllTractors(); // Tractors 0 and 1 should be HARVESTING. Tractor 2 should be IDLE.
+
+    if(!g.MoveTractor(2,99,99)) cout<<"Cannot move tractor 2 to coordinates (99,99)"<<endl; // You should see this message
+    if(!g.MoveTractor(2,13,13)) cout<<"Cannot move tractor 2 to coordinates (13,13)"<<endl; // You should see this message
+
+    g.MoveTractor(2,80,50);
+    g.PrintTractor(2); // should be the IDLE tractor of size 4 at coordinates (80,50)
+
+    return 0;
 }

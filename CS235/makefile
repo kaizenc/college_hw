@@ -1,5 +1,5 @@
 all:
-	g++ Game.cpp -o Game.o
+	g++ -std=c++11 Game.cpp -o Game.o
 run: 
 	./Game.o
 clean:
