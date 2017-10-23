@@ -58,7 +58,7 @@ Game::Game(unsigned int const &new_size){
 }
 //----Select Tractors----//
 //Returns index of a tractor in "all" at the specified location, returns -1 if doesn't exist
-int Game::GetTractor(int x, int y) const{
+int Game::GetTractor(int const &x, int const &y) const{
     for(int i = 0;i<all.size();i++){
         if(all[i].getX() + all[i].getSize() >= x and all[i].getX() - all[i].getSize() <= x and 
            all[i].getY() + all[i].getSize() >= y and all[i].getY() - all[i].getSize() <= y){
@@ -126,7 +126,7 @@ bool Game::MoveTractor(int i, int new_x, int new_y){
     return true;
 }
 //Assigns Activity to selected tractors
-void Game::AssignTractorsActivity(Activity new_activity){
+void Game::AssignTractorsActivity(Activity const &new_activity){
     int i = 0;
     for(int i = 0;i<selected.size();i++){
         all[selected[i]].setActivity(new_activity);

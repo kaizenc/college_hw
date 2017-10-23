@@ -32,13 +32,13 @@ class Game{
     //constructor
     Game(unsigned int const &new_size);
     //select tractors
-    int GetTractor(int x, int y) const; 
+    int GetTractor(int const &x, int const &y) const; 
     void SelectTractor(int const &x, int const &y); 
     void SelectTractors(int const &x1, int const &y1, int const &x2, int const &y2); 
     //change tractors
     void AddTractor(Tractor const &new_unit);
     bool MoveTractor(int i, int new_x, int new_y); 
-    void AssignTractorsActivity(Activity new_activity);
+    void AssignTractorsActivity(Activity const &new_activity);
     //print tractors
     void PrintTractor(int const &i);
     void PrintSelectedTractors(); 
