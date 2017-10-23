@@ -110,11 +110,15 @@ bool Game::MoveTractor(int i, int new_x, int new_y){
     for(int j = 0;j<all.size();j++){
         if (j == i) continue;
         Tractor & trac2 = all[j];
-        if(new_x - trac1.getSize() < trac2.getX() + trac2.getSize() &&
+        if(new_x - trac1.getSize() < trac2.getX() + trac2.getSize() && //Check for intersection between tractors
            new_x + trac1.getSize() > trac2.getX() - trac2.getSize() &&
            new_y + trac1.getSize() > trac2.getY() - trac2.getSize() &&
            new_y - trac1.getSize() < trac2.getY() + trac2.getSize()){
                return false;
+        }
+        if(new_x - trac1.getSize() < 0 || new_x + trac1.getSize() > map_size ||
+           new_y - trac1.getSize() < 0 || new_y + trac1.getSize() > map_size){
+            return false;
         }
     }
     trac1.setX(new_x);
@@ -137,10 +141,14 @@ void Game::PrintTractor(int const &i){
 
     cout << "Activity: ";
     switch(trac.getActivity()){
-        case 0: cout << "SEEDING";
-        case 1: cout << "HARVESTING";
-        case 2: cout << "MOVING";
-        case 3: cout << "IDLE";
+        case SEEDING: cout << "SEEDING";
+            break;
+        case HARVESTING: cout << "HARVESTING";
+            break;
+        case MOVING: cout << "MOVING";
+            break;
+        case IDLE: cout << "IDLE";
+            break;
     }
     cout << endl;
 }
@@ -172,14 +180,14 @@ int main(){
 
     g.PrintAllTractors(); // all three tractors should be printed out
 
-    //cout<<"Clicking (9,9) found the tractor number "<<g.GetTractor(9,9)<<endl; // should be tractor number 0
-    //g.SelectTractor(89,90);
-    //g.PrintSelectedTractors(); // should print 2
+    cout<<"Clicking (9,9) found the tractor number "<<g.GetTractor(9,9)<<endl; // should be tractor number 0
+    g.SelectTractor(89,90);
+    g.PrintSelectedTractors(); // should print 2
 
-    //g.PrintSelectedTractors(); // should print 2
+    g.PrintSelectedTractors(); // should print 2
 
     g.SelectTractors(11,49,49,11);
-    //g.PrintSelectedTractors(); // should print 0 1
+    g.PrintSelectedTractors(); // should print 0 1
 
     g.AssignTractorsActivity(HARVESTING);
     g.PrintAllTractors(); // Tractors 0 and 1 should be HARVESTING. Tractor 2 should be IDLE.
