@@ -38,27 +38,27 @@ Activity Tractor::getActivity() const{
     return activity;
 }
 //Mutators
-void Tractor::setX(int const &x_){
+void Tractor::setX(int x_){
     x = x_;
 }
-void Tractor::setY(int const &y_){
+void Tractor::setY(int y_){
     y = y_;
 }
-void Tractor::setSize(int const &size_){
+void Tractor::setSize(int size_){
     size = size_;
 }
-void Tractor::setActivity(Activity const &activity_){
+void Tractor::setActivity(Activity activity_){
     activity = activity_;
 }
 
 //------------Game Class Definitions-----------//
 //----Constructor----//
-Game::Game(unsigned int const &new_size){
+Game::Game(unsigned int new_size){
     map_size = new_size;
 }
 //----Select Tractors----//
 //Returns index of a tractor in "all" at the specified location, returns -1 if doesn't exist
-int Game::GetTractor(int const &x, int const &y) const{
+int Game::GetTractor(int x, int y) const{
     for(int i = 0;i<all.size();i++){
         if(all[i].getX() + all[i].getSize() >= x and all[i].getX() - all[i].getSize() <= x and 
            all[i].getY() + all[i].getSize() >= y and all[i].getY() - all[i].getSize() <= y){
@@ -68,13 +68,13 @@ int Game::GetTractor(int const &x, int const &y) const{
     return -1;
 }
 //Puts the index of the Tractor at the given coordinates into the selected vector
-void Game::SelectTractor(int const &x, int const &y){
+void Game::SelectTractor(int x, int y){
     selected.clear();
     int trac = GetTractor(x,y);
     if(trac != -1) selected.push_back(trac);
 }
 //Puts the index of the Tractors within the given coordinates into the selected vector
-void Game::SelectTractors(int const &x1, int const &y1, int const &x2, int const &y2){
+void Game::SelectTractors(int x1, int y1, int x2, int y2){
     selected.clear();
     int x_1 = x1;
     int y_1 = y1;
@@ -126,7 +126,7 @@ bool Game::MoveTractor(int i, int new_x, int new_y){
     return true;
 }
 //Assigns Activity to selected tractors
-void Game::AssignTractorsActivity(Activity const &new_activity){
+void Game::AssignTractorsActivity(Activity new_activity){
     int i = 0;
     for(int i = 0;i<selected.size();i++){
         all[selected[i]].setActivity(new_activity);
@@ -134,14 +134,13 @@ void Game::AssignTractorsActivity(Activity const &new_activity){
 }
 //----Print Tractors----//
 //Prints out single tractor
-void Game::PrintTractor(int const &i){
-    Tractor & trac = all[i];
+void Game::PrintTractor(int i) const{
     cout << "Index: " << i << " | ";
-    cout << "Coords: (" << trac.getX() << ", " << trac.getY() << ") | ";
-    cout << "Size: " << trac.getSize() << " | ";
+    cout << "Coords: (" << all[i].getX() << ", " << all[i].getY() << ") | ";
+    cout << "Size: " << all[i].getSize() << " | ";
 
     cout << "Activity: ";
-    switch(trac.getActivity()){
+    switch(all[i].getActivity()){
         case SEEDING: cout << "SEEDING";
             break;
         case HARVESTING: cout << "HARVESTING";
@@ -154,16 +153,14 @@ void Game::PrintTractor(int const &i){
     cout << endl;
 }
 //Prints out all tractors in the selected vector
-void Game::PrintSelectedTractors(){
-    for(vector<int>::iterator item = selected.begin();item != selected.end(); item++){
-        PrintTractor(*item);
+void Game::PrintSelectedTractors() const{
+    for(int i =0;i<selected.size();i++){
+        PrintTractor(selected[i]);
     }
 }
 //Pritns out all tractors in the game
-void Game::PrintAllTractors(){
-    int i = 0;
-    for(vector<Tractor>::iterator item = all.begin();item != all.end(); item++){
+void Game::PrintAllTractors() const{
+    for(int i = 0;i<all.size();i++){
         PrintTractor(i);
-        i++;
     }
 }

@@ -18,10 +18,10 @@ class Tractor{
     Activity getActivity() const;
     
     //mutators
-    void setX(int const &x_); //take care not to change parameter
-    void setY(int const &y_);
-    void setSize(int const &size_);
-    void setActivity(Activity const &activity_);
+    void setX(int x_); //take care not to change parameter
+    void setY(int y_);
+    void setSize(int size_);
+    void setActivity(Activity activity_);
 };
 
 class Game{
@@ -30,18 +30,18 @@ class Game{
     std::vector<int> selected;
   public:
     //constructor
-    Game(unsigned int const &new_size);
+    Game(unsigned int new_size);
     //select tractors
-    int GetTractor(int const &x, int const &y) const; 
-    void SelectTractor(int const &x, int const &y); 
-    void SelectTractors(int const &x1, int const &y1, int const &x2, int const &y2); 
+    int GetTractor(int x, int y) const; 
+    void SelectTractor(int x, int y); 
+    void SelectTractors(int x1, int y1, int x2, int y2); 
     //change tractors
     void AddTractor(Tractor const &new_unit);
     bool MoveTractor(int i, int new_x, int new_y); 
-    void AssignTractorsActivity(Activity const &new_activity);
+    void AssignTractorsActivity(Activity new_activity);
     //print tractors
-    void PrintTractor(int const &i);
-    void PrintSelectedTractors(); 
-    void PrintAllTractors(); 
+    void PrintTractor(int i) const;
+    void PrintSelectedTractors() const; 
+    void PrintAllTractors() const; 
 };
 #endif
