@@ -14,16 +14,17 @@ class Node{
     Node(KeyType new_key, ItemType new_item);
 
     void operator=(ItemType item);
-    ItemType * getItem();
+    ItemType & getItem();
     KeyType getKey();
     Node<KeyType,ItemType> * getLeft();
     Node<KeyType,ItemType> * getRight();
+    void setLeft(Node<KeyType,ItemType> * node);
+    void setRight(Node<KeyType,ItemType> * node);
 };
 
 template<class KeyType, class ItemType>
 class Dictionary{
     Node<KeyType,ItemType> *head; //basically the tree
-    int height;
     int size;
 
     int Height_Helper(Node<KeyType,ItemType>* node);

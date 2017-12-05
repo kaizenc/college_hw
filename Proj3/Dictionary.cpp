@@ -21,9 +21,11 @@ Node<KeyType,ItemType>::Node(KeyType new_key, ItemType new_item){
 	item = new_item;
 }
 
+
+
 template<class KeyType, class ItemType>
-ItemType * Node<KeyType,ItemType>::getItem(){
-	return &item;
+ItemType & Node<KeyType,ItemType>::getItem(){
+	return item;
 }
 template<class KeyType, class ItemType>
 KeyType Node<KeyType,ItemType>::getKey(){
@@ -37,25 +39,38 @@ template<class KeyType, class ItemType>
 Node<KeyType,ItemType> * Node<KeyType,ItemType>::getRight(){
 	return right;
 }
+
+template<class KeyType, class ItemType>
+void Node<KeyType,ItemType>::setLeft(Node<KeyType,ItemType> * node){
+	left = node;
+}
+template<class KeyType, class ItemType>
+void Node<KeyType,ItemType>::setRight(Node<KeyType,ItemType> * node){
+	right = node;
+}
 template<class KeyType, class ItemType>
 void Node<KeyType,ItemType>::operator=(ItemType new_item){
 	item = new_item;
 }
 
+
+
+
+
+
 //------------Dictionary Class Definitions-----------//
 template<class KeyType, class ItemType>
-Dictionary<KeyType,ItemType>::Dictionary(){
-    height = 0;
+Dictionary<KeyType,ItemType>::Dictionary(){    
     size = 0;
     head = NULL;
 }
-
 template<class KeyType, class ItemType>
-Dictionary<KeyType,ItemType>::Dictionary(Node<KeyType,ItemType> * node){
-	height = 0;
+Dictionary<KeyType,ItemType>::Dictionary(Node<KeyType,ItemType> * node){	
     size = 0;
     head = node;
 }
+
+
 
 template<class KeyType, class ItemType>
 int Dictionary<KeyType, ItemType>::Size(){
@@ -75,10 +90,10 @@ template<class KeyType, class ItemType>
 int Dictionary<KeyType, ItemType>::Height_Helper(Node<KeyType,ItemType>* node){
 	if(node == NULL) return 0;
 	int result = 0;
-	if(node->left == NULL and 	node->right == NULL){
+	if(node->getLeft() == NULL and node->getRight() == NULL){
 		return 1;
 	}else{
-		result+= max(Height_Helper(node->left), Height_Helper(node->right));
+		result+= max(Height_Helper(node->getLeft()), Height_Helper(node->getRight()));
 	}
 	return result;
 }
@@ -89,11 +104,12 @@ template<class KeyType, class ItemType>
 ItemType & Dictionary<KeyType, ItemType>::operator[](KeyType key){
 	Node<KeyType,ItemType> * node = search(head, key);
 	if(node == NULL){
-		node = Node<KeyType,ItemType>(key);
-		insert(node);
-		return node;
+		Node<KeyType,ItemType> new_node(key);
+		node = &new_node;
+		insert(head, node);
+		return node->getItem();
 	}
-	return node;	
+	return node->getItem();	
 }
 template<class KeyType, class ItemType>
 Node<KeyType,ItemType> * Dictionary<KeyType, ItemType>::search(Node<KeyType,ItemType>* curr, KeyType key){
@@ -121,13 +137,13 @@ void Dictionary<KeyType, ItemType>::insert(Node<KeyType,ItemType>* curr, Node<Ke
 	if(curr == NULL) curr = node;
 	if(node->getKey() <= curr->getKey()){
 		if(curr->getLeft() == NULL){
-			curr->getLeft() = node;
+			curr->setLeft(node);
 		}else{
 			insert(curr->getLeft(), node);
 		}
 	}else{
 		if(curr->getRight() == NULL){
-			curr->getRight() = node;
+			curr->setRight(node);
 		}else{
 			insert(curr->getRight(), node);
 		}
@@ -135,9 +151,11 @@ void Dictionary<KeyType, ItemType>::insert(Node<KeyType,ItemType>* curr, Node<Ke
 }
 
 //----------------Main Function Test---------------//
+
 int main(){    
     Node<string, int> node("potato",3);    
     Dictionary<string, int> container(&node);
 
-   int a = container["potato"];
+	//container["pptato"] = 4;
+	//cout << container.Height() << endl;
 }
