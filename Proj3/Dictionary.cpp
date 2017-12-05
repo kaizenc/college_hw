@@ -11,12 +11,14 @@ Node<KeyType,ItemType>::Node(){
 }
 template<class KeyType, class ItemType>
 Node<KeyType,ItemType>::Node(KeyType new_key){
-	Node();
+	left = NULL;
+	right = NULL;
 	key = new_key;
 }
 template<class KeyType, class ItemType>
 Node<KeyType,ItemType>::Node(KeyType new_key, ItemType new_item){
-	Node();
+	left = NULL;
+	right = NULL;
 	key = new_key;
 	item = new_item;
 }
@@ -93,9 +95,13 @@ int Dictionary<KeyType, ItemType>::Height_Helper(Node<KeyType,ItemType>* node){
 	if(node->getLeft() == NULL and node->getRight() == NULL){
 		return 1;
 	}else{
-		result+= max(Height_Helper(node->getLeft()), Height_Helper(node->getRight()));
+		if(node->getLeft() == NULL){
+			return Height_Helper(node->getRight());
+		}else if(node->getRight() == NULL){
+			Height_Helper(node->getLeft());
+		}
 	}
-	return result;
+	return max(Height_Helper(node->getLeft()), Height_Helper(node->getRight()));
 }
 
 
@@ -156,6 +162,6 @@ int main(){
     Node<string, int> node("potato",3);    
     Dictionary<string, int> container(&node);
 
-	//container["pptato"] = 4;
-	//cout << container.Height() << endl;
+	container["pptato"] = 4;
+	cout << container.Height() << endl;
 }
