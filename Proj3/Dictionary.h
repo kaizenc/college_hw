@@ -1,20 +1,26 @@
 #ifndef DICTIONARY_H
 #define DICTIONARY_H
 
-//Design this so we use a binary search tree, implement BST?
 template<class KeyType, class ItemType>
 class Node{
-    Node *left;
-    Node *right;
+    Node<KeyType,ItemType> *left;
+    Node<KeyType,ItemType> *right;
     KeyType key;
     ItemType item;
+  public:
+    Node();
+    void operator=(ItemType item);
+    ItemType getItem();
 };
 
 template<class KeyType, class ItemType>
 class Dictionary{
-    Node *head;
+    Node<KeyType,ItemType> *head; //basically the tree
     int height;
     int size;
+
+    int Height_Helper(Node<KeyType,ItemType>* node);
+    Node<KeyType,ItemType> * search(KeyType key);
   public:
     Dictionary(); //Constructor
     bool IsEmpty(); //returns true if container is empty
@@ -34,3 +40,4 @@ Size should just keep track of size
 Count is just a search, as is operator[]
 
 */
+#endif
