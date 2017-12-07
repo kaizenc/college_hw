@@ -50,10 +50,6 @@ template<class KeyType, class ItemType>
 void Node<KeyType,ItemType>::setRight(Node<KeyType,ItemType> * node){
 	right = node;
 }
-template<class KeyType, class ItemType>
-void Node<KeyType,ItemType>::operator=(ItemType new_item){
-	item = new_item;
-}
 
 
 
@@ -68,7 +64,7 @@ Dictionary<KeyType,ItemType>::Dictionary(){
 }
 template<class KeyType, class ItemType>
 Dictionary<KeyType,ItemType>::Dictionary(Node<KeyType,ItemType> * node){	
-    size = 0;
+    size = 1;
     head = node;
 }
 
@@ -111,10 +107,10 @@ ItemType & Dictionary<KeyType, ItemType>::operator[](KeyType key){
 	Node<KeyType,ItemType> * node = search(head, key);
 	if(node == NULL){
 		Node<KeyType,ItemType> new_node(key);
-		node = &new_node;
+		node = & new_node;
 		insert(head, node);
-		return node->getItem();
 	}
+	//cout << head->getRight()->getItem() << endl;
 	return node->getItem();	
 }
 template<class KeyType, class ItemType>
@@ -122,10 +118,11 @@ Node<KeyType,ItemType> * Dictionary<KeyType, ItemType>::search(Node<KeyType,Item
 	if(curr == NULL) return NULL;
 	Node<KeyType,ItemType> * left = NULL;
 	Node<KeyType,ItemType> * right = NULL;
+	KeyType curr_key = curr->getKey();
 
-	if(key == curr->getKey()){
+	if(key == curr_key){
 		return curr;
-	}else if(key < curr->getKey()){
+	}else if(key < curr_key){
 		if(curr->getLeft() != NULL){
 			left = search(curr->getLeft(), key);
 		}
@@ -149,7 +146,7 @@ void Dictionary<KeyType, ItemType>::insert(Node<KeyType,ItemType>* curr, Node<Ke
 		}
 	}else{
 		if(curr->getRight() == NULL){
-			curr->setRight(node);
+ 			curr->setRight(node);
 		}else{
 			insert(curr->getRight(), node);
 		}
@@ -160,8 +157,11 @@ void Dictionary<KeyType, ItemType>::insert(Node<KeyType,ItemType>* curr, Node<Ke
 
 int main(){    
     Node<string, int> node("potato",3);    
+    Node<string, int> node1("apple",2);  
     Dictionary<string, int> container(&node);
 
-	container["pptato"] = 4;
-	cout << container.Height() << endl;
+	container["quasi"] = 4;
+	//cout << container.head->getRight()->getKey() << endl;
+	cout << container["quasi"] << endl;
+	//cout << container.Height() << endl;
 }

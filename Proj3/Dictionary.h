@@ -13,7 +13,6 @@ class Node{
     Node(KeyType new_key);
     Node(KeyType new_key, ItemType new_item);
 
-    void operator=(ItemType item);
     ItemType & getItem();
     KeyType getKey();
     Node<KeyType,ItemType> * getLeft();
@@ -24,13 +23,14 @@ class Node{
 
 template<class KeyType, class ItemType>
 class Dictionary{
-    Node<KeyType,ItemType> *head; //basically the tree
+    
     int size;
 
     int Height_Helper(Node<KeyType,ItemType>* node);
     Node<KeyType,ItemType> * search(Node<KeyType,ItemType>* curr, KeyType key);
     void insert(Node<KeyType,ItemType>* top, Node<KeyType,ItemType>* node); //recursive, node has to be placed below top
   public:
+    Node<KeyType,ItemType> *head; //basically the tree
     //Constructors
     Dictionary(); 
     Dictionary(Node<KeyType,ItemType> * node);
