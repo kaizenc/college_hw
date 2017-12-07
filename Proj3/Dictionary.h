@@ -14,11 +14,11 @@ class Node{
     Node(KeyType new_key, ItemType new_item);
 
     ItemType & getItem();
-    KeyType getKey();
-    Node<KeyType,ItemType> * getLeft();
-    Node<KeyType,ItemType> * getRight();
-    void setLeft(Node<KeyType,ItemType> * node);
-    void setRight(Node<KeyType,ItemType> * node);
+    KeyType & getKey();
+    Node<KeyType,ItemType> getLeft();
+    Node<KeyType,ItemType> getRight();
+    void setLeft(Node<KeyType,ItemType> node);
+    void setRight(Node<KeyType,ItemType> node);
 };
 
 template<class KeyType, class ItemType>
@@ -27,10 +27,11 @@ class Dictionary{
     int size;
 
     int Height_Helper(Node<KeyType,ItemType>* node);
-    Node<KeyType,ItemType> * search(Node<KeyType,ItemType>* curr, KeyType key);
-    void insert(Node<KeyType,ItemType>* top, Node<KeyType,ItemType>* node); //recursive, node has to be placed below top
+    Node<KeyType,ItemType> & search(Node<KeyType,ItemType>& curr, KeyType key);
+    void insert(Node<KeyType,ItemType> & curr, Node<KeyType,ItemType> & node); //recursive, node has to be placed below top
   public:
     Node<KeyType,ItemType> *head; //basically the tree
+
     //Constructors
     Dictionary(); 
     Dictionary(Node<KeyType,ItemType> * node);
