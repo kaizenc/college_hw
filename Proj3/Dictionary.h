@@ -21,8 +21,7 @@ class Node{
 };
 
 template<class KeyType, class ItemType>
-class Dictionary{
-    Node<KeyType,ItemType> * head; //basically the tree
+class Dictionary{    
     int size;
     int Height_Helper(Node<KeyType,ItemType>* node);
     Node<KeyType,ItemType> * search(Node<KeyType,ItemType> * curr, KeyType key);
@@ -32,6 +31,7 @@ class Dictionary{
     //Constructors
     Dictionary(); 
     Dictionary(Node<KeyType,ItemType> * node);
+    Node<KeyType,ItemType> * head; //basically the tree
 
     bool IsEmpty(); //returns true if container is empty
     void Clear(); //removes all items and leaves container empty
