@@ -8,12 +8,14 @@ template<class KeyType, class ItemType>
 Node<KeyType,ItemType>::Node(){
 	left = NULL;
 	right = NULL;
+	item = NULL;
 }
 template<class KeyType, class ItemType>
 Node<KeyType,ItemType>::Node(KeyType new_key){
 	left = NULL;
 	right = NULL;
 	key = new_key;
+	item = NULL;
 }
 template<class KeyType, class ItemType>
 Node<KeyType,ItemType>::Node(KeyType new_key, ItemType new_item){
@@ -23,32 +25,30 @@ Node<KeyType,ItemType>::Node(KeyType new_key, ItemType new_item){
 	item = new_item;
 }
 
-
-
 template<class KeyType, class ItemType>
 ItemType & Node<KeyType,ItemType>::getItem(){
 	return item;
 }
 template<class KeyType, class ItemType>
-KeyType & Node<KeyType,ItemType>::getKey(){
+KeyType Node<KeyType,ItemType>::getKey(){
 	return key;
 }
 template<class KeyType, class ItemType>
-Node<KeyType,ItemType> Node<KeyType,ItemType>::getLeft(){
-	return *left; //returns reference to node that pointer is pointing to
+Node<KeyType,ItemType> * Node<KeyType,ItemType>::getLeft(){
+	return left; //returns reference to node that pointer is pointing to
 }
 template<class KeyType, class ItemType>
-Node<KeyType,ItemType> Node<KeyType,ItemType>::getRight(){
-	return *right;
+Node<KeyType,ItemType> * Node<KeyType,ItemType>::getRight(){
+	return right;
 }
 
 template<class KeyType, class ItemType>
-void Node<KeyType,ItemType>::setLeft(Node<KeyType,ItemType> node){
-	left = &node;
+void Node<KeyType,ItemType>::setLeft(Node<KeyType,ItemType> * node){
+	left = node;
 }
 template<class KeyType, class ItemType>
-void Node<KeyType,ItemType>::setRight(Node<KeyType,ItemType> node){
-	right = &node;
+void Node<KeyType,ItemType>::setRight(Node<KeyType,ItemType> * node){
+	right = node;
 }
 
 
@@ -68,8 +68,6 @@ Dictionary<KeyType,ItemType>::Dictionary(Node<KeyType,ItemType> * node){
     head = node;
 }
 
-
-
 template<class KeyType, class ItemType>
 int Dictionary<KeyType, ItemType>::Size(){
 	return size;
@@ -81,76 +79,42 @@ bool Dictionary<KeyType, ItemType>::IsEmpty(){
 }
 
 template<class KeyType, class ItemType>
-int Dictionary<KeyType, ItemType>::Height(){
-	return Height_Helper(head);
-}
-/*
-template<class KeyType, class ItemType>
-int Dictionary<KeyType, ItemType>::Height_Helper(Node<KeyType,ItemType>* node){
-	if(node == NULL) return 0;
-	int result = 0;
-	if(node->getLeft() == NULL and node->getRight() == NULL){
-		return 1;
-	}else{
-		if(node->getLeft() == NULL){
-			return Height_Helper(node->getRight());
-		}else if(node->getRight() == NULL){
-			Height_Helper(node->getLeft());
-		}
-	}
-	return max(Height_Helper(node->getLeft()), Height_Helper(node->getRight()));
-}
-
-
-
-*/
-
-template<class KeyType, class ItemType>
 ItemType & Dictionary<KeyType, ItemType>::operator[](KeyType key){
-	Node<KeyType,ItemType> node = search(*head, key);
-	/*if(node == NULL){ 
-		Node<KeyType,ItemType> new_node(key);
-		node = new_node;
-		insert(head, node);
-	}*/
-	ItemType & result = node.getItem();	
-	return result;
+	Node<KeyType, ItemType> * node = search(head, key);
+	if (node == NULL){
+		cout << "test" << endl;
+		Node<KeyType, ItemType> new_node(key);
+		head = insert(head, new_node);
+		node = search(head, key);
+		//return new_node.getItem();
+	}
+	return node->getItem();
 }
 
 template<class KeyType, class ItemType>
-Node<KeyType,ItemType> & Dictionary<KeyType, ItemType>::search(Node<KeyType,ItemType> & curr, KeyType key){	
-	//if(curr == NULL) return NULL;	
-	KeyType curr_key = curr.getKey();
-
-	if(key == curr_key){			
-		return curr;
-	}else if(key < curr_key){		
-		return search(curr.getLeft(), key);		
-	}else{
-						
-		return search(curr.getRight(), key);		
-	}
+Node<KeyType,ItemType> * Dictionary<KeyType, ItemType>::search(Node<KeyType,ItemType> * curr, KeyType key){	
+	if(curr == NULL) return curr;
+	
+	KeyType curr_key = curr->getKey();
+	if(curr_key == key) return curr;
+	
+	if(key < curr_key) return search(curr->getLeft(), key);
+	return search(curr->getRight(), key);
 }
-/*
+
 template<class KeyType, class ItemType>
-void Dictionary<KeyType, ItemType>::insert(Node<KeyType,ItemType> & curr, Node<KeyType,ItemType> & node){
-	if(curr == NULL) curr = node;
-	if(node.getKey() <= curr.getKey()){
-		if(curr.getLeft() == NULL){
-			curr.setLeft(&node);
-		}else{
-			insert(&curr.getLeft(), node);
-		}
-	}else{
-		if(curr.getRight() == NULL){
- 			curr.setRight(&node);
-		}else{
-			insert(&curr.getRight(), node);
-		}
+Node<KeyType,ItemType> * Dictionary<KeyType, ItemType>::insert(Node<KeyType,ItemType> * curr, Node<KeyType,ItemType> node){
+	if(curr == NULL){
+		Node<KeyType, ItemType> * new_node = &node;
+		return new_node;
 	}
+	
+	KeyType curr_key = curr->getKey();
+	KeyType key = node.getKey();
+	if(key < curr_key) curr->setLeft(insert(curr->getLeft(), node));
+	else if(key > curr_key) curr->setRight(insert(curr->getRight(), node));
+	return curr;
 }
-
-*/
 
 //----------------Main Function Test---------------//
 
@@ -158,10 +122,12 @@ int main(){
     Node<string, int> node("potato",3);    
     Node<string, int> node2("apple",2);  
     Dictionary<string, int> container(&node);
-
-	container["quasi"] = 4;
-	//cout << container["quasi"] << endl;
-	//cout << container.head->getRight()->getKey() << endl;
-	//cout << container["quasi"] << endl;
-	//cout << container.Height() << endl;
+    
+    container["potato"] = 2;
+    container["potato"] += 2;
+    container["quasi"] = 3;
+    container["quasi"] = 4;
+    
+    cout << container["potato"] << endl;
+    cout << container["quasi"] << endl;
 }
