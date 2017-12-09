@@ -137,6 +137,9 @@ int main(){
 	//cout << container["potato"] << endl;	
 	//container["potato"] += 3;
 	//cout << container["potato"] << endl;
-	cout << container.head << endl;
-	container["a"] = 2;
+	container.head = container.insert(container.head, "a");
+	container.head->getItem() = 2;
+	cout << container.head->getItem() << endl;
+	cout << container.search(container.head, "a")->getItem() << endl;
+	//container["a"] = 2;
 }

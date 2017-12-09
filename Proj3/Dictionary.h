@@ -24,14 +24,15 @@ template<class KeyType, class ItemType>
 class Dictionary{    
     int size;
     int Height_Helper(Node<KeyType,ItemType>* node);
-    Node<KeyType,ItemType> * search(Node<KeyType,ItemType> * curr, KeyType key);
-    Node<KeyType,ItemType> * insert(Node<KeyType,ItemType> * curr, KeyType key); //recursive, node has to be placed below top
+    
   public:
 
     //Constructors
     Dictionary(); 
     Dictionary(Node<KeyType,ItemType> * node);
     Node<KeyType,ItemType> * head; //basically the tree
+    Node<KeyType,ItemType> * search(Node<KeyType,ItemType> * curr, KeyType key);
+    Node<KeyType,ItemType> * insert(Node<KeyType,ItemType> * curr, KeyType key); //recursive, node has to be placed below top
 
     bool IsEmpty(); //returns true if container is empty
     void Clear(); //removes all items and leaves container empty
