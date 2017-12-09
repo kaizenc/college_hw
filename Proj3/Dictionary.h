@@ -3,8 +3,8 @@
 
 template<class KeyType, class ItemType>
 class Node{
-    Node *left;
-    Node *right;
+    Node<KeyType,ItemType> *left;
+    Node<KeyType,ItemType> *right;
     KeyType key;
     ItemType item;
   public:
@@ -25,7 +25,7 @@ class Dictionary{
     int size;
     int Height_Helper(Node<KeyType,ItemType>* node);
     Node<KeyType,ItemType> * search(Node<KeyType,ItemType> * curr, KeyType key);
-    Node<KeyType,ItemType> * insert(Node<KeyType,ItemType> * curr, Node<KeyType,ItemType> key); //recursive, node has to be placed below top
+    Node<KeyType,ItemType> * insert(Node<KeyType,ItemType> * curr, KeyType key); //recursive, node has to be placed below top
   public:
 
     //Constructors
