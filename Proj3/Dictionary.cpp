@@ -84,7 +84,6 @@ ItemType & Dictionary<KeyType, ItemType>::operator[](KeyType key){
 		node = search(head, key);
 	}
 	ItemType & result = node->getItem();
-	delete node;
 	return result;
 }
 
@@ -99,7 +98,6 @@ Node<KeyType,ItemType> * Dictionary<KeyType, ItemType>::search(Node<KeyType,Item
 	}
 	
 	if(key < curr_key){	
-		cout << "went left" << endl;	
 		return search(curr->getLeft(), key);
 	}	
 	return search(curr->getRight(), key);
@@ -108,9 +106,8 @@ Node<KeyType,ItemType> * Dictionary<KeyType, ItemType>::search(Node<KeyType,Item
 template<class KeyType, class ItemType>
 Node<KeyType,ItemType> * Dictionary<KeyType, ItemType>::insert(Node<KeyType,ItemType> * curr, KeyType key){
 	if(curr == NULL){		
-		Node<KeyType, ItemType> new_node(key);		
-		Node<KeyType, ItemType> * node = &new_node;
-		return node;
+		Node<KeyType, ItemType> * new_node = new Node<KeyType, ItemType>(key);
+		return new_node;
 	}
 	
 	KeyType curr_key = curr->getKey();
@@ -131,12 +128,14 @@ int main(){
 	Node<string, int> node("potato",3);	
 	Node<string, int> node2("apple",2);  
 
-	//Dictionary<string, int> container(&node);
-	Dictionary<string, int> container;	
+	Dictionary<string, int> container(&node);
+	Dictionary<string, int> container2;	
 	
-	//cout << container["potato"] << endl;	
-	//container["potato"] += 3;
-	//cout << container["potato"] << endl;
-	cout << container.head << endl;
-	container["a"] = 2;
+	container["apple"] = 3;
+	container["apple"] += 1;
+	cout << container["apple"] << endl;
+	container2["mental"] = 3;
+	container2["onion"] = 6;
+	container2["banana"] = 7;
+	cout << container2["banana"] << endl;
 }
