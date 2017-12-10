@@ -31,13 +31,15 @@ class Dictionary{
     //Constructors
     Dictionary(); 
     Dictionary(Node<KeyType,ItemType> * node);
+    //REQUIRES DESTRUCTOR
     
 
     bool IsEmpty(); //returns true if container is empty
-    void Clear(); //removes all items and leaves container empty
     int Size(); //returns number of items
-    int Height(); //returns height of BST
     int Count(KeyType key); //returns 1 if exists, 0 if otherwise, aka search
+    
+    int Height(); //returns height of BST
+    void Clear(); //removes all items and leaves container empty
     
     ItemType & operator[](KeyType key); //returns reference to item with key - should also create if DNE
     

@@ -76,6 +76,10 @@ template<class KeyType, class ItemType>
 bool Dictionary<KeyType, ItemType>::IsEmpty(){
 	return head == NULL;
 }
+template<class KeyType, class ItemType>
+int Dictionary<KeyType, ItemType>::Count(KeyType key){
+	return (search(head, key)==NULL)?0:1;
+}
 
 
 template<class KeyType, class ItemType>
@@ -153,4 +157,6 @@ int main(){
 	
 	cout << container["apple"] << endl;
 	cout << container.Height() << endl;
+	cout << container.Count("carrot") << endl;
+	cout << container.Count("karrot") << endl;
 }
