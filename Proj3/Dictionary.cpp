@@ -23,6 +23,7 @@ Node<KeyType,ItemType>::Node(KeyType new_key, ItemType new_item){
 	item = new_item;
 }
 
+
 template<class KeyType, class ItemType>
 ItemType & Node<KeyType,ItemType>::getItem(){
 	return item;
@@ -66,27 +67,43 @@ Dictionary<KeyType,ItemType>::Dictionary(Node<KeyType,ItemType> * node){
 	head = node;
 }
 
+
 template<class KeyType, class ItemType>
 int Dictionary<KeyType, ItemType>::Size(){
 	return size;
 }
-
 template<class KeyType, class ItemType>
 bool Dictionary<KeyType, ItemType>::IsEmpty(){
 	return head == NULL;
 }
+
+
+template<class KeyType, class ItemType>
+int Dictionary<KeyType, ItemType>::Height(){
+	return Height_Helper(head)-1;
+}
+template<class KeyType, class ItemType>
+int Dictionary<KeyType, ItemType>::Height_Helper(Node<KeyType,ItemType>* node){
+	if(node == NULL) return 0;
+	int result = 1;
+	if(!(node->getLeft() == NULL and 	node->getRight() == NULL)){
+		result+= max(Height_Helper(node->getLeft()), Height_Helper(node->getRight()));
+	}
+	return result;
+}
+
 
 template<class KeyType, class ItemType>
 ItemType & Dictionary<KeyType, ItemType>::operator[](KeyType key){
 	Node<KeyType, ItemType> * node = search(head, key);
 	if (node == NULL){			
 		head = insert(head, key);
+		size++;
 		node = search(head, key);
 	}
 	ItemType & result = node->getItem();
 	return result;
 }
-
 template<class KeyType, class ItemType>
 Node<KeyType,ItemType> * Dictionary<KeyType, ItemType>::search(Node<KeyType,ItemType> * curr, KeyType key){		
 	if(curr == NULL){		
@@ -102,7 +119,6 @@ Node<KeyType,ItemType> * Dictionary<KeyType, ItemType>::search(Node<KeyType,Item
 	}	
 	return search(curr->getRight(), key);
 }
-
 template<class KeyType, class ItemType>
 Node<KeyType,ItemType> * Dictionary<KeyType, ItemType>::insert(Node<KeyType,ItemType> * curr, KeyType key){
 	if(curr == NULL){		
@@ -111,7 +127,6 @@ Node<KeyType,ItemType> * Dictionary<KeyType, ItemType>::insert(Node<KeyType,Item
 	}
 	
 	KeyType curr_key = curr->getKey();
-	
 	if(key < curr_key){
 		Node<KeyType, ItemType> * node = insert(curr->getLeft(), key);	
 		curr->setLeft(node);
@@ -131,11 +146,11 @@ int main(){
 	Dictionary<string, int> container(&node);
 	Dictionary<string, int> container2;	
 	
+	container["banana"] = 4;
 	container["apple"] = 3;
 	container["apple"] += 1;
+	container["carrot"] = 5;
+	
 	cout << container["apple"] << endl;
-	container2["mental"] = 3;
-	container2["onion"] = 6;
-	container2["banana"] = 7;
-	cout << container2["banana"] << endl;
+	cout << container.Height() << endl;
 }
