@@ -23,8 +23,10 @@ class Node{
 template<class KeyType, class ItemType>
 class Dictionary{    
     int size;
+    Node<KeyType,ItemType> *head; //basically the tree
+    
     int Height_Helper(Node<KeyType,ItemType>* node);
-    Node<KeyType,ItemType> * head; //basically the tree
+    void Clear_Helper(Node<KeyType,ItemType>* node);
     Node<KeyType,ItemType> * search(Node<KeyType,ItemType> * curr, KeyType key);
     Node<KeyType,ItemType> * insert(Node<KeyType,ItemType> * curr, KeyType key); //recursive, node has to be placed below top
   public:

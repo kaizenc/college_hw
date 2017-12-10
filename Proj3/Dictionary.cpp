@@ -96,6 +96,26 @@ int Dictionary<KeyType, ItemType>::Height_Helper(Node<KeyType,ItemType>* node){
 	return result;
 }
 
+template<class KeyType, class ItemType>
+void Dictionary<KeyType, ItemType>::Clear(){
+	if(head->getLeft() != NULL) Clear_Helper(head->getLeft());
+	if(head->getRight() != NULL) Clear_Helper(head->getRight());
+	//delete head;
+	head = NULL;
+}
+template<class KeyType, class ItemType>
+void Dictionary<KeyType, ItemType>::Clear_Helper(Node<KeyType,ItemType>* node){
+	if(node->getLeft() == NULL and node->getRight() == NULL){
+		delete node;
+		node = NULL;
+	}else{
+		if(node->getLeft() != NULL) Clear_Helper(node->getLeft());
+		if(node->getRight() != NULL) Clear_Helper(node->getRight());
+		delete node;
+		node = NULL;
+	}
+}
+
 
 template<class KeyType, class ItemType>
 ItemType & Dictionary<KeyType, ItemType>::operator[](KeyType key){
@@ -159,4 +179,5 @@ int main(){
 	cout << container.Height() << endl;
 	cout << container.Count("carrot") << endl;
 	cout << container.Count("karrot") << endl;
+	container.Clear();
 }
