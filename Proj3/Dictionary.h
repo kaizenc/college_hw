@@ -48,6 +48,6 @@ class Dictionary{
     ItemType & operator[](KeyType key); //DONE
     
     void Remove(KeyType key); //DONE
-    void Balance();
+    void Balance(); //DONE
 };
 #endif
