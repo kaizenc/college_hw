@@ -127,17 +127,12 @@ ItemType & Dictionary<KeyType, ItemType>::operator[](KeyType key){
 }
 template<class KeyType, class ItemType>
 Node<KeyType,ItemType> * Dictionary<KeyType, ItemType>::search(Node<KeyType,ItemType> * curr, KeyType key){		
-	if(curr == NULL){		
-		return curr;
-	}
+	if(curr == NULL) return curr;
+
 	KeyType curr_key = curr->getKey();	
-	if(curr_key == key){		
-		return curr;
-	}
+	if(curr_key == key) return curr;
 	
-	if(key < curr_key){	
-		return search(curr->getLeft(), key);
-	}	
+	if(key < curr_key) return search(curr->getLeft(), key);	
 	return search(curr->getRight(), key);
 }
 template<class KeyType, class ItemType>
@@ -163,7 +158,8 @@ template<class KeyType, class ItemType>
 void Dictionary<KeyType, ItemType>::Balance(){
 	/*
 	Node<KeyType, ItemType>* arr = new Node<KeyType, ItemType>[size];
-	void Fill_Array(arr); // pre-order transversal, will also nullify left/right
+	int * counter = new int(0);
+	void Fill_Array(arr, counter); // pre-order transversal, will also nullify left/right
 	void BalanceByArray(head, arr, 0, size-1); // will recursively set lefts and rights
 	
 	Iterate through each node, getting them to null their left&right
@@ -173,6 +169,8 @@ void Dictionary<KeyType, ItemType>::Balance(){
 	
 	delete [] arr;
 	arr = NULL;
+	delete counter;
+	counter = NULL;
 	*/
 }
 template<class KeyType, class ItemType>
@@ -188,8 +186,57 @@ void Dictionary<KeyType, ItemType>::BalanceByArray(Node<KeyType, ItemType> * cur
 	*/
 }
 template<class KeyType, class ItemType>
-void Dictionary<KeyType, ItemType>::Fill_Array(Node<KeyType, ItemType>* arr){
+void Dictionary<KeyType, ItemType>::Fill_Array(Node<KeyType, ItemType>* arr, int* counter){
 	//
+}
+
+template<class KeyType, class ItemType>
+void Dictionary<KeyType, ItemType>::Remove(KeyType key){
+	Node<KeyType, ItemType> * child = search(head, key);
+	if (child == NULL) return;
+	Node<KeyType, ItemType> * parent = searchParent(head, key);
+	if (parent == NULL){
+		delete head;
+		head = NULL;
+		return;
+	}
+	if(parent->getRight() == child){//if the child is on the right
+		if(child->getRight() != NULL){//if the child's right exists
+			parent->setRight(child->getRight());//set the parents right to the child's right
+			getLeftmost(child->getRight())->setLeft(child->getLeft());//set the child's left to the new parent's right's left
+		}else{//the child's right is null
+			parent->setRight(child->getLeft());//replace child with its left
+		}
+	}else{//if the child is on the left, same process, but every parent->setRight is now left
+		if(child->getRight() != NULL){
+			parent->setLeft(child->getRight());
+			getLeftmost(child->getRight())->setLeft(child->getLeft());
+		}else{
+			parent->setLeft(child->getLeft());
+		}
+	}
+	delete child;
+	child = NULL;
+}
+template<class KeyType, class ItemType>
+Node<KeyType, ItemType> * Dictionary<KeyType, ItemType>::searchParent(Node<KeyType, ItemType> * curr, KeyType key){
+	if(curr == NULL or curr->getKey() == key) return NULL;
+	if(curr->getRight() != NULL and curr->getRight()->getKey() == key){
+		return curr;
+	}
+	if(curr->getLeft() != NULL and curr->getLeft()->getKey() == key){
+		return curr;
+	}
+	
+	KeyType curr_key = curr->getKey();	
+	
+	if(key < curr_key) return searchParent(curr->getLeft(), key);	
+	return searchParent(curr->getRight(), key);
+}
+template<class KeyType, class ItemType>
+Node<KeyType, ItemType> * Dictionary<KeyType, ItemType>::getLeftmost(Node<KeyType, ItemType> * curr){
+	if(curr->getLeft() == NULL) return curr;
+	return getLeftmost(curr->getLeft());
 }
 
 //----------------Main Function Test---------------//
@@ -204,9 +251,7 @@ int main(){
 	
 	cout << container["apple"] << endl;
 	cout << container.Height() << endl;
-	cout << container.Count("carrot") << endl;
-	cout << container.Count("karrot") << endl;
-	container.Clear();
-	container["potato"] = 90;
-	cout << container.Height() << endl;
+	container.Remove("apple");
+	
+	cout << container.Count("apple") << endl;
 }

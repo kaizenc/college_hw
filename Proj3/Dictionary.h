@@ -29,7 +29,9 @@ class Dictionary{
     void Clear_Helper(Node<KeyType,ItemType>* node);
     Node<KeyType,ItemType> * search(Node<KeyType,ItemType> * curr, KeyType key);
     Node<KeyType,ItemType> * insert(Node<KeyType,ItemType> * curr, KeyType key); //recursive, node has to be placed below top
-    void Fill_Array(Node<KeyType, ItemType>* arr);
+    Node<KeyType, ItemType> * searchParent(Node<KeyType, ItemType> * curr, KeyType key);
+    Node<KeyType, ItemType> * getLeftmost(Node<KeyType, ItemType> * curr);
+    void Fill_Array(Node<KeyType, ItemType>* arr, int* counter);
     void BalanceByArray(Node<KeyType, ItemType> * curr, Node<KeyType, ItemType> * arr, int small, int large);
   public:
     //Constructors
