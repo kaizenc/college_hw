@@ -62,6 +62,10 @@ Dictionary<KeyType,ItemType>::Dictionary(){
 	size = 0;
 	head = NULL;
 }
+template<class KeyType, class ItemType>
+Dictionary<KeyType,ItemType>::~Dictionary(){
+	Clear();
+}
 
 
 template<class KeyType, class ItemType>
@@ -156,39 +160,49 @@ Node<KeyType,ItemType> * Dictionary<KeyType, ItemType>::insert(Node<KeyType,Item
 
 template<class KeyType, class ItemType>
 void Dictionary<KeyType, ItemType>::Balance(){
-	/*
-	Node<KeyType, ItemType>* arr = new Node<KeyType, ItemType>[size];
+	Node<KeyType, ItemType> ** arr = new Node<KeyType, ItemType>*[size];
 	int * counter = new int(0);
-	void Fill_Array(arr, counter); // pre-order transversal, will also nullify left/right
-	void BalanceByArray(head, arr, 0, size-1); // will recursively set lefts and rights
-	
-	Iterate through each node, getting them to null their left&right
-	Throw into an array
-	Get middle term, make it root
-	left child is middle of left array, etc
+	Fill_Array(head, arr, *counter); // pre-order transversal, will also nullify left/right
+	for(int i = 0;i<size;i++){
+		cout << arr[i]->getKey() << ", ";
+	}
+	cout << endl;
+	head = BalanceByArray(head, arr, 0, size-1); // will recursively set lefts and rights
 	
 	delete [] arr;
 	arr = NULL;
 	delete counter;
 	counter = NULL;
-	*/
 }
 template<class KeyType, class ItemType>
-void Dictionary<KeyType, ItemType>::BalanceByArray(Node<KeyType, ItemType> * curr, Node<KeyType, ItemType> * arr, int small, int large){
-	/*
-	If (small > large) return;
+void Dictionary<KeyType, ItemType>::Fill_Array(Node<KeyType, ItemType>* curr, Node<KeyType, ItemType>** arr, int &counter){
+	if (curr == NULL) return;
+	if (curr->getRight() == NULL and curr->getLeft() == NULL){
+		arr[counter] = curr;		
+		(counter)++;
+		return;
+	}
+	Fill_Array(curr->getLeft(), arr, counter);
+	arr[counter] = curr;
+	(counter)++;
+	Fill_Array(curr->getRight(), arr, counter);
+	curr->setLeft(NULL);
+	curr->setRight(NULL);
+}
+template<class KeyType, class ItemType>
+Node<KeyType, ItemType> * Dictionary<KeyType, ItemType>::BalanceByArray(Node<KeyType, ItemType> * curr, Node<KeyType, ItemType>** arr, int small, int large){
 	
-	curr = items[(small+large)/2];
-	curr->setLeft(items[(small+large)/4]);
-	BalanceByArray(curr->getLeft(), arr, small, (small+large)/2);
-	curr->setRight(items[3*(small+large)/4]);
-	BalanceByArray(curr->getRight(), arr, (small+large)/2, large);
-	*/
+	if (small > large) return NULL;
+	int mid = (small+large)/2;
+	
+	Node<KeyType, ItemType> * node = arr[mid];
+
+	node->setLeft(BalanceByArray(node->getLeft(), arr, small, mid-1));
+	node->setRight(BalanceByArray(node->getRight(), arr, mid+1, large));
+
+	return node;
 }
-template<class KeyType, class ItemType>
-void Dictionary<KeyType, ItemType>::Fill_Array(Node<KeyType, ItemType>* arr, int* counter){
-	//
-}
+
 
 template<class KeyType, class ItemType>
 void Dictionary<KeyType, ItemType>::Remove(KeyType key){
@@ -217,6 +231,7 @@ void Dictionary<KeyType, ItemType>::Remove(KeyType key){
 	}
 	delete child;
 	child = NULL;
+	size--;
 }
 template<class KeyType, class ItemType>
 Node<KeyType, ItemType> * Dictionary<KeyType, ItemType>::searchParent(Node<KeyType, ItemType> * curr, KeyType key){
@@ -244,14 +259,21 @@ Node<KeyType, ItemType> * Dictionary<KeyType, ItemType>::getLeftmost(Node<KeyTyp
 int main(){	
 	Dictionary<string, int> container;
 	
+
+	
+	container["elephant"] = 7;
+	container["durian"] = 6;
+	container["carrot"] = 5;
 	container["banana"] = 4;
 	container["apple"] = 3;
-	container["apple"] += 1;
-	container["carrot"] = 5;
 	
-	cout << container["apple"] << endl;
-	cout << container.Height() << endl;
-	container.Remove("apple");
 	
-	cout << container.Count("apple") << endl;
+	
+	
+	cout << "Height: " << container.Height() << endl;
+
+	container.Balance();
+
+	cout << "Height: " << container.Height() << endl;
+	
 }

@@ -17,7 +17,7 @@ class Node{
     Node<KeyType,ItemType> * getLeft();
     Node<KeyType,ItemType> * getRight();
     void setLeft(Node<KeyType,ItemType> * node);
-    void setRight(Node<KeyType,ItemType> * node);
+    void setRight(Node<KeyType,ItemType> * node);    
 };
 
 template<class KeyType, class ItemType>
@@ -28,32 +28,26 @@ class Dictionary{
     int Height_Helper(Node<KeyType,ItemType>* node);
     void Clear_Helper(Node<KeyType,ItemType>* node);
     Node<KeyType,ItemType> * search(Node<KeyType,ItemType> * curr, KeyType key);
-    Node<KeyType,ItemType> * insert(Node<KeyType,ItemType> * curr, KeyType key); //recursive, node has to be placed below top
+    Node<KeyType,ItemType> * insert(Node<KeyType,ItemType> * curr, KeyType key);
     Node<KeyType, ItemType> * searchParent(Node<KeyType, ItemType> * curr, KeyType key);
     Node<KeyType, ItemType> * getLeftmost(Node<KeyType, ItemType> * curr);
-    void Fill_Array(Node<KeyType, ItemType>* arr, int* counter);
-    void BalanceByArray(Node<KeyType, ItemType> * curr, Node<KeyType, ItemType> * arr, int small, int large);
-  public:
-    //Constructors
-    Dictionary();
-    //REQUIRES DESTRUCTOR
 
-    bool IsEmpty(); //returns true if container is empty
-    int Size(); //returns number of items
-    int Count(KeyType key); //returns 1 if exists, 0 if otherwise, aka search
+    void Fill_Array(Node<KeyType, ItemType>* curr, Node<KeyType, ItemType>** arr, int & counter);
+    Node<KeyType, ItemType> *  BalanceByArray(Node<KeyType, ItemType> * curr, Node<KeyType, ItemType>** arr, int small, int large);
+  public:
+    //Structors
+    Dictionary();
+    ~Dictionary();
+
+    bool IsEmpty(); //DONE
+    int Size(); //DONE
+    int Count(KeyType key); //DONE
+    int Height(); //DONE
+    void Clear(); //DONE
     
-    int Height(); //returns height of BST
-    void Clear(); //removes all items and leaves container empty
+    ItemType & operator[](KeyType key); //DONE
     
-    ItemType & operator[](KeyType key); //returns reference to item with key - should also create if DNE
-    
-    void Remove(KeyType key);
+    void Remove(KeyType key); //DONE
     void Balance();
 };
-/*
-IsEmpty is true if Node is a null pointer
-Clear recursively goes through the BST and deletes the pointers (go to the bottom, when bottom is done, do top)
-Size should just keep track of size
-Count is just a search, as is operator[]
-*/
 #endif
