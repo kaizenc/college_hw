@@ -3,7 +3,9 @@
 #include "Dictionary.h"
 using namespace std;
 
+///////////////////////////////////////////////////////
 //---------------Node Class Definitions--------------//
+///////////////////////////////////////////////////////
 template<class KeyType, class ItemType>
 Node<KeyType,ItemType>::Node(){
 	left = NULL;
@@ -52,19 +54,13 @@ void Node<KeyType,ItemType>::setRight(Node<KeyType,ItemType> * node){
 
 
 
-
-
-
+///////////////////////////////////////////////////////
 //------------Dictionary Class Definitions-----------//
+///////////////////////////////////////////////////////
 template<class KeyType, class ItemType>
 Dictionary<KeyType,ItemType>::Dictionary(){	
 	size = 0;
 	head = NULL;
-}
-template<class KeyType, class ItemType>
-Dictionary<KeyType,ItemType>::Dictionary(Node<KeyType,ItemType> * node){	
-	size = 1;
-	head = node;
 }
 
 
@@ -84,7 +80,7 @@ int Dictionary<KeyType, ItemType>::Count(KeyType key){
 
 template<class KeyType, class ItemType>
 int Dictionary<KeyType, ItemType>::Height(){
-	return Height_Helper(head)-1;
+	return Height_Helper(head);
 }
 template<class KeyType, class ItemType>
 int Dictionary<KeyType, ItemType>::Height_Helper(Node<KeyType,ItemType>* node){
@@ -100,8 +96,9 @@ template<class KeyType, class ItemType>
 void Dictionary<KeyType, ItemType>::Clear(){
 	if(head->getLeft() != NULL) Clear_Helper(head->getLeft());
 	if(head->getRight() != NULL) Clear_Helper(head->getRight());
-	//delete head;
+	delete head;
 	head = NULL;
+	size = 0;
 }
 template<class KeyType, class ItemType>
 void Dictionary<KeyType, ItemType>::Clear_Helper(Node<KeyType,ItemType>* node){
@@ -161,14 +158,44 @@ Node<KeyType,ItemType> * Dictionary<KeyType, ItemType>::insert(Node<KeyType,Item
 	return curr;
 }
 
+
+template<class KeyType, class ItemType>
+void Dictionary<KeyType, ItemType>::Balance(){
+	/*
+	Node<KeyType, ItemType>* arr = new Node<KeyType, ItemType>[size];
+	void Fill_Array(arr); // pre-order transversal, will also nullify left/right
+	void BalanceByArray(head, arr, 0, size-1); // will recursively set lefts and rights
+	
+	Iterate through each node, getting them to null their left&right
+	Throw into an array
+	Get middle term, make it root
+	left child is middle of left array, etc
+	
+	delete [] arr;
+	arr = NULL;
+	*/
+}
+template<class KeyType, class ItemType>
+void Dictionary<KeyType, ItemType>::BalanceByArray(Node<KeyType, ItemType> * curr, Node<KeyType, ItemType> * arr, int small, int large){
+	/*
+	If (small > large) return;
+	
+	curr = items[(small+large)/2];
+	curr->setLeft(items[(small+large)/4]);
+	BalanceByArray(curr->getLeft(), arr, small, (small+large)/2);
+	curr->setRight(items[3*(small+large)/4]);
+	BalanceByArray(curr->getRight(), arr, (small+large)/2, large);
+	*/
+}
+template<class KeyType, class ItemType>
+void Dictionary<KeyType, ItemType>::Fill_Array(Node<KeyType, ItemType>* arr){
+	//
+}
+
 //----------------Main Function Test---------------//
 
 int main(){	
-	Node<string, int> node("potato",3);	
-	Node<string, int> node2("apple",2);  
-
-	Dictionary<string, int> container(&node);
-	Dictionary<string, int> container2;	
+	Dictionary<string, int> container;
 	
 	container["banana"] = 4;
 	container["apple"] = 3;
@@ -180,4 +207,6 @@ int main(){
 	cout << container.Count("carrot") << endl;
 	cout << container.Count("karrot") << endl;
 	container.Clear();
+	container["potato"] = 90;
+	cout << container.Height() << endl;
 }

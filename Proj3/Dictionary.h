@@ -29,12 +29,12 @@ class Dictionary{
     void Clear_Helper(Node<KeyType,ItemType>* node);
     Node<KeyType,ItemType> * search(Node<KeyType,ItemType> * curr, KeyType key);
     Node<KeyType,ItemType> * insert(Node<KeyType,ItemType> * curr, KeyType key); //recursive, node has to be placed below top
+    void Fill_Array(Node<KeyType, ItemType>* arr);
+    void BalanceByArray(Node<KeyType, ItemType> * curr, Node<KeyType, ItemType> * arr, int small, int large);
   public:
     //Constructors
-    Dictionary(); 
-    Dictionary(Node<KeyType,ItemType> * node);
+    Dictionary();
     //REQUIRES DESTRUCTOR
-    
 
     bool IsEmpty(); //returns true if container is empty
     int Size(); //returns number of items
