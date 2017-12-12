@@ -43,7 +43,7 @@ class Dictionary{
     int Size(); //DONE
     int Count(KeyType key); //DONE
     int Height(); //DONE
-    void Clear(); //DONE
+    void Clear(); //?
     
     ItemType & operator[](KeyType key); //DONE
     

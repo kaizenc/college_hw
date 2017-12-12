@@ -1,4 +1,5 @@
 #include <iostream>
+#include<string>
 #include <algorithm>
 #include "Dictionary.h"
 using namespace std;
@@ -43,6 +44,7 @@ Node<KeyType,ItemType> * Node<KeyType,ItemType>::getRight(){
 	return right;
 }
 
+
 template<class KeyType, class ItemType>
 void Node<KeyType,ItemType>::setLeft(Node<KeyType,ItemType> * node){
 	left = node;	
@@ -84,7 +86,7 @@ int Dictionary<KeyType, ItemType>::Count(KeyType key){
 
 template<class KeyType, class ItemType>
 int Dictionary<KeyType, ItemType>::Height(){
-	return Height_Helper(head);
+	return (Height_Helper(head)==0)?0:Height_Helper(head)-1;
 }
 template<class KeyType, class ItemType>
 int Dictionary<KeyType, ItemType>::Height_Helper(Node<KeyType,ItemType>* node){
@@ -97,9 +99,11 @@ int Dictionary<KeyType, ItemType>::Height_Helper(Node<KeyType,ItemType>* node){
 	return result;
 }
 
+
 template<class KeyType, class ItemType>
 void Dictionary<KeyType, ItemType>::Clear(){
 	//recursively delete
+	if(head == NULL) return;
 	if(head->getLeft() != NULL) Clear_Helper(head->getLeft());
 	if(head->getRight() != NULL) Clear_Helper(head->getRight());
 	delete head;
@@ -108,15 +112,10 @@ void Dictionary<KeyType, ItemType>::Clear(){
 }
 template<class KeyType, class ItemType>
 void Dictionary<KeyType, ItemType>::Clear_Helper(Node<KeyType,ItemType>* node){
-	if(node->getLeft() == NULL and node->getRight() == NULL){
-		delete node;
-		node = NULL;
-	}else{
 		if(node->getLeft() != NULL) Clear_Helper(node->getLeft()); //delete left and right before deleting self
 		if(node->getRight() != NULL) Clear_Helper(node->getRight());
 		delete node;
 		node = NULL;
-	}
 }
 
 
@@ -254,22 +253,29 @@ Node<KeyType, ItemType> * Dictionary<KeyType, ItemType>::getLeftmost(Node<KeyTyp
 }
 
 //----------------Main Function Test---------------//
-
+/*
 int main(){	
-	Dictionary<int, int> container;
+	Dictionary<string, int> container;
+	cout << container.IsEmpty() << endl;
 	
-
+	container["apple"] = 1;
+	container["banana"] = 2;
+	container["cantaloupe"] = 3;
+	container["durian"] = 4;
+	container["elderberry"] = 5;
 	
-	container[1] = 7;
-	container[2] = 6;
-	container[3] = 5;
-	container[4] = 4;
-	container[5] = 3;
+	//cout << "Height: " << container.Height() << endl;
+	//container.Balance();
+	//cout << "Height: " << container.Height() << endl;
+	cout << container.Height() << endl;
+	container.Remove("durian");
+	cout << container.IsEmpty() << endl;
+	container.Clear();
+	//container["apple"] = 70;
+	cout << container.Size() << endl;
+	//cout << container["apple"] << endl;
 	
-	cout << "Height: " << container.Height() << endl;
-
-	container.Balance();
-
-	cout << "Height: " << container.Height() << endl;
+	//cout << "Height: " << container.Height() << endl;
 	
 }
+*/
