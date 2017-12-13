@@ -50,4 +50,5 @@ class Dictionary{
     void Remove(KeyType key); //DONE
     void Balance(); //DONE
 };
+#include "Dictionary.cpp"
 #endif

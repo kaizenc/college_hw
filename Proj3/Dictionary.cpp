@@ -1,3 +1,6 @@
+#ifndef DICTIONARY_CPP
+#define DICTIONARY_CPP
+
 #include <iostream>
 #include<string>
 #include <algorithm>
@@ -251,31 +254,4 @@ Node<KeyType, ItemType> * Dictionary<KeyType, ItemType>::getLeftmost(Node<KeyTyp
 	if(curr->getLeft() == NULL) return curr;
 	return getLeftmost(curr->getLeft());
 }
-
-//----------------Main Function Test---------------//
-/*
-int main(){	
-	Dictionary<string, int> container;
-	cout << container.IsEmpty() << endl;
-	
-	container["apple"] = 1;
-	container["banana"] = 2;
-	container["cantaloupe"] = 3;
-	container["durian"] = 4;
-	container["elderberry"] = 5;
-	
-	//cout << "Height: " << container.Height() << endl;
-	//container.Balance();
-	//cout << "Height: " << container.Height() << endl;
-	cout << container.Height() << endl;
-	container.Remove("durian");
-	cout << container.IsEmpty() << endl;
-	container.Clear();
-	//container["apple"] = 70;
-	cout << container.Size() << endl;
-	//cout << container["apple"] << endl;
-	
-	//cout << "Height: " << container.Height() << endl;
-	
-}
-*/
+#endif
