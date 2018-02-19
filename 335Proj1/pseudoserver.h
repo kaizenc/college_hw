@@ -1,3 +1,7 @@
+class Queue{
+	
+}
+
 class PseudoServer{
 	public:
 		bool read(istream & is);

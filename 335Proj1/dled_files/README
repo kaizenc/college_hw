@@ -1,0 +1,11 @@
+This directory contains files that you will need for project1.
+The Makefile is  what you will use to build your program. To rebuild
+after any changes, just type "make". Please read the Makefile for
+more instructions.
+
+The pdf is a data dictionary, i.e., a file that explains what each
+column is - its type, its name, and its meaning.
+
+The two csv files are the full dataset, with over 683,000 tree records, and a 99-line subset of it for testing.
+
+The bitcoin.o and bitcoin.h files are for using in your project.
