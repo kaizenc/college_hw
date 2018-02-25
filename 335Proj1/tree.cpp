@@ -5,7 +5,14 @@
 using namespace std;
 
 Tree::Tree(const string & treedata){
-	//
+	/*
+	vector<string> data;
+	std::stringstream ss(str);
+    std::string token;
+    while (getline(ss, token, delim)) {
+        data.push_back(token);
+    }
+	*/
 }
 ostream& operator<< (ostream & os, const Tree & t){
 	os << t.write(", ") << "\n";
