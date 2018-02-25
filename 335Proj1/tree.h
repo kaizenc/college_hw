@@ -1,3 +1,11 @@
+#ifndef __TREE_H__
+#define __TREE_H__
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+
 class Tree{
 	private:
 		string spc_common;
@@ -13,6 +21,8 @@ class Tree{
 		
 	public:
 		Tree(const string & treedata); 
-		ostream& operator<< (ostream & os);
-		string write();
-}
+		friend ostream& operator<< (ostream & os, const Tree & t);
+		string write(string delimiter="	") const;
+};
+
+#endif /* __TREE_H__ */

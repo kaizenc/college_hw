@@ -9,3 +9,22 @@ column is - its type, its name, and its meaning.
 The two csv files are the full dataset, with over 683,000 tree records, and a 99-line subset of it for testing.
 
 The bitcoin.o and bitcoin.h files are for using in your project.
+
+
+MORE STUFF FROM YOURS TRULY
+- Program invoked with 3 command line arguments: a csv file for reading, an output file for writing, and a random seed
+- If these don't work, write a message to the error stream 
+- The output file doesn't have to exist
+
+IF BITCOIN IS 0:
+	- Pseudoserver sends a line to a Tree *from its queue*, which makes an object. Main will write it to the output file
+IF BITCOIN IS 1:
+	- Pseudoserver will read the next line and store it *in its queue*
+
+We also need queue statistics:
+	seed: 
+	average queue size:
+	maximum queue size:
+	empty queue count: 
+	queue size on EOF:
+
