@@ -5,14 +5,28 @@
 using namespace std;
 
 Tree::Tree(const string & treedata){
-	/*
 	vector<string> data;
-	std::stringstream ss(str);
-    std::string token;
-    while (getline(ss, token, delim)) {
-        data.push_back(token);
-    }
-	*/
+
+	string word = ""; 
+  for(int i = 0; i<treedata.length(); i++){
+  	if(treedata[i] == ','){
+			i++;
+			data.push_back(word);
+			word = "";
+			continue;
+  	}
+		word+=treedata[i];
+  }
+  spc_common = data[9]; 
+	//int tree_id; //0
+	//int tree_dbh; //3
+	status = data[6];
+	health = data[7];
+	address = data[24];
+	boroname = data[29];
+	//int zipcode; //25
+	//double latitude; //37
+	//double longitude; //3
 }
 ostream& operator<< (ostream & os, const Tree & t){
 	os << t.write(", ") << "\n";
@@ -21,7 +35,7 @@ ostream& operator<< (ostream & os, const Tree & t){
 string Tree::write(string delimiter) const{
 	string result = "";
 	string temp = "";
-	//ARE YOU READY FOR THIS **incredible** CODE WRITING SKILLS BOIZ
+	
 	temp = "spc_common: " + spc_common + delimiter;
 	result += temp;
 	temp = "tree_id: " + tree_id + delimiter;

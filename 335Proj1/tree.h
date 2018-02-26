@@ -8,16 +8,16 @@ using namespace std;
 
 class Tree{
 	private:
-		string spc_common;
-		int tree_id;
-		int tree_dbh;
-		string status;
-		string health;
-		string address;
-		string boroname;
-		int zipcode;
-		double latitude;
-		double longitude;
+		string spc_common; //9
+		int tree_id; //0
+		int tree_dbh; //3
+		string status; //6
+		string health; //7
+		string address; //24
+		string boroname; //29
+		int zipcode; //25
+		double latitude; //37
+		double longitude; //38
 		
 	public:
 		Tree(const string & treedata); 

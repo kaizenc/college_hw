@@ -19,15 +19,23 @@ int Queue::get_size(){
 
 
 bool PseudoServer::read(istream & is){
-	return true;
+	string temp = "";
+	getline(is, temp);
+	if(temp != ""){
+		queue.push(temp);
+		return true;
+	}
+	return false;
 	//
 }
 
 bool PseudoServer::extract(string & s){
-	return false;
-	//
+	if(queue.get_size() == 0){
+		return false;
+	}
+	s = queue.pop();
+	return true;
 }
 int PseudoServer::queuesize(){
-	return 1;
-	//
+	return queue.get_size();
 }
