@@ -10,13 +10,14 @@ Tree::Tree(const string & treedata){
 	string word = ""; 
 	for(int i = 0; i<treedata.length(); i++){
 		if(treedata[i] == ','){
-			i++;
 			data.push_back(word);
 			word = "";
 			continue;
 		}
 		word+=treedata[i];
 	}
+	data.push_back(word);
+
 	spc_common = data[9]; 
 	tree_id = stoi(data[0]); //0
 	tree_dbh = stoi(data[3]); //3
@@ -56,4 +57,6 @@ string Tree::write(string delimiter) const{
 	result += temp;
 	temp = "longitude: " + 3 + delimiter;//FIX THIS
 	result += temp;
+
+	return result;
 }

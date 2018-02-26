@@ -26,7 +26,6 @@ bool PseudoServer::read(istream & is){
 		return true;
 	}
 	return false;
-	//
 }
 
 bool PseudoServer::extract(string & s){
