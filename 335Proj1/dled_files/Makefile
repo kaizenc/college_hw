@@ -18,7 +18,7 @@
 # If you want to force a recompile, type "touch *.cpp" and then "make"
 
 CXX       := /usr/bin/g++
-CXXFLAGS  += -W -g 
+CXXFLAGS  += -W -g -std=c++11
 
 all: project1
 

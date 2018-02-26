@@ -25,7 +25,9 @@ int main(int argc, char *argv[]){
 	int eof_q_size = 0;
 
 	Bitcoin coin = Bitcoin(seed);
-	Pseudoserver server;
+	PseudoServer server;
+	Tree new_tree("1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1");
+	
 	if(coin() == 0){
 		string line = "";
 		if(server.extract(line)){
@@ -35,4 +37,5 @@ int main(int argc, char *argv[]){
 	}else{//coin is 1
 		//read server
 	}
+	
 }

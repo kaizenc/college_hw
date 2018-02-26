@@ -19,6 +19,7 @@
 
 CXX       := /usr/bin/g++
 CXXFLAGS  += -W -g 
+CXX_FLAGS += -std=c++11
 
 all: project1
 

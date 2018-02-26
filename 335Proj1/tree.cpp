@@ -8,25 +8,25 @@ Tree::Tree(const string & treedata){
 	vector<string> data;
 
 	string word = ""; 
-  for(int i = 0; i<treedata.length(); i++){
-  	if(treedata[i] == ','){
+	for(int i = 0; i<treedata.length(); i++){
+		if(treedata[i] == ','){
 			i++;
 			data.push_back(word);
 			word = "";
 			continue;
-  	}
+		}
 		word+=treedata[i];
-  }
-  spc_common = data[9]; 
-	//int tree_id; //0
-	//int tree_dbh; //3
+	}
+	spc_common = data[9]; 
+	tree_id = stoi(data[0]); //0
+	tree_dbh = stoi(data[3]); //3
 	status = data[6];
 	health = data[7];
 	address = data[24];
 	boroname = data[29];
-	//int zipcode; //25
-	//double latitude; //37
-	//double longitude; //3
+	zipcode = stoi(data[25]); //25
+	latitude = stod(data[37]); //37
+	longitude = stod(data[38]); //38
 }
 ostream& operator<< (ostream & os, const Tree & t){
 	os << t.write(", ") << "\n";
