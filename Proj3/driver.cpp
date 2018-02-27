@@ -35,6 +35,4 @@ int main()
     dict.Clear();
     cout<<"The number of unique letters is "<<dict.Size()<<endl; // Should show 0
     cout<<"The height of the tree is "<<dict.Height()<<endl;     // Should show 0
-
-    return 0;
 }

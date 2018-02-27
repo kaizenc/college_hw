@@ -26,7 +26,7 @@ Tree::Tree(const string & treedata){
 
 	string word = ""; 
 	for(int i = 0; i<treedata.length(); i++){
-		if(treedata[i] == '"'){
+		if(treedata[i] == '"'){ //ensures strings aren't separated by "," inside values
 			in_an_entry = !in_an_entry;
 		}
 		if(treedata[i] == ',' && !in_an_entry){
@@ -36,28 +36,40 @@ Tree::Tree(const string & treedata){
 		}
 		word+=treedata[i];
 	}
-	data.push_back(word);
+	data.push_back(word); //pushes back last word
 
 	spc_common = data[9]; 
-	tree_id = stoi(data[0]); //0
-	tree_dbh = stoi(data[3]); //3
+	tree_id = stoi(data[0]);
+	tree_dbh = stoi(data[3]);
 	status = data[6];
+	if(status != "Alive" and status != "Dead" and status != "Stump" and status !=""){
+		cerr << "Invalid value for 'Status'" << endl;
+		exit(1);
+	}
 	health = data[7];
+	if(health != "Good" and health != "Fair" and health != "Poor" and health !=""){
+		cerr << "Invalid value for 'Health'" << endl;
+		exit(1);
+	}
 	address = data[24];
 	boroname = data[29];
-	zipcode = stoi(data[25]); //25
-	latitude = stod(data[37]); //37
-	longitude = stod(data[38]); //38
+	if(boroname != "Manhattan" and boroname != "Bronx" and boroname != "Brooklyn" and boroname != "Queens" and boroname != "Staten Island"){
+		cerr << "Invalid value for 'Boroname'" << endl;
+		exit(1);
+	}
+	zipcode = stoi(data[25]);
+	latitude = stod(data[37]);
+	longitude = stod(data[38]);
 }
 ostream& operator<< (ostream & os, const Tree & t){
-	if(os == cout){
+	if(os == cout){ //If it's a standard output, use commas
 		os << t.write_with_delim(", ") << "\n";
-	}else{
+	}else{ //Else use the default tabs
 		os << t.write() << "\n";
 	}
 	return os;
 }
-string Tree::write() const{
+string Tree::write() const{ //Wrapper function
 	return write_with_delim("	");
 }
 string Tree::write_with_delim(string delimiter) const{

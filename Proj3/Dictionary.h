@@ -9,13 +9,12 @@ class Node{
     ItemType item;
   public:
     Node();
-    Node(KeyType new_key);
-    Node(KeyType new_key, ItemType new_item);
+    Node(const KeyType &new_key);
 
-    ItemType & getItem();
-    KeyType getKey();
-    Node<KeyType,ItemType> * getLeft();
-    Node<KeyType,ItemType> * getRight();
+    ItemType& getItem();
+    KeyType& getKey();
+    Node<KeyType,ItemType> * getLeft() const;
+    Node<KeyType,ItemType> * getRight() const;
     void setLeft(Node<KeyType,ItemType> * node);
     void setRight(Node<KeyType,ItemType> * node);    
 };
@@ -39,16 +38,16 @@ class Dictionary{
     Dictionary();
     ~Dictionary();
 
-    bool IsEmpty(); //DONE
-    int Size(); //DONE
-    int Count(KeyType key); //DONE
-    int Height(); //DONE
-    void Clear(); //?
+    bool IsEmpty() const;
+    int Size();
+    int Count(KeyType key);
+    int Height();
+    void Clear();
     
-    ItemType & operator[](KeyType key); //DONE
+    ItemType & operator[](KeyType key);
     
-    void Remove(KeyType key); //DONE
-    void Balance(); //DONE
+    void Remove(KeyType key);
+    void Balance();
 };
 #include "Dictionary.cpp"
 #endif

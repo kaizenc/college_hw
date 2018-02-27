@@ -2,7 +2,7 @@
 #define DICTIONARY_CPP
 
 #include <iostream>
-#include<string>
+#include <string>
 #include <algorithm>
 #include "Dictionary.h"
 using namespace std;
@@ -16,17 +16,10 @@ Node<KeyType,ItemType>::Node(){
 	right = NULL;	
 }
 template<class KeyType, class ItemType>
-Node<KeyType,ItemType>::Node(KeyType new_key){
+Node<KeyType,ItemType>::Node(const KeyType &new_key){
 	left = NULL;
 	right = NULL;
 	key = new_key;	
-}
-template<class KeyType, class ItemType>
-Node<KeyType,ItemType>::Node(KeyType new_key, ItemType new_item){
-	left = NULL;
-	right = NULL;
-	key = new_key;
-	item = new_item;
 }
 
 
@@ -35,15 +28,15 @@ ItemType & Node<KeyType,ItemType>::getItem(){
 	return item;
 }
 template<class KeyType, class ItemType>
-KeyType Node<KeyType,ItemType>::getKey(){
+KeyType & Node<KeyType,ItemType>::getKey(){
 	return key;
 }
 template<class KeyType, class ItemType>
-Node<KeyType,ItemType> * Node<KeyType,ItemType>::getLeft(){
+Node<KeyType,ItemType> * Node<KeyType,ItemType>::getLeft() const{
 	return left;
 }
 template<class KeyType, class ItemType>
-Node<KeyType,ItemType> * Node<KeyType,ItemType>::getRight(){
+Node<KeyType,ItemType> * Node<KeyType,ItemType>::getRight() const{
 	return right;
 }
 
@@ -78,7 +71,7 @@ int Dictionary<KeyType, ItemType>::Size(){
 	return size;
 }
 template<class KeyType, class ItemType>
-bool Dictionary<KeyType, ItemType>::IsEmpty(){
+bool Dictionary<KeyType, ItemType>::IsEmpty() const{
 	return head == NULL;
 }
 template<class KeyType, class ItemType>
@@ -180,6 +173,8 @@ void Dictionary<KeyType, ItemType>::Fill_Array(Node<KeyType, ItemType>* curr, No
 	if (curr->getRight() == NULL and curr->getLeft() == NULL){ //if you can't recurse any further...
 		arr[counter] = curr; //insert node
 		counter++; //increment counter
+		curr->setLeft(NULL); //nullify left and right pointers
+		curr->setRight(NULL);
 		return;
 	}
 	Fill_Array(curr->getLeft(), arr, counter); //recurse left...
@@ -206,13 +201,21 @@ Node<KeyType, ItemType> * Dictionary<KeyType, ItemType>::BalanceByArray(Node<Key
 template<class KeyType, class ItemType>
 void Dictionary<KeyType, ItemType>::Remove(KeyType key){
 	Node<KeyType, ItemType> * child = search(head, key);
-	if (child == NULL) return;
+	if (child == NULL) return; //Node DNE
 	Node<KeyType, ItemType> * parent = searchParent(head, key);
-	if (parent == NULL){
-		delete head;
-		head = NULL;
+	if (parent == NULL){ //removing the root/head
+		Node<KeyType, ItemType> * temp = head;
+		if(head->getRight() != NULL){ //if right exists
+			getLeftmost(head->getRight())->setLeft(head->getLeft());
+			head = head->getRight();
+		}else{
+			head = head->getLeft();
+		}
+		delete temp;
+		size-=1;
 		return;
 	}
+	
 	if(parent->getRight() == child){//if the child is on the right
 		if(child->getRight() != NULL){//if the child's right exists
 			parent->setRight(child->getRight());//set the parents right to the child's right
@@ -221,6 +224,7 @@ void Dictionary<KeyType, ItemType>::Remove(KeyType key){
 			parent->setRight(child->getLeft());//replace child with its left
 		}
 	}else{//if the child is on the left, same process, but every parent->setRight is now left
+		
 		if(child->getRight() != NULL){
 			parent->setLeft(child->getRight());
 			getLeftmost(child->getRight())->setLeft(child->getLeft());
@@ -230,7 +234,7 @@ void Dictionary<KeyType, ItemType>::Remove(KeyType key){
 	}
 	delete child; //prevent memory leaks
 	child = NULL;
-	size--;	//decrement size
+	size-=1;	//decrement size
 }
 template<class KeyType, class ItemType>
 Node<KeyType, ItemType> * Dictionary<KeyType, ItemType>::searchParent(Node<KeyType, ItemType> * curr, KeyType key){

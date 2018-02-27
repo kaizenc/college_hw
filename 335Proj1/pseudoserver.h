@@ -23,17 +23,17 @@ class Queue{
 	private:
 		vector<string> q_;
 	public:
-		/** pop() removes the first element and returns it
+		/** pop() removes the first element of the vector and returns it
 	     *  @return std::string		Element string
 	     */
 		string pop();
 		
-		/** push(string &s) adds the string s to the end of the queue
+		/** push(string &s) adds the string s to the end of the vector
 	     *  @param string&s			String element to add
 	     */
 		void push(string &s);
 		
-		/** operator() returns the size of the queue
+		/** get_size() returns the size of the vector
 	     *  @return int 			Size 
 	     */
 		int get_size();
@@ -43,8 +43,23 @@ class PseudoServer{
 	private:
 		Queue queue;
 	public:
+		/** read(istream & is) reads the input stream to add to a queue, 
+		 *	returns true if successful
+	     *  @param istream &is		Input Stream
+	     *	@return bool			Success or Failure
+	     */
 		bool read(istream & is);
+		
+		/** extract(string &s) pops an element from the queue and sets
+		 *  the parameter string &s to that element
+	     *  @param string&s			String to modify
+	     *	@return bool			Success or Failure
+	     */
 		bool extract(string & s);
+		
+		/** queuesize() returns the size of the queue
+	     *  @return int 			Size 
+	     */
 		int queuesize();
 };
 #endif /* __PSEUDOSERVER_H__ */
