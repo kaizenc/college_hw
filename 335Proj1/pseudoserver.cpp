@@ -1,3 +1,18 @@
+/*******************************************************************************
+  Title          : pseudoserver.cpp
+  Author         : Kaizen Castanos
+  Created on     : February 26, 2018
+  Description    : The code for the PseudoServer and Queue classes
+  Purpose        : PseudoServer is a class used to mimic an actual server for
+				   reading and sending files to a client using a Queue, whose
+				   implementation is also included. 
+  Usage          : Include this file with client code
+  Build with     : Makefile; type make to compile, or make tree.o to compile
+				   just this file
+  Modifications  : 
+ 
+*******************************************************************************/
+
 #include <iostream>
 #include <vector>
 #include <string>

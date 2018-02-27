@@ -1,3 +1,19 @@
+/*******************************************************************************
+  Title          : tree.cpp
+  Author         : Kaizen Castanos
+  Created on     : February 26, 2018
+  Description    : The code for the Tree class
+  Purpose        : A tree container used to contain some data, specifically
+                   from NYC's OpenData data set on trees. Also includes
+                   functions to populate its variables with a string and a
+                   function to send data to an output stream. 
+  Usage          : Include this file with client code
+  Build with     : Makefile; type make to compile, or make tree.o to compile
+				   just this file
+  Modifications  : 
+ 
+*******************************************************************************/
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -34,10 +50,17 @@ Tree::Tree(const string & treedata){
 	longitude = stod(data[38]); //38
 }
 ostream& operator<< (ostream & os, const Tree & t){
-	os << t.write(", ") << "\n";
+	if(os == cout){
+		os << t.write_with_delim(", ") << "\n";
+	}else{
+		os << t.write() << "\n";
+	}
 	return os;
 }
-string Tree::write(string delimiter) const{
+string Tree::write() const{
+	return write_with_delim("	");
+}
+string Tree::write_with_delim(string delimiter) const{
 	string result = "";
 	string temp = "";
 	

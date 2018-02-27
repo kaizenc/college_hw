@@ -1,3 +1,18 @@
+/*******************************************************************************
+  Title          : main.cpp
+  Author         : Kaizen Castanos
+  Created on     : February 26, 2018
+  Description    : A project used to simulate reading and parsing text using a
+				   server, a queue, and a random "bitcoin.""
+  Purpose        : To simulate the reading and parsing of data using a server
+				   and possibly scaling it up to work with larger sets of data.
+  Usage          : Include this file with client code
+  Build with     : Makefile; type make to compile, or make tree.o to compile
+				   just this file
+  Modifications  : 
+ 
+*******************************************************************************/
+
 #include <iostream>
 #include <stdexcept>
 #include <fstream>

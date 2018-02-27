@@ -16,6 +16,7 @@
 # Type make cleanall to remove all .o files and the project1 executable.
 
 # If you want to force a recompile, type "touch *.cpp" and then "make"
+# Modifications: Modified to compile using c++11
 
 CXX       := /usr/bin/g++
 CXXFLAGS  += -W -g 
