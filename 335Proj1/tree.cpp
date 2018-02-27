@@ -6,10 +6,14 @@ using namespace std;
 
 Tree::Tree(const string & treedata){
 	vector<string> data;
+	bool in_an_entry = false;
 
 	string word = ""; 
 	for(int i = 0; i<treedata.length(); i++){
-		if(treedata[i] == ','){
+		if(treedata[i] == '"'){
+			in_an_entry = !in_an_entry;
+		}
+		if(treedata[i] == ',' && !in_an_entry){
 			data.push_back(word);
 			word = "";
 			continue;
@@ -39,9 +43,9 @@ string Tree::write(string delimiter) const{
 	
 	temp = "spc_common: " + spc_common + delimiter;
 	result += temp;
-	temp = "tree_id: " + tree_id + delimiter;
+	temp = "tree_id: " + to_string(tree_id) + delimiter;
 	result += temp;
-	temp = "tree_dbh: " + tree_dbh + delimiter;
+	temp = "tree_dbh: " + to_string(tree_dbh) + delimiter;
 	result += temp;
 	temp = "status: " + status + delimiter;
 	result += temp;
@@ -51,11 +55,11 @@ string Tree::write(string delimiter) const{
 	result += temp;
 	temp = "boroname: " + boroname + delimiter;
 	result += temp;
-	temp = "zipcode: " + zipcode + delimiter;
+	temp = "zipcode: " + to_string(zipcode) + delimiter;
 	result += temp;
-	temp = "latitude: " + 3 + delimiter;//FIX THIS
+	temp = "latitude: " + to_string(latitude) + delimiter;
 	result += temp;
-	temp = "longitude: " + 3 + delimiter;//FIX THIS
+	temp = "longitude: " + to_string(longitude);
 	result += temp;
 
 	return result;

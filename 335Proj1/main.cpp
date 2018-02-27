@@ -10,15 +10,19 @@ int main(int argc, char *argv[]){
 	//if argc=2, only input file supplied
 	//if argc=3, input/output supplied
 	//if argc=4, input/output and seed supplied
-	/*
-	string filename = "filename.csv";
+	
+	if(argc < 2){
+		cerr << "Insufficient params" << endl;
+		exit(1);
+	}
+	string filename = "smol.csv";
 	ifstream tree_data(filename);
+	ofstream output("out2.txt");
 
 	if (!tree_data) { //If file fails to open
 	  	cerr << "Unable to open file " << filename << endl;
 	    exit(1);
 	}
-	*/
 
 	int seed = 0;
 	int num_of_flips = 0;
@@ -28,19 +32,28 @@ int main(int argc, char *argv[]){
 
 	Bitcoin coin = Bitcoin(seed);
 	PseudoServer server;
-	string sample_data = "180683,348711,08/27/2015,3,0,OnCurb,Alive,Fair,Acer rubrum,red maple,None,None,NoDamage,TreesCount Staff,None,No,No,No,No,No,No,No,No,No,108-005 70 AVENUE,11375,Forest Hills,406,4,Queens,29,28,16,QN17,Forest Hills,4073900,New York,40.72309177,-73.84421522,1027431.148,202756.7687";
-	Tree new_tree(sample_data);	
-	cout << new_tree.write(", ") << endl;
-	/*
-	if(coin() == 0){
-		string line = "";
-		if(server.extract(line)){
-			Tree new_tree(line);
-			cout << new_tree;
+	
+	bool server_is_done = false;
+	
+	while(!server_is_done){
+		if(coin() == 0){
+			string line = "";
+			if(server.extract(line)){
+				cout << line << endl << endl;
+				Tree new_tree(line);
+				output << new_tree;
+			}
+		}else{//coin is 1
+			if(!server.read(tree_data)){
+				server_is_done = true;
+			}
 		}
-	}else{//coin is 1
-		//read server
 	}
-	*/
+	
+	string line = "";
+	while(server.extract(line)){
+		Tree new_tree(line);
+		output << new_tree;
+	}
 	
 }
