@@ -15,9 +15,13 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "tree.h"
 
 class AVL_Tree{
     private:
+        Tree* actual_tree;
+        AVL_Tree* left;
+        AVL_Tree* right;
         //Node, left, and right....?
     public:
         AVL_Tree (); // default

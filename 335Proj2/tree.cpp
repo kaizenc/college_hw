@@ -68,14 +68,14 @@ Tree::Tree(int id, int diam, string status,
 		latitude, double longitude ){
 	tree_id = id;
 	tree_dbh = diam;
-	this.status = status;
-	this.health = health;
-	this.spc = spc;
+	this->status = status;
+	this->health = health;
+	this->spc_common = spc;
 	zipcode = zip;
 	address = addr;
 	boroname = boro;
-	this.latitude = latitude;
-	this.longitude = longitude;
+	this->latitude = latitude;
+	this->longitude = longitude;
 }
 
 
@@ -103,7 +103,6 @@ ostream& operator<< (ostream & os, const Tree & t){
 }
 
 
-
 //get functions
 string Tree::common_name() const{
 	return spc_common;
@@ -120,7 +119,10 @@ int Tree::diameter() const{
 int Tree::zip() const{
 	return zipcode;
 }
-void Tree::get_position(double & latitude, double & longitude) const;
+void Tree::get_position(double & latitude, double & longitude) const{
+	latitude = this->latitude;
+	longitude = this->longitude;
+}
 
 //
 string Tree::write() const{ //Wrapper function
