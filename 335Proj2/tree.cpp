@@ -21,6 +21,9 @@
 using namespace std;
 
 //Constructors
+Tree::Tree(){
+	//
+}
 Tree::Tree(const string & treedata){
 	vector<string> data;
 	bool in_an_entry = false;

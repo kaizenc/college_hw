@@ -15,33 +15,50 @@
 #include <vector>
 #include <string>
 #include "avl.h"
+#include "tree.h"
 using namespace std;
 
 //Con-De structors
 AVL_Tree::AVL_Tree(){
-  &actual_tree = new Tree();
   left = nullptr;
   right = nullptr;
 }
 AVL_Tree::AVL_Tree (const AVL_Tree & tree){
-  //
+  this->left = tree.left;
+  this->right = tree.right;
 }
 AVL_Tree::~AVL_Tree (){
-  //
+  delete left;
+  delete right;
+  left = nullptr;
+  right = nullptr;
 }
 
 
 //Search methods:
 const Tree & AVL_Tree::find (const Tree & x) const{
-  //
+  if(x == actual_tree){
+    return actual_tree;
+  }
+  if(left != nullptr && x < actual_tree){
+    return left->find(x);
+  }else if(right != nullptr && actual_tree < x){
+    return right->find(x);
+  } //needs to return something if we can't find it
 }
 const Tree & AVL_Tree::findMin() const{
-  //
+  if(left != nullptr){
+    return left->findMin();
+  }
+  return actual_tree;
 }
 const Tree & AVL_Tree::findMax() const{
-  //
+  if(right != nullptr){
+    return right->findMin();
+  }
+  return actual_tree;
 }
-list <Tree>& AVL_Tree::findallmatches (const Tree & x) const{
+list<Tree>& AVL_Tree::findallmatches (const Tree & x) const{
   //
 }
 
@@ -50,9 +67,27 @@ list <Tree>& AVL_Tree::findallmatches (const Tree & x) const{
 
 
 //inorder print
-void AVL_Tree::print ( ostream & out ) const{
-  //
+void AVL_Tree::print (ostream & out) const{
+  if(left != nullptr){
+    left->print(out);
+  }
+  out << actual_tree;
+  if(right != nullptr){
+    right->print(out);
+  }
 }
-void AVL_Tree::clear(); // empty the tree
-void AVL_Tree::insert(const Tree & x); // insert element x
-void AVL_Tree::remove(const Tree & x); // remove element x
+// empty the tree
+void AVL_Tree::clear(){
+
+}
+// insert element x
+void AVL_Tree::insert(const Tree & x){
+
+} 
+// remove element x
+void AVL_Tree::remove(const Tree & x){
+
+}
+
+//AVL Helper Functions:
+//Rotations

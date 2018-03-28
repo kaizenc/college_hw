@@ -15,11 +15,12 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <list>
 #include "tree.h"
 
 class AVL_Tree{
     private:
-        Tree* actual_tree;
+        Tree actual_tree;
         AVL_Tree* left;
         AVL_Tree* right;
         //Node, left, and right....?
@@ -31,7 +32,7 @@ class AVL_Tree{
         const Tree & find (const Tree & x) const ;
         const Tree & findMin () const ;
         const Tree & findMax () const ;
-        list <Tree>& findallmatches (const Tree & x) const ;
+        list<Tree>& findallmatches (const Tree & x) const ;
         // Traversals :
         // prints the Tree objects onto the ostream using inorder traversal .
         // Each of the members of the Tree object is printed , in the exact

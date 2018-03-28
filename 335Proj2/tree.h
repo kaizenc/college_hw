@@ -41,6 +41,7 @@ class Tree{
 		string write_with_delim(string delimiter) const;
 	public:
 		//Constructors for Tree
+		Tree();
 		Tree(const string & treedata);
 		Tree ( int id, int diam, string status,
 		string health, string spc, int zip,

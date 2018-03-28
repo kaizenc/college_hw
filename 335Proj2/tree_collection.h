@@ -15,10 +15,14 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "avl.h"
+#include "tree_species.h"
 
 
 class TreeCollection{
 	private:
+		AVL_Tree *root;
+		TreeSpecies species;
 		//avl tree, treespecies, and another container
 	public:
 		//Constructors for Tree
