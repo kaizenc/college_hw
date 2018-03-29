@@ -30,7 +30,7 @@ int TreeCollection::total_tree_count() const{
   return 0;
 }
 int TreeCollection::count_of_tree_species ( const string & species_name ) const{
-  return species.get_matching_species(species_name).size;
+  return species.get_matching_species(species_name).size();
 }
 int TreeCollection::count_of_trees_in_boro( const string & boro_name ) const{
   //
@@ -44,4 +44,8 @@ list<string> TreeCollection::get_all_in_zipcode(int zipcode) const{
 }
 list<string> TreeCollection::get_all_near(double latitude, double longitude, double distance) const{
   //
+}
+
+void TreeCollection::print_all_species(ostream & out) const{
+  species.print_all_species(out);
 }

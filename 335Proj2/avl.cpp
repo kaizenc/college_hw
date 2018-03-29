@@ -64,11 +64,10 @@ const Tree & AVL_Tree::findMax() const{
   return actual_tree;
 }
 list<Tree>& AVL_Tree::findallmatches (const Tree & x) const{
-  //
+  list<Tree> result;
+  //figure out how to search without looking through every node in the tree
+  return result;
 }
-
-//Search Helper Methods:
-//recursive versions of findmax & find min
 
 
 //inorder print
@@ -83,7 +82,14 @@ void AVL_Tree::print (ostream & out) const{
 }
 // empty the tree
 void AVL_Tree::clear(){
-
+  if(left != nullptr){
+    left->clear();
+  }
+  if (right != nullptr){
+    right->clear();
+  }
+  left = nullptr;
+  right = nullptr;
 }
 // insert element x
 void AVL_Tree::insert(const Tree & x){

@@ -24,11 +24,30 @@
 using namespace std;
 
 
-void tree_info(string comm_string){
-	//
+void tree_info(string comm_string, TreeCollection collection){
+	string lookup = "";
+	bool read_string = false;
+	for(int i = 0;i<comm_string.length();i++){
+		if(comm_string[i] == " "){
+			read_string = true;
+			continue;
+		}
+		if(!read_string){
+			continue;
+		}
+		lookup += comm_string[i];
+	}
+
+	list<string> all_matching = collection.get_matching_species(lookup);
+	cout << lookup << endl;
+	cout << "All Matching Species: " << endl;
+	for(list<string>::const_iterator iterator = all_matching.begin(), end =all_matching.end(); iterator != end, iterator++){
+		cout << *iterator << endl;
+	}
+	cout << "Frequency By Borough: " << endl;
 }
-void listall_names(string comm_string){
-	//
+void listall_names(string comm_string, TreeCollection){
+	collection.print_all_species(cout);
 }
 void listall_inzip(string comm_string){
 	//
