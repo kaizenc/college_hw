@@ -23,6 +23,11 @@ AVL_Tree::AVL_Tree(){
   left = nullptr;
   right = nullptr;
 }
+AVL_Tree::AVL_Tree(const Tree & tree){
+  left = nullptr;
+  right = nullptr;
+  actual_tree = tree;
+}
 AVL_Tree::AVL_Tree (const AVL_Tree & tree){
   this->left = tree.left;
   this->right = tree.right;
@@ -82,8 +87,25 @@ void AVL_Tree::clear(){
 }
 // insert element x
 void AVL_Tree::insert(const Tree & x){
-
+  if(x < actual_tree){
+    if(left != nullptr){
+      left->insert(x);
+    }else{
+      AVL_Tree *new_left = new AVL_Tree(x);
+      left = new_left;
+      //balance
+    }
+  }else if (actual_tree < x){
+    if(right != nullptr){
+      right->insert(x);
+    }else{
+      AVL_Tree *new_right = new AVL_Tree(x);
+      right = new_right;
+      //balance
+    }
+  }
 } 
+
 // remove element x
 void AVL_Tree::remove(const Tree & x){
 

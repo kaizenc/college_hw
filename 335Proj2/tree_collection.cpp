@@ -37,7 +37,7 @@ int TreeCollection::count_of_trees_in_boro( const string & boro_name ) const{
   return 0;
 }
 list<string> TreeCollection::get_matching_species(const string & species_name) const{
-  //
+  return species.get_matching_species(species_name);
 }
 list<string> TreeCollection::get_all_in_zipcode(int zipcode) const{
   //

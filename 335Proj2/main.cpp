@@ -23,6 +23,20 @@
 #include "tree.h"
 using namespace std;
 
+
+void tree_info(string comm_string){
+	//
+}
+void listall_names(string comm_string){
+	//
+}
+void listall_inzip(string comm_string){
+	//
+}
+void list_near(string comm_string){
+	//
+}
+
 int main(int argc, char *argv[]){
 	
 	if(argc < 3){
@@ -36,11 +50,51 @@ int main(int argc, char *argv[]){
 	    exit(1);
 	}
 	string command_filename = argv[2];
-	ofstream commands(command_filename);
+	ifstream commands(command_filename);
 	if (!commands.is_open()) { //If file fails to open
 	  	cerr << "Unable to open output file: " << out_filename << endl;
 	    exit(1);
 	}
+
+	//Tree_Collection Population Loop
+	while(1){
+		string temp = "";
+		getline(tree_data, temp);
+		if (temp == ""){
+			break;
+		}
+		Tree temp_tree = new Tree(temp);
+		//insert into tree_collection
+	}
+
+	//Command Loop
+	while(1){
+		string temp = "";
+		getline(commands, temp);
+		if (temp == ""){
+			break;
+		}
+		string command_name = "";
+		for(int i = 0;i<temp.length();i++){
+			if(temp[i] == " "){
+				break;
+			}
+			command_name += temp[i];
+		}
+		if(command_name == "tree_info"){
+			tree_info();
+		}else if(command_name == "listall_names"){
+			listall_names();
+		}else if (command_name == "listall_inzip"){
+			listall_inzip();
+		}else if (command_name == "list_near"){
+			list_near();
+		}else{
+			cerr << "Invalid command: " << command_name << endl;
+			exit(1);
+		}
+	}
+
 	
 	//create a loop for reading commands
 	/***
@@ -48,7 +102,9 @@ int main(int argc, char *argv[]){
 	 * listall_names: cout << print_all_species
 	 * listall_inzip "zipcode": nothing in treecollection, finds all trees in zipcode
 	 * list_near "latitude longitude dist": use haversine formula on all trees, generate output
-	 * /
+	 **/
+	tree_data.close();
+	commands.close();
 	
 	
 	

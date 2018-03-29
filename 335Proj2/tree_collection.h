@@ -15,6 +15,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "tree.h"
 #include "avl.h"
 #include "tree_species.h"
 
@@ -32,6 +33,7 @@ class TreeCollection{
 		int total_tree_count() const;
 		int count_of_tree_species ( const string & species_name ) const;
 		int count_of_trees_in_boro( const string & boro_name ) const;
+		void insert_tree(const Tree & tree);
 		list<string> get_matching_species(const string & species_name) const;
 		list<string> get_all_in_zipcode(int zipcode) const;
 		list<string> get_all_near(double latitude, double longitude, double distance) const;

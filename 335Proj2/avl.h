@@ -26,6 +26,7 @@ class AVL_Tree{
         //Node, left, and right....?
     public:
         AVL_Tree (); // default
+        AVL_Tree (const Tree & tree); //Constructor with tree as param
         AVL_Tree (const AVL_Tree & tree); // copy constructor
         ~AVL_Tree (); // destructor
         // Search methods :
