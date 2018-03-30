@@ -58,19 +58,24 @@ int main(int argc, char *argv[]){
 	}
 
 	//Command Loop
+	string arg_tree_to_find;
 	int arg_zip;
     double arg_latitude; 
-    double arg_longitude,;
-    double arg_distance,;
+    double arg_longitude;
+    double arg_distance;
     bool result;
 	while(1){
 		if(command_handler.get_next(commands)){
-			command_handler.get_args(arg_zip, arg_latitude, arg_longitude, result);
+			command_handler.get_args(arg_tree_to_find, arg_zip, arg_latitude, arg_longitude, arg_distance, result);
 			switch(command_handler.type_of()){
 				case tree_info_cmmd: //run tree info command
+					break;
 				case listall_names_cmmd: //run command
+					break;
 			    case listall_inzip_cmmd: //run command
+			    	break;
 			    case list_near_cmmd: //run command
+			    	break;
 			}
 		}else{
 			break;
