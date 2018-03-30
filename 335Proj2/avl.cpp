@@ -63,7 +63,19 @@ const Tree & AVL_Tree::findMax() const{
 list<Tree>& AVL_Tree::findallmatches (const Tree & x) const{
   list<Tree> result;
   //figure out how to search without looking through every node in the tree
+  root->search(x, result);
   return result;
+}
+void AVL_Node::search(const Tree & x, list<Tree> & result){
+  if(x == actual_tree){
+    result.push_back(actual_tree);
+  }
+  if(left != nullptr){
+    left->search(x, result);
+  }
+  if(right != nullptr){
+    right->search(x, result);
+  }
 }
 //Search methods (node recursive)
 const Tree & AVL_Node::find (const Tree & x) const{
@@ -180,6 +192,20 @@ int AVL_Node::getHeight(){
     int right_height = 1 + right->getHeight();
   }
   return (left_height>right_height)?left_height:right_height;
+}
+void AVL_Node::getCount(int& counter) const{
+  counter++;
+  if(left!=nullptr){
+    left->getCount(counter);
+  }
+  if(right!=nullptr){
+    right->getCount(counter);
+  }
+}
+int AVL_Tree::getCount() const{
+  int counter = 0;
+  root->getCount(counter);
+  return counter;
 }
 
 //Rotations

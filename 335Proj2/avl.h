@@ -43,9 +43,11 @@ class AVL_Node{
     void clear();
     void insert(const Tree& x);
     void remove(const Tree& x);
+    void search(const Tree& x, list<Tree>& result);
 
     void balance();
     int getHeight();
+    void getCount(int &counter) const;
 };
 class AVL_Tree{
     private:
@@ -74,6 +76,8 @@ class AVL_Tree{
         void clear(); // empty the tree
         void insert ( const Tree & x ); // insert element x
         void remove ( const Tree & x ); // remove element x
+
+        int getCount() const;
 };
 
 

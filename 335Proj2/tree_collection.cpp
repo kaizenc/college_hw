@@ -27,7 +27,7 @@ TreeCollection::~TreeCollection(){
 }
 
 int TreeCollection::total_tree_count() const{
-  return root->getCount();
+  return root.getCount();
   return 0;
 }
 int TreeCollection::count_of_tree_species ( const string & species_name ) const{
@@ -53,6 +53,6 @@ void TreeCollection::print_all_species(ostream & out) const{
 }
 
 void TreeCollection::insert_tree(const Tree & tree){
-  root->insert(tree);
+  root.insert(tree);
   species.add_species(tree.common_name());
 }

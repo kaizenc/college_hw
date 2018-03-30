@@ -22,7 +22,7 @@
 
 class TreeCollection{
 	private:
-		AVL_Tree *root;
+		AVL_Tree root;
 		TreeSpecies species;
 		list<string> BoroughNames; //access by same index
 		list<int> BoroughTreeCounts;
