@@ -24,6 +24,7 @@ class AVL_Tree{
         AVL_Tree* left;
         AVL_Tree* right;
         //Node, left, and right....?
+
     public:
         AVL_Tree (); // default
         AVL_Tree (const Tree & tree); //Constructor with tree as param
@@ -47,6 +48,11 @@ class AVL_Tree{
         void clear (); // empty the tree
         void insert ( const Tree & x ); // insert element x
         void remove ( const Tree & x ); // remove element x
+
+
+        AVL_Tree* getLeftmost();//Get leftmost
+        bool hasLeft();
+        bool hasRight();
 };
 
 #endif /* __AVL_H__ */

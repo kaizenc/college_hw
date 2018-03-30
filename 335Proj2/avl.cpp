@@ -114,8 +114,33 @@ void AVL_Tree::insert(const Tree & x){
 
 // remove element x
 void AVL_Tree::remove(const Tree & x){
-
+  if(x < actual_tree){
+    left->remove(x);
+    return;
+  }
+  if(actual_tree < x){
+    right->remove(x);
+    return;
+  }
+  AVL_Tree* leftmost = right->getLeftmost();
+  //insert tree into pointer
 }
 
+bool AVL_Tree::hasLeft(){
+  return left==nullptr;
+}
+bool AVL_Tree::hasRight(){
+  return right==nullptr;
+}
 //AVL Helper Functions:
+AVL_Tree* AVL_Tree::getLeftmost(){
+  if(left->hasLeft()){
+    return left->getLeftmost();
+  }
+  AVL_Tree* temp = left;
+  delete left;
+  left = nullptr;
+  return temp;
+}
+
 //Rotations

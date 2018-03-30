@@ -45,6 +45,7 @@ int main(int argc, char *argv[]){
 	}
 
 	TreeCollection collection;
+	Command command_handler;
 	//Tree_Collection Population Loop
 	while(1){
 		string temp = "";
@@ -57,18 +58,22 @@ int main(int argc, char *argv[]){
 	}
 
 	//Command Loop
+	int arg_zip;
+    double arg_latitude; 
+    double arg_longitude,;
+    double arg_distance,;
+    bool result;
 	while(1){
-		string temp = "";
-		getline(commands, temp);
-		if (temp == ""){
-			break;
-		}
-		string command_name = "";
-		for(int i = 0;i<temp.length();i++){
-			if(&temp[i] == " "){
-				break;
+		if(command_handler.get_next(commands)){
+			command_handler.get_args(arg_zip, arg_latitude, arg_longitude, result);
+			switch(command_handler.type_of()){
+				case tree_info_cmmd: //run tree info command
+				case listall_names_cmmd: //run command
+			    case listall_inzip_cmmd: //run command
+			    case list_near_cmmd: //run command
 			}
-			command_name += &temp[i];
+		}else{
+			break;
 		}
 	}
 
