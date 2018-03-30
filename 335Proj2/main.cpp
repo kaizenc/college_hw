@@ -30,9 +30,8 @@ void tree_info(string tree_to_find, TreeCollection collection){
 	cout << "All Matching Species: " << endl;
 
 	list<string> collection_species = collection.get_matching_species(tree_to_find);
-	list<int>::const_iterator iterator;
-	for (list<int>::const_iterator iterator = collection_species.begin(), end = collection_species.end(); iterator != end; ++iterator) {
-	    cout << *iterator;
+	for (string tree_name : collection_species) {
+	    cout << tree_name << endl;
 	}
 
 	cout << "Frequency By Borough: " << endl;
@@ -76,7 +75,7 @@ int main(int argc, char *argv[]){
 			break;
 		}
 		Tree temp_tree(temp);
-		//insert into tree_collection
+		collection.insert_tree(temp_tree);
 	}
 
 	//Command Loop
