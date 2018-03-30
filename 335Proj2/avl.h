@@ -21,11 +21,14 @@
 class AVL_Tree{
     private:
         Tree actual_tree;
-        AVL_Tree* left;
-        AVL_Tree* right;
-        //Node, left, and right....?
+        int number_of_nodes=1;
+
+        
 
     public:
+        AVL_Tree* left;
+        AVL_Tree* right;
+
         AVL_Tree (); // default
         AVL_Tree (const Tree & tree); //Constructor with tree as param
         AVL_Tree (const AVL_Tree & tree); // copy constructor
@@ -53,6 +56,15 @@ class AVL_Tree{
         AVL_Tree* getLeftmost();//Get leftmost
         bool hasLeft();
         bool hasRight();
-};
+        AVL_Tree* getRight();
+        AVL_Tree* getLeft();
 
+        void balance();
+        int getHeight();
+        int getCount();
+};
+void LL_Rotation(AVL_Tree* k2);
+void RR_Rotation(AVL_Tree* k2);
+void RL_Rotation(AVL_Tree* A);
+void LR_Rotation(AVL_Tree* A);
 #endif /* __AVL_H__ */

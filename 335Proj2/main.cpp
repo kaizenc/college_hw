@@ -25,6 +25,28 @@
 #include "command.h"
 using namespace std;
 
+void tree_info(string tree_to_find, TreeCollection collection){
+	cout << tree_to_find << endl;
+	cout << "All Matching Species: " << endl;
+
+	list<string> collection_species = collection.get_matching_species(tree_to_find);
+	list<int>::const_iterator iterator;
+	for (list<int>::const_iterator iterator = collection_species.begin(), end = collection_species.end(); iterator != end; ++iterator) {
+	    cout << *iterator;
+	}
+
+	cout << "Frequency By Borough: " << endl;
+}
+void listall_names(){
+	//
+}
+void listall_inzip(int zip){
+	//
+}
+void list_near(double latitude, double longitude, double distance){
+	//
+}
+
 int main(int argc, char *argv[]){
 	
 	if(argc < 3){
@@ -68,13 +90,13 @@ int main(int argc, char *argv[]){
 		if(command_handler.get_next(commands)){
 			command_handler.get_args(arg_tree_to_find, arg_zip, arg_latitude, arg_longitude, arg_distance, result);
 			switch(command_handler.type_of()){
-				case tree_info_cmmd: //run tree info command
+				case tree_info_cmmd: tree_info(arg_tree_to_find, collection);
 					break;
-				case listall_names_cmmd: //run command
+				case listall_names_cmmd: listall_names();
 					break;
-			    case listall_inzip_cmmd: //run command
+			    case listall_inzip_cmmd: listall_inzip(arg_zip);
 			    	break;
-			    case list_near_cmmd: //run command
+			    case list_near_cmmd: list_near(arg_latitude, arg_longitude, arg_distance);
 			    	break;
 			}
 		}else{

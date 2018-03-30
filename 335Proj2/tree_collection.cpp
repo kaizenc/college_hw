@@ -27,7 +27,7 @@ TreeCollection::~TreeCollection(){
 }
 
 int TreeCollection::total_tree_count() const{
-  //
+  return root->getCount();
   return 0;
 }
 int TreeCollection::count_of_tree_species ( const string & species_name ) const{
@@ -44,9 +44,15 @@ list<string> TreeCollection::get_all_in_zipcode(int zipcode) const{
   //
 }
 list<string> TreeCollection::get_all_near(double latitude, double longitude, double distance) const{
-  //
+  list<string> results;
+  
 }
 
 void TreeCollection::print_all_species(ostream & out) const{
   species.print_all_species(out);
+}
+
+void TreeCollection::insert_tree(const Tree & tree){
+  root->insert(tree);
+  species.add_species(tree.common_name());
 }

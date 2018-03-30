@@ -99,7 +99,6 @@ void AVL_Tree::insert(const Tree & x){
     }else{
       AVL_Tree *new_left = new AVL_Tree(x);
       left = new_left;
-      //balance
     }
   }else if (actual_tree < x){
     if(right != nullptr){
@@ -107,9 +106,10 @@ void AVL_Tree::insert(const Tree & x){
     }else{
       AVL_Tree *new_right = new AVL_Tree(x);
       right = new_right;
-      //balance
     }
   }
+  number_of_nodes += 1;
+  balance();
 } 
 
 // remove element x
@@ -124,7 +124,9 @@ void AVL_Tree::remove(const Tree & x){
   }
   AVL_Tree* leftmost = right->getLeftmost();
   //insert tree into pointer
+  balance();
 }
+
 
 bool AVL_Tree::hasLeft(){
   return left==nullptr;
@@ -142,5 +144,74 @@ AVL_Tree* AVL_Tree::getLeftmost(){
   left = nullptr;
   return temp;
 }
+int AVL_Tree::getHeight(){
+  if(left == nullptr && right == nullptr){
+    return 0;
+  }
+  int left_height = 0;
+  int right_height = 0;
+  if(left != nullptr){
+    left_height = 1 + left->getHeight();
+  }
+  if(right != nullptr){
+    int right_height = 1 + right->getHeight();
+  }
+  return (left_height>right_height)?left_height:right_height;
+}
+int AVL_Tree::getCount(){
+  return number_of_nodes;
+}
+AVL_Tree* AVL_Tree::getRight(){
+  return right;
+}
+AVL_Tree* AVL_Tree::getLeft(){
+  return left;
+}
 
 //Rotations
+void AVL_Tree::balance(){
+  if(left->getHeight() - right->getHeight() > 2){
+    if(left->getLeft()->getHeight() >= left->getRight()->getHeight()){
+      LL_Rotation(this);
+    }else{
+      LR_Rotation(this);
+    }
+  }else if(right->getHeight() - left->getHeight() > 2){
+    if(right->getRight()->getHeight() >= right->getRight()->getHeight()){
+      RR_Rotation(this);
+    }else{
+      RL_Rotation(this);
+    }
+  }
+}
+
+void LL_Rotation(AVL_Tree* k2){
+  AVL_Tree* k1 = k2->left;
+  k2->left = k1->getRight();
+  k1->right = k2;
+  k2 = k1;
+}
+void RR_Rotation(AVL_Tree* k2){
+  AVL_Tree* k1 = k2->right;
+  k2->right = k1->getLeft();
+  k1->left = k2;
+  k2 = k1;
+}
+void RL_Rotation(AVL_Tree* A){
+  AVL_Tree* C = A->right->left;
+  AVL_Tree* B = A->right;
+  B->left = C->right;
+  A->right = C->left;
+  C->left = A;
+  C->right = B;
+  A = C;
+}
+void LR_Rotation(AVL_Tree* A){
+  AVL_Tree* B = A->left;
+  AVL_Tree* C = A->left->right;
+  B->right = C->left;
+  A->left = C->right;
+  C->right = A;
+  C->left = C;
+  A = C;
+}
