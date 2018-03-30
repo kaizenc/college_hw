@@ -18,9 +18,10 @@
 #include <fstream>
 #include <vector>
 #include <string>
-#include "bitcoin.h"
-#include "pseudoserver.h"
 #include "tree.h"
+#include "avl.h"
+#include "tree_collection.h"
+#include "tree_species.h"
 using namespace std;
 
 
@@ -28,7 +29,7 @@ void tree_info(string comm_string, TreeCollection collection){
 	string lookup = "";
 	bool read_string = false;
 	for(int i = 0;i<comm_string.length();i++){
-		if(comm_string[i] == " "){
+		if(&comm_string[i] == " "){
 			read_string = true;
 			continue;
 		}
@@ -41,12 +42,12 @@ void tree_info(string comm_string, TreeCollection collection){
 	list<string> all_matching = collection.get_matching_species(lookup);
 	cout << lookup << endl;
 	cout << "All Matching Species: " << endl;
-	for(list<string>::const_iterator iterator = all_matching.begin(), end =all_matching.end(); iterator != end, iterator++){
+	for(list<string>::const_iterator iterator = all_matching.begin(), end =all_matching.end(); iterator != end; iterator++){
 		cout << *iterator << endl;
 	}
 	cout << "Frequency By Borough: " << endl;
 }
-void listall_names(string comm_string, TreeCollection){
+void listall_names(string comm_string, TreeCollection collection){
 	collection.print_all_species(cout);
 }
 void listall_inzip(string comm_string){
@@ -65,16 +66,17 @@ int main(int argc, char *argv[]){
 	string tree_filename = argv[1];
 	ifstream tree_data(tree_filename);
 	if (!tree_data) { //If file fails to open
-	  	cerr << "Unable to open input file: " << in_filename << endl;
+	  	cerr << "Unable to open input file: " << tree_filename << endl;
 	    exit(1);
 	}
 	string command_filename = argv[2];
 	ifstream commands(command_filename);
 	if (!commands.is_open()) { //If file fails to open
-	  	cerr << "Unable to open output file: " << out_filename << endl;
+	  	cerr << "Unable to open output file: " << command_filename << endl;
 	    exit(1);
 	}
 
+	TreeCollection collection;
 	//Tree_Collection Population Loop
 	while(1){
 		string temp = "";
@@ -82,7 +84,7 @@ int main(int argc, char *argv[]){
 		if (temp == ""){
 			break;
 		}
-		Tree temp_tree = new Tree(temp);
+		Tree temp_tree(temp);
 		//insert into tree_collection
 	}
 
@@ -95,19 +97,19 @@ int main(int argc, char *argv[]){
 		}
 		string command_name = "";
 		for(int i = 0;i<temp.length();i++){
-			if(temp[i] == " "){
+			if(&temp[i] == " "){
 				break;
 			}
-			command_name += temp[i];
+			command_name += &temp[i];
 		}
 		if(command_name == "tree_info"){
-			tree_info();
+			tree_info(temp, collection);
 		}else if(command_name == "listall_names"){
-			listall_names();
+			listall_names(temp, collection);
 		}else if (command_name == "listall_inzip"){
-			listall_inzip();
+			listall_inzip(temp);
 		}else if (command_name == "list_near"){
-			list_near();
+			list_near(temp);
 		}else{
 			cerr << "Invalid command: " << command_name << endl;
 			exit(1);
