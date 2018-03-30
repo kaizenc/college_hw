@@ -15,6 +15,7 @@
 #include <vector>
 #include <string>
 #include <list>
+#include "tree_species.h"
 #include "tree_collection.h"
 using namespace std;
 

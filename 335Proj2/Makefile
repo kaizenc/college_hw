@@ -32,7 +32,7 @@ cleanall:
 	rm -f main.o tree_collection.o tree.o avl.o project2  
 	
 project2:  tree_collection.o tree.o main.o avl.o tree_species.o
-	$(CXX) $(CXXFLAGS) -o project2  tree_collection.o tree.o main.o avl.o tree_species.o command.o
+	$(CXX) $(CXX_FLAGS) -o project2  tree_collection.o tree.o main.o avl.o tree_species.o command.o
 
 main.o: main.cpp tree_collection.h tree.h tree_species.h  command.h
 	$(CXX) $(CXX_FLAGS)  -c main.cpp

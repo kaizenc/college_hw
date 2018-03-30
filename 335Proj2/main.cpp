@@ -70,18 +70,6 @@ int main(int argc, char *argv[]){
 			}
 			command_name += &temp[i];
 		}
-		if(command_name == "tree_info"){
-			tree_info(temp, collection);
-		}else if(command_name == "listall_names"){
-			listall_names(temp, collection);
-		}else if (command_name == "listall_inzip"){
-			listall_inzip(temp);
-		}else if (command_name == "list_near"){
-			list_near(temp);
-		}else{
-			cerr << "Invalid command: " << command_name << endl;
-			exit(1);
-		}
 	}
 
 	
