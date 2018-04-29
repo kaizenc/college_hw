@@ -16,6 +16,8 @@
 #include <string>
 
 //requires a bit mask
+//requires an array of subway entrances using chapter 8 stuff
+//Basically an array conceptualized as a parent tree
 
 
 
