@@ -19,6 +19,14 @@
 //requires an array of subway entrances using chapter 8 stuff
 //Basically an array conceptualized as a parent tree
 
+/**This file will likely NOT be used as anything but notes
+Create a set with just one entrance in it. 
+Compare that set with all the roots
+If it's equal, just run the union algo between the two. Throw the entrance at the end of the array. 
+
+/**
+
 
 
 #endif
+

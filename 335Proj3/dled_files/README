@@ -1,0 +1,18 @@
+subway_entrances_orig.csv is the downloaded data file, without the column
+headings, with invalid line fields, some lower-case, some missing names,
+and duplicate names as well.
+
+subway_entrances_cleaned.csv differs from the original in that:
+1. there are no null names
+2. names are now unique
+3. all line field data is in upper-case and in the correct format
+
+The names were made unique by appending a digit to the end of the string
+when there were more two or more names that were the same.
+
+April 30, 2018
+There are now two files in this directory, command.o and command.h, to
+make it easier for you to complete this project. command.o implements the
+interface in command.h and can be linked into your program. The command.h
+interface provides methods to read and parse the command file for the project.
+It is similar to the same-named files of the preceding projects.
