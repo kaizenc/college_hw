@@ -14,6 +14,7 @@
 #define __SUBWAY_ENTRANCE_H__
 #include <iostream>
 #include <string>
+using namespace std;
 
 //simply unpack everything into variables
 class subway_entrance{
@@ -24,6 +25,7 @@ private:
 	string name;
 	double longitude;
 	double latitude;
+	string lines;
 	unsigned short line_mask;
 public:
 	subway_entrance(const string & data);
