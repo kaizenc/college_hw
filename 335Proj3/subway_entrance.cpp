@@ -62,7 +62,7 @@ subway_entrance::subway_entrance(const string & data){
 	longitude = coord_arr[0];
 	latitude = coord_arr[1];
 
-
+	convertToMask(lines);
 
 	//unsigned  long mask_k = 1UL << k; 
 	//mask with a "1" in bit k
@@ -87,7 +87,21 @@ short subway_entrance::getMask(){
 	return line_mask;
 }
 
+void subway_entrance::convertToMask(string lines){
+	vector<string> arr_lines;
+	string word = "";
+	for(int i = 0; i<lines.length(); i++){		
+		if(lines[i] == '-'){
+			arr_lines.push_back(word);
+			word = "";
+			continue;
+		}
+		word+=lines[i];
+	}
+	arr_lines.push_back(word);
+}
+
 int main(){
-	subway_entrance entrance("1457,http://web.mta.info/nyct/service/,10th Ave & 207th St at NE corner,POINT( -73.91868100 40.86459900),1");
+	subway_entrance entrance("1457,http://web.mta.info/nyct/service/,10th Ave & 207th St at NE corner,POINT( -73.91868100 40.86459900),1-2-3");
 	return 0;
 }

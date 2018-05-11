@@ -27,12 +27,14 @@ private:
 	double latitude;
 	string lines;
 	unsigned short line_mask;
+	void convertToMask(string lines);
 public:
 	subway_entrance(const string & data);
 	double getLong();
 	double getLat();
 	string getName();
 	short getMask();
+
 
 };
 
