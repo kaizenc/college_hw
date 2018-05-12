@@ -26,14 +26,15 @@ private:
 	double longitude;
 	double latitude;
 	string lines;
-	unsigned short line_mask;
-	void convertToMask(string lines);
+	unsigned long line_mask;
+	long convertToMask(string lines);
+	int hash_line(string x);
 public:
 	subway_entrance(const string & data);
 	double getLong();
 	double getLat();
 	string getName();
-	short getMask();
+	long getMask();
 
 
 };

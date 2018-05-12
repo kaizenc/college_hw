@@ -83,11 +83,11 @@ double subway_entrance::getLat(){
 string subway_entrance::getName(){
 	return name;
 }
-short subway_entrance::getMask(){
+long subway_entrance::getMask(){
 	return line_mask;
 }
 
-void subway_entrance::convertToMask(string lines){
+long subway_entrance::convertToMask(string lines){
 	vector<string> arr_lines;
 	string word = "";
 	for(int i = 0; i<lines.length(); i++){		
@@ -99,6 +99,23 @@ void subway_entrance::convertToMask(string lines){
 		word+=lines[i];
 	}
 	arr_lines.push_back(word);
+	unsigned long finalmask = 0;
+	for(int i = 0; i < arr_lines.size();i++){
+		int k = hash_line(arr_lines[i]);
+		unsigned long mask_k = 1UL << k; 
+		finalmask = finalmask & mask_k;
+	}
+	return finalmask
+}
+
+int hash_line(string x){
+	//horner's method of encoding, then simple modulo hashing
+	int hashval = 0;
+	for(int i = 0;i < x.length();i++){
+		hashval = x[i] + 33*hashval;
+	}
+	return hashval%51;
+
 }
 
 int main(){

@@ -23,3 +23,11 @@ Slow progress, just writing down the easy parts of the code so I'm not completel
 # Thursday, May 10
 
 Haven't been coding much, but I finished up subway_entrance. A lot of work is being done just to figure out what I need.
+
+#Saturday, May 12
+
+The lines are, in order, 
+1, 2, 3, 4, 5, 6, 7, A, B, C, D, E, F, FS, G, GS, H, J, L, M, N, Q, R, S, SIR, Z
+literally only 26
+I created a hash function by testing and testing a bunch of different values to mod a number by, after using horner's rule to convert the string into an integer.
+Applied the hash function in c.
