@@ -108,16 +108,6 @@ long subway_entrance::convertToMask(string lines){
 	return finalmask
 }
 
-int hash_line(string x){
-	//horner's method of encoding, then simple modulo hashing
-	int hashval = 0;
-	for(int i = 0;i < x.length();i++){
-		hashval = x[i] + 33*hashval;
-	}
-	return hashval%51;
-
-}
-
 int main(){
 	subway_entrance entrance("1457,http://web.mta.info/nyct/service/,10th Ave & 207th St at NE corner,POINT( -73.91868100 40.86459900),1-2-3");
 	return 0;
