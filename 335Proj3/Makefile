@@ -17,7 +17,13 @@ OBJS = $(patsubst %.cpp,%.o,$(SRCS))
 PROG = project3
 
 
-all: $(PROG) 
+old: $(PROG) 
+
+all: 
+	g++ -Wall -g -lm -std=c++11 -o project3 subway_entrance.o subway_system.o command.o main.o
+
+run: 
+	./project3 subway_entrances_cleaned.csv commandfile2
 
 .PHONY: clean  cleanall
 clean:

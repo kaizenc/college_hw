@@ -25,7 +25,7 @@ private:
 	string name;
 	double longitude;
 	double latitude;
-	string lines;
+	vector<string> arr_lines;
 	unsigned long line_mask;
 	long convertToMask(string lines);
 public:
@@ -34,6 +34,7 @@ public:
 	double getLat();
 	string getName();
 	long getMask();
+	int line_hash(string x);
 
 
 };

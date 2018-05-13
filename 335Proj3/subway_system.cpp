@@ -15,7 +15,7 @@
 #include <vector>
 #include "subway_entrance.h"
 #include "subway_system.h"
-#include "haversine.cpp"
+#include "haversine.h"
 using namespace std;
 
 
@@ -28,9 +28,14 @@ int subway_system::line_hash(string x){
 	return hashval%51;
 }
 
-int subway_system::station_hash(string x){
+int subway_system::station_hash(string name){
+	string x = name;
 	sanitize(x);
-	
+	int hashval = 0;
+	for(int i = 0;i < x.length();i++){
+		hashval = x[i] + 80*hashval;
+	}
+	return hashval%4001;
 }
 
 void subway_system::insert_entrance(subway_entrance e){
@@ -55,7 +60,8 @@ void subway_system::insert_entrance(subway_entrance e){
 bool subway_system::is_station(subway_entrance &e1, subway_entrance &e2){
 	bool a = (e1.getMask() ^ e2.getMask()) == 0;
 	double distance = haversine(e1.getLat(), e1.getLong(), e2.getLat(), e2.getLong());
-	bool b = distance <= 0.28;
+	double limit = 0.28;
+	bool b = (distance <= limit);
 	return a and b;
 }
 
@@ -64,7 +70,7 @@ void subway_system::sanitize(string &x){
 	bool space_seq = false; //true if encountering spaces
 	string new_x = "";
 	for(int i = 0;i<x.length();i++){
-		if(x[i] == " "){
+		if(x[i] == ' '){
 			space_seq = true;
 			continue;
 		}
@@ -74,3 +80,14 @@ void subway_system::sanitize(string &x){
 	}
 	x = new_x;
 }
+
+/**
+int main(){
+	subway_system hello;
+	subway_entrance e1("911,http://web.mta.info/nyct/service/,103rd St & 159th Ave at NE corner,POINT( -73.83051800 40.66046500),A");
+	subway_entrance e2("983,http://web.mta.info/nyct/service/,21st St & 41st Ave at NE corner1,POINT( -73.94193500 40.75425500),F");
+	hello.insert_entrance(e2);
+	cout << hello.entrances[0].getName() << endl;
+	return 0;
+}
+**/

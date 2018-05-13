@@ -6,9 +6,12 @@
   Purpose        : 
   Usage          : haversine latitude1 longitude1 latitude2 longitude2 in degrees
   Build with     : gcc -o haversine haversine.v -lm
-  Modifications  : 
+  Modifications  : turned into a header file instead
  
 *******************************************************************************/
+#ifndef __HAVERSINE_H__
+#define __HAVERSINE_H__
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -40,51 +43,5 @@ double haversine(  double lat1, double lon1, double lat2, double lon2)
     double b    = sin(dLon);
     return 2*R * asin(sqrt(a*a + cos(lat1) * cos(lat2) * b*b));
 }
- 
 
-int main(int argc, char* argv[])
-{
-    double th1, ph1, th2, ph2;
-    char*  endptr;
-
-    if ( argc < 5 ) {
-        printf("usage: %s lat1 lon1 lat2 lon2\n", argv[0]);
-        return 1;
-    }
-    errno = 0;
-    th1 = strtod(argv[1], &endptr);
-    if ((errno == ERANGE )
-           || (errno != 0 && th1 == 0)) {
-        perror("strtod");
-        exit(1);
-    }
-    errno = 0;
-    ph1 = strtod(argv[2], 0);
-    if ((errno == ERANGE )
-           || (errno != 0 && ph1  == 0)) {
-        perror("strtod");
-        exit(1);
-    }
-    errno = 0;
-    th2 = strtod(argv[3], 0);
-    if ((errno == ERANGE )
-           || (errno != 0 && th2  == 0)) {
-        perror("strtod");
-        exit(1);
-    }
-    errno = 0;
-    ph2 = strtod(argv[4], 0);
-    if ((errno == ERANGE )
-           || (errno != 0 && ph2  == 0)) {
-        perror("strtod");
-        exit(1);
-    }
-   
-	double d = dist(th1,ph1,th2,ph2);
-	/* Americans don't know kilometers */
-	printf("dist: %.1f km (%.1f mi.)\n", d, d / 1.609344);
-	double e = haversine(th1,ph1,th2,ph2);
- printf("dist: %.1f km (%.1f mi.)\n", e, e / 1.609344);
-
-	return 0;
-}
+#endif

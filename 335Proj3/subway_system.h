@@ -16,7 +16,7 @@
 #include <string>
 #include <vector>
 #include "subway_entrance.h"
-#include "haversine.cpp"
+
 
 //contains a station hash table
 //contains a line hash table
@@ -25,15 +25,18 @@
 //requires a bit mask
 class subway_system{
 private:
-  vector<int> stations; //contains indices of stations
-  vector<int> entrance_p_tree; //parent tree
-  vector<subway_entrance> entrances; //actual entrances
+  
   //station hashtable needs 1899 entries (2000)
 public:
-  int hash_line(string x);
+  int line_hash(string x);
+  int station_hash(string x);
   void insert_entrance(subway_entrance e);
   bool is_station(subway_entrance &e1, subway_entrance &e2);
   void sanitize(string &x); //cleans up the string so that we get single spaces, lowercased, etc.
+
+  vector<int> stations; //contains indices of stations
+  vector<int> entrance_p_tree; //parent tree
+  vector<subway_entrance> entrances; //actual entrances
 };
 
 

@@ -12,7 +12,9 @@
 *******************************************************************************/
 
 #include <iostream>
+#include <fstream>
 #include <string>
+#include <vector>
 #include "subway_entrance.h"
 #include "subway_system.h"
 #include "command.h"
@@ -37,31 +39,47 @@ int main(int argc, char *argv[]){
 	    exit(1);
 	}
 	//write some code to process csv into the thing
+	subway_system system;
+	string line = "";
+	while(getline(sub_data, line)){
+		subway_entrance e(line);
+		system.insert_entrance(e);
+	}
+
 
 	Command command_parser;
 	string arg_line_identifier;
-  string arg_station_name;
-  double arg_longitude;
-  double arg_latitude;
-  bool result;
+	string arg_station_name;
+	double arg_longitude;
+	double arg_latitude;
+	bool result;
 	while(command_parser.get_next(cmd_data)){
-		if(command_parser.typeof() == list_line_stations_cmmd){
+		if(command_parser.type_of() == list_line_stations_cmmd){
 			command_parser.get_args(arg_line_identifier, arg_station_name, arg_longitude, arg_latitude, result);
+			cout << arg_line_identifier << endl;
+			unsigned long mask1 = 1UL << (system.line_hash(arg_line_identifier));
+			for (int i=0;i<system.stations.size();i++){
+				subway_entrance tester = system.entrances[system.stations[i]];
+				long result = mask1 & tester.getMask();
+				if (result > 0){ //match found
+					cout << tester.getName() << endl;
+				}
+			}
 			//linehash the identifier
 			//turn it into a bitmask
 			//& it with every station
 			//if the & is greater than 0, list it 
-		} else if(command_parser.typeof() == list_all_stations_cmmd){
+		} else if(command_parser.type_of() == list_all_stations_cmmd){
 			//iterate through the stations table
-		} else if(command_parser.typeof() == list_entrances_cmmd){
+		} else if(command_parser.type_of() == list_entrances_cmmd){
 			//find the station using the station hash
 			//get the parent tree index
 			//iterate through the parent tree, look for everything that has that as its entry
-		} else if(command_parser.typeof() == nearest_station_cmmd){
+		} else if(command_parser.type_of() == nearest_station_cmmd){
 			//iterate through stations, haversine each
-		} else if(command_parser.typeof() == nearest_lines_cmmd){
+		} else if(command_parser.type_of() == nearest_lines_cmmd){
 			//iterate through stations, haversine each, decode bitmask
-		} else if(command_parser.typeof() == nearest_entrance_cmmd){
+		} else if(command_parser.type_of() == nearest_entrance_cmmd){
 			//nearest stations with a larger radius, and then check nearest entrance
 		}
 	}

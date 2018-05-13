@@ -38,7 +38,6 @@ subway_entrance::subway_entrance(const string & data){
 	ObjectID = stoi(data_arr[0]);
 	URL = data_arr[1];
 	name = data_arr[2];
-	lines = data_arr[4];
 
 
 	vector<double> coord_arr;
@@ -61,7 +60,7 @@ subway_entrance::subway_entrance(const string & data){
 	longitude = coord_arr[0];
 	latitude = coord_arr[1];
 
-	line_mask = convertToMask(lines);
+	convertToMask(data_arr[4]);
 }
 double subway_entrance::getLong(){
 	return longitude;
@@ -77,7 +76,6 @@ long subway_entrance::getMask(){
 }
 
 long subway_entrance::convertToMask(string lines){
-	vector<string> arr_lines;
 	string word = "";
 	for(int i = 0; i<lines.length(); i++){		
 		if(lines[i] == '-'){
@@ -88,16 +86,28 @@ long subway_entrance::convertToMask(string lines){
 		word+=lines[i];
 	}
 	arr_lines.push_back(word);
+
 	unsigned long finalmask = 0;
 	for(int i = 0; i < arr_lines.size();i++){
-		int k = hash_line(arr_lines[i]);
+		int k = line_hash(arr_lines[i]);
 		unsigned long mask_k = 1UL << k; 
-		finalmask = finalmask & mask_k;
+		finalmask = finalmask | mask_k;
 	}
-	return finalmask
+	line_mask = finalmask;
 }
 
+int subway_entrance::line_hash(string x){
+	//horner's method of encoding, then simple modulo hashing
+	int hashval = 0;
+	for(int i = 0;i < x.length();i++){
+		hashval = x[i] + 33*hashval;
+	}
+	return hashval%51;
+}
+
+/**
 int main(){
 	subway_entrance entrance("1457,http://web.mta.info/nyct/service/,10th Ave & 207th St at NE corner,POINT( -73.91868100 40.86459900),1-2-3");
 	return 0;
 }
+**/
