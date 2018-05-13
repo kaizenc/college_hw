@@ -14,30 +14,9 @@
 #include <iostream>
 #include <string>
 #include "subway_entrance.h"
-#include "subway_station.h"
 #include "subway_system.h"
+#include "command.h"
 using namespace std;
-
-string normalize(string line){
-	string result = "";
-	bool space_ = false;
-	for(int i = 0;i<line.length();i++){
-		char c = line[i];
-		if(c == ' '){
-			if(space_){
-				continue;
-			}
-			else{
-				space_ = true;
-				result+=c;
-				continue;
-			}			
-		}
-		space_ = false;
-		result+=char(tolower(c));
-	}
-	return result;
-}
 
 int main(int argc, char *argv[]){
 	
@@ -56,6 +35,35 @@ int main(int argc, char *argv[]){
 	if (!cmd_data) { //If file fails to open
 	  	cerr << "Unable to open commands file: " << commands_filename << endl;
 	    exit(1);
+	}
+	//write some code to process csv into the thing
+
+	Command command_parser;
+	string arg_line_identifier;
+  string arg_station_name;
+  double arg_longitude;
+  double arg_latitude;
+  bool result;
+	while(command_parser.get_next(cmd_data)){
+		if(command_parser.typeof() == list_line_stations_cmmd){
+			command_parser.get_args(arg_line_identifier, arg_station_name, arg_longitude, arg_latitude, result);
+			//linehash the identifier
+			//turn it into a bitmask
+			//& it with every station
+			//if the & is greater than 0, list it 
+		} else if(command_parser.typeof() == list_all_stations_cmmd){
+			//iterate through the stations table
+		} else if(command_parser.typeof() == list_entrances_cmmd){
+			//find the station using the station hash
+			//get the parent tree index
+			//iterate through the parent tree, look for everything that has that as its entry
+		} else if(command_parser.typeof() == nearest_station_cmmd){
+			//iterate through stations, haversine each
+		} else if(command_parser.typeof() == nearest_lines_cmmd){
+			//iterate through stations, haversine each, decode bitmask
+		} else if(command_parser.typeof() == nearest_entrance_cmmd){
+			//nearest stations with a larger radius, and then check nearest entrance
+		}
 	}
 
 
@@ -83,10 +91,6 @@ int main(int argc, char *argv[]){
 
 	5. nearest_lines (long, lat)
 	6. nearest_entrance (long, lat)
-
-
-
-	
 	**/
 	
 	

@@ -16,7 +16,6 @@
 #include "subway_entrance.h"
 using namespace std;
 
-//NOT DONE YET
 subway_entrance::subway_entrance(const string & data){
 	//sample: 1457,http://web.mta.info/nyct/service/,10th Ave & 207th St at NE corner,POINT( -73.91868100 40.86459900),1
 	vector<string> data_arr;
@@ -62,17 +61,7 @@ subway_entrance::subway_entrance(const string & data){
 	longitude = coord_arr[0];
 	latitude = coord_arr[1];
 
-	convertToMask(lines);
-
-	//unsigned  long mask_k = 1UL << k; 
-	//mask with a "1" in bit k
-	//assign variables here
-	/**
-
-	double longitude;
-	double latitude;
-	unsigned short line_mask;
-	**/
+	line_mask = convertToMask(lines);
 }
 double subway_entrance::getLong(){
 	return longitude;

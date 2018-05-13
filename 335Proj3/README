@@ -31,3 +31,5 @@ The lines are, in order,
 literally only 26
 I created a hash function by testing and testing a bunch of different values to mod a number by, after using horner's rule to convert the string into an integer.
 Applied the hash function in c.
+
+I'm using a lot of python code to help come up with function for this project. 
