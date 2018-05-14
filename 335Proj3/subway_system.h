@@ -34,15 +34,16 @@ private:
   bool is_connected(subway_entrance &e1, subway_entrance &e2);
   void sanitize(string &x); //cleans up the string so that we get single spaces, lowercased, etc.
   void quad_probe(int &hashval, int &k);
-  void build_station_hash_table();
+  
 public:
+  subway_system();
   /** insert_entrance(subway_entrance e): inserts the subway_entrance
     *   into the system's hash tables, automatically doing any required
     *   unions and hashing. 
     * @return void
     */
   void insert_entrance(subway_entrance e);
-
+  void build_station_hash_table();
   //commands
   void list_line_stations(string x);
   void list_all_stations();

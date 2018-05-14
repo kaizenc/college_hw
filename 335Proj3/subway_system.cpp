@@ -19,6 +19,13 @@
 #include "haversine.h"
 using namespace std;
 
+subway_system::subway_system(){
+	subway_station def = subway_station();
+	for(int i = 0;i<4001;i++){
+		temp_stations.push_back(def);
+	}
+}
+
 
 int subway_system::line_hash(string x){
 	//horner's method of encoding, then simple modulo hashing
@@ -40,6 +47,7 @@ int subway_system::station_hash(string name){
 }
 void subway_system::quad_probe(int &hashval, int &k){
 	hashval = (hashval + (k*k))%4001;
+	k++;
 }
 
 
@@ -47,13 +55,31 @@ void subway_system::build_station_hash_table(){
 	for(unsigned int i=0;i<stations.size();i++){
 		subway_station temp_station(entrances[stations[i]].getMask());
 		temp_station.insert_entrance(entrances[stations[i]]);
+		int hashval = station_hash(temp_station.getName());
+		int k=0;
+
+		while(!temp_stations[hashval].isEmpty()){
+			quad_probe(hashval, k);
+		}
 		for(unsigned int j=0;j<entrances.size();j++){
-			if(entrance_p_tree[j] = i){
+			if(entrance_p_tree[j] == i){
 				temp_station.insert_entrance(entrances[j]);
 			}
 		}
 		temp_station.calculate_centroid();
-		temp_stations.push_back(temp_station);
+		//temp_stations.push_back(temp_station);
+
+		vector<subway_entrance> asdf = temp_station.getEntrances();
+		for(unsigned int j=1;j<asdf.size();j++){
+			int hashval2 = station_hash(asdf[j].getName());
+			int k2 = 0;
+			while(!temp_stations[hashval2].isEmpty()){
+				quad_probe(hashval2, k2);
+			}
+			temp_stations[hashval] = temp_station;
+		}
+
+		temp_stations[hashval] = temp_station;
 	}
 }
 

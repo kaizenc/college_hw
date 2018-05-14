@@ -45,6 +45,7 @@ int main(int argc, char *argv[]){
 		subway_entrance e(line);
 		sub_system.insert_entrance(e);
 	}
+	sub_system.build_station_hash_table();
 
 
 	Command command_parser;
@@ -63,6 +64,7 @@ int main(int argc, char *argv[]){
 			
 		} else if(command_parser.type_of() == list_all_stations_cmmd){
 			sub_system.list_all_stations();
+			cout << endl;
 			//iterate through the stations table
 		} else if(command_parser.type_of() == list_entrances_cmmd){
 			//find the station using the station hash
@@ -71,6 +73,7 @@ int main(int argc, char *argv[]){
 		} else if(command_parser.type_of() == nearest_station_cmmd){
 			command_parser.get_args(arg_line_identifier, arg_station_name, arg_longitude, arg_latitude, result);
 			sub_system.nearest_station(arg_longitude, arg_latitude);
+			cout << endl;
 		} else if(command_parser.type_of() == nearest_lines_cmmd){
 			//iterate through stations, haversine each, decode bitmask
 		} else if(command_parser.type_of() == nearest_entrance_cmmd){

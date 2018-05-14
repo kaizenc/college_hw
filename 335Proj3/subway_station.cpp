@@ -18,8 +18,13 @@
 using namespace std;
 
 //holds a vector of entrances and the centroid location
+
+subway_station::subway_station(){
+  //
+}
 subway_station::subway_station(unsigned long mask){
   line_mask = mask;
+  empty = false;
 }
 
 void subway_station::insert_entrance(subway_entrance e){
@@ -37,3 +42,24 @@ void subway_station::calculate_centroid(){
   longitude = sum_long/(entrances.size());
 }
 
+double subway_station::getLong(){
+  return longitude;
+}
+double subway_station::getLat(){
+  return latitude;
+}
+
+vector<subway_entrance> subway_station::getEntrances(){
+  return entrances;
+}
+
+string subway_station::getName(){
+  if(entrances.size() < 1){
+    return "no_name";
+  }
+  return entrances[0].getName();
+}
+
+bool subway_station::isEmpty(){
+  return empty;
+}
