@@ -3,7 +3,9 @@
   Author         : Kaizen Castanos
   Created on     : April 19, 2018
   Description    : The interface file for the subway_system class
-  Purpose        : to be written
+  Purpose        : Used to store information about all subway_entrance, uses
+                   several hash tables to store and retreive data. Also contains
+                   functions used to respond to commands
   Usage          : Include this file with client code
   Build with     : No building
   Modifications  : 
@@ -17,12 +19,6 @@
 #include <vector>
 #include "subway_entrance.h"
 
-
-//contains a station hash table
-//contains a line hash table
-//contains subway station parent trees
-
-//requires a bit mask
 class subway_system{
 private:
   vector<int> stations; //contains **indices** of stations
@@ -35,6 +31,11 @@ private:
   bool is_station(subway_entrance &e1, subway_entrance &e2);
   void sanitize(string &x); //cleans up the string so that we get single spaces, lowercased, etc.
 public:
+  /** insert_entrance(subway_entrance e): inserts the subway_entrance
+    *   into the system's hash tables, automatically doing any required
+    *   unions and hashing. 
+    * @return void
+    */
   void insert_entrance(subway_entrance e);
 
   //commands

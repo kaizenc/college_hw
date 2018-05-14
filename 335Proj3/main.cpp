@@ -5,8 +5,7 @@
   Description    : 
   Purpose        : 
   Usage          : Include this file with client code
-  Build with     : Makefile; type make to compile, or make tree.o to compile
-				   just this file
+  Build with     : Makefile; type make to compile
   Modifications  : 
  
 *******************************************************************************/

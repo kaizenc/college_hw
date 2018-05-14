@@ -28,16 +28,37 @@ private:
 	double latitude;
 	vector<string> arr_lines;
 	unsigned long line_mask;
-	long convertToMask(string lines);
-public:
-	subway_entrance(const string & data);
-	double getLong();
-	double getLat();
-	string getName();
-	long getMask();
+	void convertToMask(string lines);
 	int line_hash(string x);
+public:
+	//Subway Entrance Constructor
+	subway_entrance(const string & data);
 
+	/** getLong(): returns the longitude of this subway entrance
+		* @return double 	The longitude of this subway entrance
+		*/
+	double getLong();
 
+	/** getLat(): returns the latitude of this subway entrance
+		* @return double 	The latitude of this subway entrance
+		*/
+	double getLat();
+
+	/** getLat(): returns the name of this subway entrance
+		* @return std::string 	The name of this subway entrance
+		*/
+	string getName();
+
+	/** getMask(): returns a long to be used as a bitmask, formed
+		* 	using a hash function for the lines
+		* @return long 	A bitmask representing the lines of this entrance
+		*/
+	long getMask();
+
+	/** getLines(): returns a vector containing the lines of this entrance
+		* @return vector<std::string> 	A vector containing the lines of this entrance
+		*/
+	vector<string> getLines();
 };
 
 

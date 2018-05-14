@@ -3,7 +3,9 @@
   Author         : Kaizen Castanos
   Created on     : May 3, 2018
   Description    : Functions for the subway_entrance class
-  Purpose        : to be written
+  Purpose        : Used to store information about all subway_entrance, uses
+                   several hash tables to store and retreive data. Also contains
+                   functions used to respond to commands
   Usage          : Include this file with client code
   Build with     : No building
   Modifications  : 
@@ -16,8 +18,8 @@
 #include "subway_entrance.h"
 using namespace std;
 
+//Constructor
 subway_entrance::subway_entrance(const string & data){
-	//sample: 1457,http://web.mta.info/nyct/service/,10th Ave & 207th St at NE corner,POINT( -73.91868100 40.86459900),1
 	vector<string> data_arr;
 	bool in_an_entry = false;
 
@@ -41,7 +43,6 @@ subway_entrance::subway_entrance(const string & data){
 
 
 	vector<double> coord_arr;
-
 	int word_count = 0;
 	for(int i = 0; i<data_arr[3].length();i++){
 		if(data_arr[3][i] == ')') break;
@@ -62,20 +63,8 @@ subway_entrance::subway_entrance(const string & data){
 
 	convertToMask(data_arr[4]);
 }
-double subway_entrance::getLong(){
-	return longitude;
-}
-double subway_entrance::getLat(){
-	return latitude;
-}
-string subway_entrance::getName(){
-	return name;
-}
-long subway_entrance::getMask(){
-	return line_mask;
-}
 
-long subway_entrance::convertToMask(string lines){
+void subway_entrance::convertToMask(string lines){
 	string word = "";
 	for(int i = 0; i<lines.length(); i++){		
 		if(lines[i] == '-'){
@@ -105,9 +94,20 @@ int subway_entrance::line_hash(string x){
 	return hashval%51;
 }
 
-/**
-int main(){
-	subway_entrance entrance("1457,http://web.mta.info/nyct/service/,10th Ave & 207th St at NE corner,POINT( -73.91868100 40.86459900),1-2-3");
-	return 0;
+//Get Functions
+double subway_entrance::getLong(){
+	return longitude;
 }
-**/
+double subway_entrance::getLat(){
+	return latitude;
+}
+string subway_entrance::getName(){
+	return name;
+}
+long subway_entrance::getMask(){
+	return line_mask;
+}
+vector<string> subway_entrance::getLines(){
+	return arr_lines;
+}
+
