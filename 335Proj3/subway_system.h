@@ -30,6 +30,7 @@ private:
   int station_hash(string x);
   bool is_connected(subway_entrance &e1, subway_entrance &e2);
   void sanitize(string &x); //cleans up the string so that we get single spaces, lowercased, etc.
+  int quad_probe(int hashval, int &k);
 public:
   /** insert_entrance(subway_entrance e): inserts the subway_entrance
     *   into the system's hash tables, automatically doing any required

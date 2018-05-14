@@ -41,9 +41,11 @@ int subway_system::quad_probe(int hashval, int &k){
 	return (hashval + (k*k))%4001;
 }
 
+/*
 void subway_system::build_station_hash_table(){
 	return;
 }
+*/
 
 void subway_system::insert_entrance(subway_entrance e){
 	entrances.push_back(e);
