@@ -16,6 +16,7 @@
 #include <vector>
 #include "subway_entrance.h"
 #include "subway_system.h"
+#include "subway_station.h"
 #include "command.h"
 using namespace std;
 
@@ -56,8 +57,9 @@ int main(int argc, char *argv[]){
 	while(command_parser.get_next(cmd_data)){
 		if(command_parser.type_of() == list_line_stations_cmmd){
 			command_parser.get_args(arg_line_identifier, arg_station_name, arg_longitude, arg_latitude, result);
-			cout << arg_line_identifier << endl;
+			cout << "Stations of the " << arg_line_identifier << " line:" << endl;
 			sub_system.list_line_stations(arg_line_identifier);
+			cout << endl;
 			
 		} else if(command_parser.type_of() == list_all_stations_cmmd){
 			sub_system.list_all_stations();

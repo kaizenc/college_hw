@@ -26,14 +26,17 @@ clean:
 cleanall:
 	rm -f $(OBJS) $(PROG) 
 
-project3: subway_entrance.o subway_system.o command.o main.o
-	$(CXX) $(CXXFLAGS) -o project3 subway_entrance.o subway_system.o command.o main.o
+project3: subway_entrance.o subway_station.o subway_system.o command.o main.o
+	$(CXX) $(CXXFLAGS) -o project3 subway_entrance.o subway_station.o subway_system.o command.o main.o
 
-main.o: main.cpp subway_entrance.h subway_system.h command.h
+main.o: main.cpp subway_entrance.h subway_station.h subway_system.h command.h
 	$(CXX) $(CXXFLAGS) -c main.cpp
 
-subway_system.o: subway_system.cpp subway_system.h subway_entrance.h haversine.h
+subway_system.o: subway_system.cpp subway_system.h subway_station.h subway_entrance.h haversine.h
 	$(CXX) $(CXXFLAGS) -c subway_system.cpp
+
+subway_station.o: subway_station.cpp subway_station.h subway_entrance.h
+	$(CXX) $(CXXFLAGS) -c subway_station.cpp
 
 subway_entrance.o: subway_entrance.cpp subway_entrance.h
 	$(CXX) $(CXXFLAGS) -c subway_entrance.cpp
