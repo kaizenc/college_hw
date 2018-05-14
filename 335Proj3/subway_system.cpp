@@ -47,17 +47,17 @@ void subway_system::build_station_hash_table(){
 
 void subway_system::insert_entrance(subway_entrance e){
 	entrances.push_back(e);
-	for(int i = 0;i<stations.size();i++){
-		if(is_station(entrances[stations[i]], e)){
-			entrance_p_tree.push_back(stations[i]);			
+	for(int i = 0;i<entrances.size()-1;i++){
+		if(is_connected(entrances[i], e)){
+			entrance_p_tree.push_back(i);			
 			return;
 		}
 	}	
 	entrance_p_tree.push_back(-1);
-	stations.push_back(entrance_p_tree.size()-1);	
+	stations.push_back(entrance_p_tree.size()-1);
 }
 
-bool subway_system::is_station(subway_entrance &e1, subway_entrance &e2){
+bool subway_system::is_connected(subway_entrance &e1, subway_entrance &e2){
 	bool a = (e1.getMask() ^ e2.getMask()) == 0;
 	double distance = haversine(e1.getLat(), e1.getLong(), e2.getLat(), e2.getLong());
 	double limit = 0.28;

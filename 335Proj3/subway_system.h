@@ -28,7 +28,7 @@ private:
 
   int line_hash(string x);
   int station_hash(string x);
-  bool is_station(subway_entrance &e1, subway_entrance &e2);
+  bool is_connected(subway_entrance &e1, subway_entrance &e2);
   void sanitize(string &x); //cleans up the string so that we get single spaces, lowercased, etc.
 public:
   /** insert_entrance(subway_entrance e): inserts the subway_entrance
