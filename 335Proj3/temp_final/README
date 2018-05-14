@@ -1,0 +1,39 @@
+# Assignment 3
+
+This is where I'm supposed to talk about the project
+
+## How to run
+
+Instructions
+
+## Running Log
+
+# Monday, April 16
+
+Began the subway project, mainly just getting the header files finished and cleaned up
+
+# Thursday, April 19
+
+Began writing down functions and the way classes should be organized. I'm starting to get an understanding of how these classes talk to each other.
+
+# Thursday, May 3
+
+Slow progress, just writing down the easy parts of the code so I'm not completely lost when I work on this project later.
+
+# Thursday, May 10
+
+Haven't been coding much, but I finished up subway_entrance. A lot of work is being done just to figure out what I need.
+
+#Saturday, May 12
+
+The lines are, in order, 
+1, 2, 3, 4, 5, 6, 7, A, B, C, D, E, F, FS, G, GS, H, J, L, M, N, Q, R, S, SIR, Z
+literally only 26
+I created a hash function by testing and testing a bunch of different values to mod a number by, after using horner's rule to convert the string into an integer.
+Applied the hash function in c.
+
+I'm using a lot of python code to help come up with function for this project. 
+
+#Sunday, May 13
+I thought I finished up enough of the project until I realized I messed up some of the ideas I had for this project.
+First off, I forgot the third requirement of having an entrance 
