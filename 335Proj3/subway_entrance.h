@@ -3,7 +3,8 @@
   Author         : Kaizen Castanos
   Created on     : April 19, 2018
   Description    : The interface file for the subway_entrance class
-  Purpose        : to be written
+  Purpose        : Used to store information about a subway_entrance, also includes
+  								 the line hash function and its mask
   Usage          : Include this file with client code
   Build with     : No building
   Modifications  : 

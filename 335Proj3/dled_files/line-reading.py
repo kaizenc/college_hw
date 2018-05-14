@@ -13,8 +13,21 @@ for x in f:
 f.close()
 train_lines.sort()
 
-print(subway_entrances)
-print(len(subway_entrances))
+def encode2(radix, string):
+	hashval = 0
+	for i in string:
+		hashval = ord(i) + radix*hashval
+	return hashval%4001
+
+encoded = [5000 for i in range(4001)]
+for i in subway_entrances:
+	something = encode2(80, i)
+	x = 0
+	while something in encoded:
+		x+=1
+		something = (something + x*x) % 4001
+	encoded[something] = something
+
 
 '''
 def encode(radix, string):

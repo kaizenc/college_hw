@@ -25,18 +25,22 @@
 //requires a bit mask
 class subway_system{
 private:
-  
-  //station hashtable needs 1899 entries (2000)
-public:
-  int line_hash(string x);
-  int station_hash(string x);
-  void insert_entrance(subway_entrance e);
-  bool is_station(subway_entrance &e1, subway_entrance &e2);
-  void sanitize(string &x); //cleans up the string so that we get single spaces, lowercased, etc.
-
-  vector<int> stations; //contains indices of stations
+  vector<int> stations; //contains **indices** of stations
   vector<int> entrance_p_tree; //parent tree
   vector<subway_entrance> entrances; //actual entrances
+  //station hashtable needs 1899 entries (4001, prime number greater than 1899*2, used for quad probing)
+
+  int line_hash(string x);
+  int station_hash(string x);
+  bool is_station(subway_entrance &e1, subway_entrance &e2);
+  void sanitize(string &x); //cleans up the string so that we get single spaces, lowercased, etc.
+public:
+  void insert_entrance(subway_entrance e);
+
+  //commands
+  void list_line_stations(string x);
+  void list_all_stations();
+  void nearest_station(double long_, double lat_);
 };
 
 

@@ -39,11 +39,11 @@ int main(int argc, char *argv[]){
 	    exit(1);
 	}
 	//write some code to process csv into the thing
-	subway_system system;
+	subway_system sub_system;
 	string line = "";
 	while(getline(sub_data, line)){
 		subway_entrance e(line);
-		system.insert_entrance(e);
+		sub_system.insert_entrance(e);
 	}
 
 
@@ -53,43 +53,29 @@ int main(int argc, char *argv[]){
 	double arg_longitude;
 	double arg_latitude;
 	bool result;
+
 	while(command_parser.get_next(cmd_data)){
 		if(command_parser.type_of() == list_line_stations_cmmd){
 			command_parser.get_args(arg_line_identifier, arg_station_name, arg_longitude, arg_latitude, result);
 			cout << arg_line_identifier << endl;
-			unsigned long mask1 = 1UL << (system.line_hash(arg_line_identifier));
-			for (int i=0;i<system.stations.size();i++){
-				subway_entrance tester = system.entrances[system.stations[i]];
-				long result = mask1 & tester.getMask();
-				if (result > 0){ //match found
-					cout << tester.getName() << endl;
-				}
-			}
-			//linehash the identifier
-			//turn it into a bitmask
-			//& it with every station
-			//if the & is greater than 0, list it 
+			sub_system.list_line_stations(arg_line_identifier);
+			
 		} else if(command_parser.type_of() == list_all_stations_cmmd){
+			sub_system.list_all_stations();
 			//iterate through the stations table
 		} else if(command_parser.type_of() == list_entrances_cmmd){
 			//find the station using the station hash
 			//get the parent tree index
 			//iterate through the parent tree, look for everything that has that as its entry
 		} else if(command_parser.type_of() == nearest_station_cmmd){
-			//iterate through stations, haversine each
+			command_parser.get_args(arg_line_identifier, arg_station_name, arg_longitude, arg_latitude, result);
+			sub_system.nearest_station(arg_longitude, arg_latitude);
 		} else if(command_parser.type_of() == nearest_lines_cmmd){
 			//iterate through stations, haversine each, decode bitmask
 		} else if(command_parser.type_of() == nearest_entrance_cmmd){
 			//nearest stations with a larger radius, and then check nearest entrance
 		}
 	}
-
-
-	/**csv Processing Loop:
-	Create a new subway_entrance in memory, normalize it first
-	Run the subway_system function to insert it into a table or some container
-
-	**/
 	
 	/**Commands Reference:
 	All the commands return an array

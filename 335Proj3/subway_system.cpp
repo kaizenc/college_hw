@@ -37,17 +37,17 @@ int subway_system::station_hash(string name){
 	}
 	return hashval%4001;
 }
+int subway_system::quad_probe(int hashval, int &k){
+	return (hashval + (k*k))%4001;
+}
+
+void subway_system::build_station_hash_table(){
+	return;
+}
 
 void subway_system::insert_entrance(subway_entrance e){
 	entrances.push_back(e);
-	//iterate through stations, attempt to union, if not then list it as a station	
 	for(int i = 0;i<stations.size();i++){
-		//compare entrances[stations[i]] with e
-		//if they're able to be unionized
-			//entrance_p_tree.push_back(stations[i]);
-			//is_solo = false;
-			//break;
-		//
 		if(is_station(entrances[stations[i]], e)){
 			entrance_p_tree.push_back(stations[i]);			
 			return;
@@ -66,7 +66,6 @@ bool subway_system::is_station(subway_entrance &e1, subway_entrance &e2){
 }
 
 void subway_system::sanitize(string &x){
-	//
 	bool space_seq = false; //true if encountering spaces
 	string new_x = "";
 	for(int i = 0;i<x.length();i++){
@@ -81,13 +80,44 @@ void subway_system::sanitize(string &x){
 	x = new_x;
 }
 
-/**
-int main(){
-	subway_system hello;
-	subway_entrance e1("911,http://web.mta.info/nyct/service/,103rd St & 159th Ave at NE corner,POINT( -73.83051800 40.66046500),A");
-	subway_entrance e2("983,http://web.mta.info/nyct/service/,21st St & 41st Ave at NE corner1,POINT( -73.94193500 40.75425500),F");
-	hello.insert_entrance(e2);
-	cout << hello.entrances[0].getName() << endl;
-	return 0;
+
+
+void subway_system::list_line_stations(string x){
+	unsigned long mask1 = 1UL << (line_hash(x));
+	for (int i=0;i<stations.size();i++){
+		subway_entrance temp = entrances[stations[i]];
+		long result = mask1 & temp.getMask();
+		if (result > 0){ //match found
+			cout << temp.getName() << endl;
+		}
+	}
 }
-**/
+
+void subway_system::list_all_stations(){
+	for (int i=0;i<stations.size();i++){
+		cout << entrances[stations[i]].getName() << endl;
+	}
+}
+
+void subway_system::nearest_station(double long_, double lat_){
+	vector<subway_entrance> result;
+	double shortest;
+	for (int i=0;i<stations.size();i++){
+		subway_entrance temp = entrances[stations[i]];
+		double curr_distance = haversine(temp.getLat(), temp.getLong(), lat_, long_);
+		if(i == 0){
+			result.push_back(temp);
+			shortest = curr_distance;
+		}else if(curr_distance == shortest){
+			result.push_back(temp);
+			continue;
+		}else if(curr_distance < shortest){
+			result.clear();
+			result.push_back(temp);
+			shortest = curr_distance;
+		}
+	}
+	for(int i = 0;i<result.size();i++){
+		cout << result[i].getName() << endl;
+	}
+}

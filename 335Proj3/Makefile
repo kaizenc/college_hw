@@ -1,4 +1,4 @@
-# A makefile that canbe used for a generic C++ project in which there is
+# A makefile that can be used for a generic C++ project in which there is
 # a single executable named project3, which depends on all source code files.
 # To build or update the executable, or any files that require rebuilding,
 # type
@@ -9,18 +9,12 @@
 #     make cleanall
 #
 # Written by Stewart Weiss for CSci 335, Spring 2018, Project 3
+# Modified (heavily) by Kaizen Castanos
 
 CXX       := /usr/bin/g++
 CXXFLAGS  += -Wall -g -lm -std=c++11
-SRCS = $(wildcard *.cpp)
-OBJS = $(patsubst %.cpp,%.o,$(SRCS))
-PROG = project3
 
-
-old: $(PROG) 
-
-all: 
-	g++ -Wall -g -lm -std=c++11 -o project3 subway_entrance.o subway_system.o command.o main.o
+all: project3
 
 run: 
 	./project3 subway_entrances_cleaned.csv commandfile2
@@ -32,8 +26,14 @@ clean:
 cleanall:
 	rm -f $(OBJS) $(PROG) 
 
-$(PROG): $(OBJS)
-	$(CXX) -o $(PROG) $(OBJS) 
+project3: subway_entrance.o subway_system.o command.o main.o
+	$(CXX) $(CXXFLAGS) -o project3 subway_entrance.o subway_system.o command.o main.o
 
-.cpp:
-	$(CXX) -c $@.cpp  $(CXXFLAGS)
+main.o: main.cpp subway_entrance.h subway_system.h command.h
+	$(CXX) $(CXXFLAGS) -c main.cpp
+
+subway_system.o: subway_system.cpp subway_system.h subway_entrance.h haversine.h
+	$(CXX) $(CXXFLAGS) -c subway_system.cpp
+
+subway_entrance.o: subway_entrance.cpp subway_entrance.h
+	$(CXX) $(CXXFLAGS) -c subway_entrance.cpp
