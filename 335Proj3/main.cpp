@@ -59,12 +59,12 @@ int main(int argc, char *argv[]){
 		if(command_parser.type_of() == list_line_stations_cmmd){
 			command_parser.get_args(arg_line_identifier, arg_station_name, arg_longitude, arg_latitude, result);
 			cout << "Stations of the " << arg_line_identifier << " line:" << endl;
-			sub_system.list_line_stations(arg_line_identifier);
+			//sub_system.list_line_stations(arg_line_identifier);
 			cout << endl;
 			
 		} else if(command_parser.type_of() == list_all_stations_cmmd){
-			sub_system.list_all_stations();
-			cout << endl;
+			//sub_system.list_all_stations();
+			//cout << endl;
 			//iterate through the stations table
 		} else if(command_parser.type_of() == list_entrances_cmmd){
 			//find the station using the station hash

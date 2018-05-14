@@ -15,14 +15,22 @@
 #include <vector>
 #include "subway_entrance.h"
 #include "subway_system.h"
+#include "subway_station.h"
 #include "haversine.h"
 using namespace std;
+
+subway_system::subway_system(){
+	subway_station def = subway_station();
+	for(int i = 0;i<4001;i++){
+		temp_stations.push_back(def);
+	}
+}
 
 
 int subway_system::line_hash(string x){
 	//horner's method of encoding, then simple modulo hashing
 	int hashval = 0;
-	for(int i = 0;i < x.length();i++){
+	for(unsigned int i = 0;i < x.length();i++){
 		hashval = x[i] + 33*hashval;
 	}
 	return hashval%51;
@@ -32,26 +40,59 @@ int subway_system::station_hash(string name){
 	string x = name;
 	sanitize(x);
 	int hashval = 0;
-	for(int i = 0;i < x.length();i++){
+	for(unsigned int i = 0;i < x.length();i++){
 		hashval = x[i] + 80*hashval;
 	}
 	return hashval%4001;
 }
-int subway_system::quad_probe(int hashval, int &k){
-	return (hashval + (k*k))%4001;
+void subway_system::quad_probe(int &hashval, int &k){
+	hashval = (hashval + (k*k))%4001;
+	k++;
 }
 
-/*
+
 void subway_system::build_station_hash_table(){
-	return;
+	for(unsigned int i=0;i<stations.size();i++){
+		subway_station temp_station(entrances[stations[i]].getMask());
+		temp_station.insert_entrance(entrances[stations[i]]);
+		int hashval = station_hash(temp_station.getName());
+		int k=0;
+
+		while(!temp_stations[hashval].isEmpty()){
+			quad_probe(hashval, k);
+		}
+		for(unsigned int j=0;j<entrances.size();j++){
+			if(entrance_p_tree[j] == i){
+				temp_station.insert_entrance(entrances[j]);
+			}
+		}
+		temp_station.calculate_centroid();
+		//temp_stations.push_back(temp_station);
+
+		vector<subway_entrance> asdf = temp_station.getEntrances();
+		for(unsigned int j=1;j<asdf.size();j++){
+			int hashval2 = station_hash(asdf[j].getName());
+			int k2 = 0;
+			while(!temp_stations[hashval2].isEmpty()){
+				quad_probe(hashval2, k2);
+			}
+			temp_stations[hashval] = temp_station;
+		}
+
+		temp_stations[hashval] = temp_station;
+	}
 }
-*/
+
 
 void subway_system::insert_entrance(subway_entrance e){
 	entrances.push_back(e);
-	for(int i = 0;i<entrances.size()-1;i++){
+	for(unsigned int i = 0;i<entrances.size()-1;i++){
 		if(is_connected(entrances[i], e)){
-			entrance_p_tree.push_back(i);			
+			int act_index = i;
+			while(entrance_p_tree[act_index] > 0){
+				act_index = entrance_p_tree[act_index];
+			}
+			entrance_p_tree.push_back(act_index);			
 			return;
 		}
 	}	
@@ -70,7 +111,7 @@ bool subway_system::is_connected(subway_entrance &e1, subway_entrance &e2){
 void subway_system::sanitize(string &x){
 	bool space_seq = false; //true if encountering spaces
 	string new_x = "";
-	for(int i = 0;i<x.length();i++){
+	for(unsigned int i = 0;i<x.length();i++){
 		if(x[i] == ' '){
 			space_seq = true;
 			continue;
@@ -86,7 +127,7 @@ void subway_system::sanitize(string &x){
 
 void subway_system::list_line_stations(string x){
 	unsigned long mask1 = 1UL << (line_hash(x));
-	for (int i=0;i<stations.size();i++){
+	for (unsigned int i=0;i<stations.size();i++){
 		subway_entrance temp = entrances[stations[i]];
 		long result = mask1 & temp.getMask();
 		if (result > 0){ //match found
@@ -96,7 +137,7 @@ void subway_system::list_line_stations(string x){
 }
 
 void subway_system::list_all_stations(){
-	for (int i=0;i<stations.size();i++){
+	for (unsigned int i=0;i<stations.size();i++){
 		cout << entrances[stations[i]].getName() << endl;
 	}
 }
@@ -104,7 +145,7 @@ void subway_system::list_all_stations(){
 void subway_system::nearest_station(double long_, double lat_){
 	vector<subway_entrance> result;
 	double shortest;
-	for (int i=0;i<stations.size();i++){
+	for (unsigned int i=0;i<stations.size();i++){
 		subway_entrance temp = entrances[stations[i]];
 		double curr_distance = haversine(temp.getLat(), temp.getLong(), lat_, long_);
 		if(i == 0){
@@ -119,7 +160,7 @@ void subway_system::nearest_station(double long_, double lat_){
 			shortest = curr_distance;
 		}
 	}
-	for(int i = 0;i<result.size();i++){
+	for(unsigned int i = 0;i<result.size();i++){
 		cout << result[i].getName() << endl;
 	}
 }
