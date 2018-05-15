@@ -145,11 +145,11 @@ void subway_system::list_all_stations(){
 }
 
 void subway_system::list_entrances2(string x){
-	for(int i = 0;i<stations.size();i++){
+	for(unsigned int i = 0;i<stations.size();i++){
 		if(entrances[stations[i]].getName() == x){
 			int asdf = stations[i];
 			cout << entrances[asdf].getName() << endl;
-			for(int j = 0;j<entrance_p_tree.size();j++){
+			for(unsigned int j = 0;j<entrance_p_tree.size();j++){
 				if(entrance_p_tree[j] == asdf){
 					if(!is_exit_only(entrances[j].getName()))
 					cout << entrances[j].getName() << endl;
@@ -166,7 +166,7 @@ void subway_system::list_entrances(string x){
 	int k=0;
 	while(entrances[stations_hash_table[hashval]].getName() != x){
 		quad_probe(hashval, k);
-		if(k == 4001){
+		if(k == 2001 or stations_hash_table[hashval] < 0){
 			cout << "Station Not Found :(" << endl;
 			return;
 		}
@@ -259,7 +259,7 @@ void subway_system::nearest_entrance(double long_, double lat_){
 		}
 	}
 	for (unsigned int i=0;i<result.size();i++){
-		int index_to_use = stations[i];
+		int index_to_use = stations[result[i]];
 		for(unsigned int j=0;j<entrance_p_tree.size();j++){
 			if(entrance_p_tree[j] == index_to_use){
 				subway_entrance temp = entrances[j];
@@ -268,7 +268,7 @@ void subway_system::nearest_entrance(double long_, double lat_){
 					real_result.push_back(temp);
 					continue;
 				}else if(curr_distance < shortest){
-					result.clear();
+					real_result.clear();
 					real_result.push_back(temp);
 					shortest = curr_distance;
 				}
@@ -276,7 +276,8 @@ void subway_system::nearest_entrance(double long_, double lat_){
 		}
 	}
 	for(unsigned int i = 0;i<real_result.size();i++){
-		cout << real_result[i].getName() << endl;
+		cout << real_result[i].getName() << ", ";
 	}
+	cout << endl;
 	
 }

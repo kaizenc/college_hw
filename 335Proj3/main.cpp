@@ -68,7 +68,7 @@ int main(int argc, char *argv[]){
 
 		} else if(command_parser.type_of() == list_entrances_cmmd){
 			command_parser.get_args(arg_line_identifier, arg_station_name, arg_longitude, arg_latitude, result);
-			cout << "Entrances of " << arg_station_name << endl;
+			cout << "Entrances of " << arg_station_name << ":" << endl;
 			sub_system.list_entrances(arg_station_name);
 			cout << endl;
 

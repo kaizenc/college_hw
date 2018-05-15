@@ -17,7 +17,7 @@ CXXFLAGS  += -Wall -g -lm -std=c++11
 all: project3
 
 run: 
-	./project3 subway_entrances_cleaned.csv commandfile2
+	./project3 subway_entrances_cleaned.csv commandfile3
 
 .PHONY: clean  cleanall
 clean:
