@@ -16,7 +16,6 @@
 #include <vector>
 #include "subway_entrance.h"
 #include "subway_system.h"
-#include "subway_station.h"
 #include "command.h"
 using namespace std;
 
@@ -59,25 +58,37 @@ int main(int argc, char *argv[]){
 		if(command_parser.type_of() == list_line_stations_cmmd){
 			command_parser.get_args(arg_line_identifier, arg_station_name, arg_longitude, arg_latitude, result);
 			cout << "Stations of the " << arg_line_identifier << " line:" << endl;
-			//sub_system.list_line_stations(arg_line_identifier);
+			sub_system.list_line_stations(arg_line_identifier);
 			cout << endl;
 			
 		} else if(command_parser.type_of() == list_all_stations_cmmd){
-			//sub_system.list_all_stations();
-			//cout << endl;
-			//iterate through the stations table
+			cout << "All stations:" << endl;
+			sub_system.list_all_stations();
+			cout << endl;
+
 		} else if(command_parser.type_of() == list_entrances_cmmd){
-			//find the station using the station hash
-			//get the parent tree index
-			//iterate through the parent tree, look for everything that has that as its entry
+			command_parser.get_args(arg_line_identifier, arg_station_name, arg_longitude, arg_latitude, result);
+			cout << "Entrances of " << arg_station_name << endl;
+			sub_system.list_entrances(arg_station_name);
+			cout << endl;
+
+
 		} else if(command_parser.type_of() == nearest_station_cmmd){
 			command_parser.get_args(arg_line_identifier, arg_station_name, arg_longitude, arg_latitude, result);
+			cout << "The stations closest to (" << arg_longitude << "," << arg_latitude << ") are: ";
 			sub_system.nearest_station(arg_longitude, arg_latitude);
 			cout << endl;
+
 		} else if(command_parser.type_of() == nearest_lines_cmmd){
-			//iterate through stations, haversine each, decode bitmask
+			command_parser.get_args(arg_line_identifier, arg_station_name, arg_longitude, arg_latitude, result);
+			cout << "The lines closest to (" << arg_longitude << "," << arg_latitude << ") are: ";
+			sub_system.nearest_lines(arg_longitude, arg_latitude);
+			cout << endl;
 		} else if(command_parser.type_of() == nearest_entrance_cmmd){
-			//nearest stations with a larger radius, and then check nearest entrance
+			command_parser.get_args(arg_line_identifier, arg_station_name, arg_longitude, arg_latitude, result);
+			cout << "The entrances closest to (" << arg_longitude << "," << arg_latitude << ") are: ";
+			sub_system.nearest_entrance(arg_longitude, arg_latitude);
+			cout << endl;
 		}
 	}
 	
