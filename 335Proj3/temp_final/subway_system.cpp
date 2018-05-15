@@ -3,7 +3,7 @@
   Author         : Kaizen Castanos
   Created on     : May 12, 2018
   Description    : Functions for the subway_system class
-  Purpose        : to be written
+  Purpose        : Handles hash tables and actually doing the commands
   Usage          : Include this file with client code
   Build with     : No building
   Modifications  : 

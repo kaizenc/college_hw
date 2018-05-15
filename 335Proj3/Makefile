@@ -16,9 +16,6 @@ CXXFLAGS  += -Wall -g -lm -std=c++11
 
 all: project3
 
-run: 
-	./project3 subway_entrances_cleaned.csv commandfile2
-
 .PHONY: clean  cleanall
 clean:
 	rm -f $(OBJS) 
@@ -40,8 +37,8 @@ subway_entrance.o: subway_entrance.cpp subway_entrance.h
 
 
 move:
-	cp *.h temp_final
-	cp *.cpp temp_final
-	cp command.o temp_final
-	cp README temp_final
-	cp Makefile temp_final
+	cp *.h Kaizen.Castanos67_project3
+	cp *.cpp Kaizen.Castanos67_project3
+	cp command.o Kaizen.Castanos67_project3
+	cp README Kaizen.Castanos67_project3
+	cp Makefile Kaizen.Castanos67_project3
