@@ -37,3 +37,11 @@ subway_system.o: subway_system.cpp subway_system.h subway_entrance.h haversine.h
 
 subway_entrance.o: subway_entrance.cpp subway_entrance.h
 	$(CXX) $(CXXFLAGS) -c subway_entrance.cpp
+
+
+move:
+	cp *.h temp_final
+	cp *.cpp temp_final
+	cp command.o temp_final
+	cp README temp_final
+	cp Makefile temp_final

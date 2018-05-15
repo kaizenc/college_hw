@@ -17,7 +17,7 @@ CXXFLAGS  += -Wall -g -lm -std=c++11
 all: project3
 
 run: 
-	./project3 subway_entrances_cleaned.csv commandfile3
+	./project3 subway_entrances_cleaned.csv commandfile2
 
 .PHONY: clean  cleanall
 clean:
@@ -42,4 +42,6 @@ subway_entrance.o: subway_entrance.cpp subway_entrance.h
 move:
 	cp *.h temp_final
 	cp *.cpp temp_final
+	cp command.o temp_final
 	cp README temp_final
+	cp Makefile temp_final

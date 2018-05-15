@@ -47,12 +47,10 @@ public:
     */
   void insert_entrance(subway_entrance e);
   void build_station_hash_table();
-  void build_station_locations();
   //commands
   void list_line_stations(string x);
   void list_all_stations();
   void list_entrances(string x);
-  void list_entrances2(string x);
   void nearest_station(double long_, double lat_);
   void nearest_lines(double long_, double lat_);
   void nearest_entrance(double long_, double lat_);

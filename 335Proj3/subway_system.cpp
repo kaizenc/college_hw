@@ -26,43 +26,6 @@ subway_system::subway_system(){
 	}
 }
 
-
-int subway_system::line_hash(string x){
-	//horner's method of encoding, then simple modulo hashing
-	int hashval = 0;
-	for(unsigned int i = 0;i < x.length();i++){
-		hashval = x[i] + 33*hashval;
-	}
-	return hashval%51;
-}
-
-unsigned int subway_system::station_hash(string name){
-	string x = name;
-	sanitize(x);
-	unsigned int hashval = 0;
-	for(unsigned int i = 0;i < x.length();i++){
-		hashval = x[i] + 80*hashval;
-	}
-	return hashval%4001;
-}
-void subway_system::quad_probe(int &hashval, int &k){
-	hashval = (hashval + (k*k))%4001;
-	k++;
-}
-
-void subway_system::build_station_hash_table(){
-	for(unsigned int i=0;i<stations.size();i++){
-		int hashval = station_hash(entrances[stations[i]].getName());
-		int k=0;
-		while(stations_hash_table[hashval] >= 0){
-			quad_probe(hashval, k);
-		}
-		stations_hash_table[hashval] = stations[i];
-		calculate_centroid(stations[i]);
-	}
-}
-
-
 void subway_system::insert_entrance(subway_entrance e){
 	entrances.push_back(e);
 	for(unsigned int i = 0;i<entrances.size()-1;i++){
@@ -79,6 +42,43 @@ void subway_system::insert_entrance(subway_entrance e){
 	stations.push_back(entrance_p_tree.size()-1);
 }
 
+void subway_system::build_station_hash_table(){
+	for(unsigned int i=0;i<stations.size();i++){
+		int hashval = station_hash(entrances[stations[i]].getName());
+		int k=0;
+		while(stations_hash_table[hashval] >= 0){
+			quad_probe(hashval, k);
+		}
+		stations_hash_table[hashval] = stations[i];
+		calculate_centroid(stations[i]);
+	}
+}
+
+
+//Hash Functions + Probing
+int subway_system::line_hash(string x){
+	//horner's method of encoding, then simple modulo hashing
+	int hashval = 0;
+	for(unsigned int i = 0;i < x.length();i++){
+		hashval = x[i] + 33*hashval;
+	}
+	return hashval%51;
+}
+unsigned int subway_system::station_hash(string name){
+	string x = name;
+	sanitize(x);
+	unsigned int hashval = 0;
+	for(unsigned int i = 0;i < x.length();i++){
+		hashval = x[i] + 80*hashval;
+	}
+	return hashval%4001;
+}
+void subway_system::quad_probe(int &hashval, int &k){
+	hashval = (hashval + (k*k))%4001;
+	k++;
+}
+
+//Helper Functions
 bool subway_system::is_connected(subway_entrance &e1, subway_entrance &e2){
 	bool a = (e1.getMask() ^ e2.getMask()) == 0;
 	double distance = haversine(e1.getLat(), e1.getLong(), e2.getLat(), e2.getLong());
@@ -144,23 +144,6 @@ void subway_system::list_all_stations(){
 	}
 }
 
-void subway_system::list_entrances2(string x){
-	for(unsigned int i = 0;i<stations.size();i++){
-		if(entrances[stations[i]].getName() == x){
-			int asdf = stations[i];
-			cout << entrances[asdf].getName() << endl;
-			for(unsigned int j = 0;j<entrance_p_tree.size();j++){
-				if(entrance_p_tree[j] == asdf){
-					if(!is_exit_only(entrances[j].getName()))
-					cout << entrances[j].getName() << endl;
-				}
-			}
-			return;
-		}
-	}
-	cout << "Station Not Found :(" << endl;
-}
-
 void subway_system::list_entrances(string x){
 	int hashval = station_hash(x);
 	int k=0;
@@ -171,10 +154,12 @@ void subway_system::list_entrances(string x){
 			return;
 		}
 	}
-	cout << entrances[stations_hash_table[hashval]].getName() << endl;
+	if(!is_exit_only(entrances[stations_hash_table[hashval]].getName())){
+		cout << entrances[stations_hash_table[hashval]].getName() << endl;
+	}
 	int index_to_use = stations_hash_table[hashval];
 	for (unsigned int i=0;i<entrance_p_tree.size();i++){
-		if(entrance_p_tree[i] == index_to_use){
+		if(entrance_p_tree[i] == index_to_use and !is_exit_only(entrances[i].getName())){
 			cout << entrances[i].getName() << endl;
 		}
 	}

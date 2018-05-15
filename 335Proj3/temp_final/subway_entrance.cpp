@@ -24,7 +24,7 @@ subway_entrance::subway_entrance(const string & data){
 	bool in_an_entry = false;
 
 	string word = ""; 
-	for(int i = 0; i<data.length(); i++){
+	for(unsigned int i = 0; i<data.length(); i++){
 		if(data[i] == '"'){ //ensures strings aren't separated by "," inside values
 			in_an_entry = !in_an_entry;
 		}
@@ -44,7 +44,7 @@ subway_entrance::subway_entrance(const string & data){
 
 	vector<double> coord_arr;
 	int word_count = 0;
-	for(int i = 0; i<data_arr[3].length();i++){
+	for(unsigned int i = 0; i<data_arr[3].length();i++){
 		if(data_arr[3][i] == ')') break;
 		if(data_arr[3][i] == ' '){
 			if (word_count != 0){
@@ -66,7 +66,7 @@ subway_entrance::subway_entrance(const string & data){
 
 void subway_entrance::convertToMask(string lines){
 	string word = "";
-	for(int i = 0; i<lines.length(); i++){		
+	for(unsigned int i = 0; i<lines.length(); i++){		
 		if(lines[i] == '-'){
 			arr_lines.push_back(word);
 			word = "";
@@ -77,7 +77,7 @@ void subway_entrance::convertToMask(string lines){
 	arr_lines.push_back(word);
 
 	unsigned long finalmask = 0;
-	for(int i = 0; i < arr_lines.size();i++){
+	for(unsigned int i = 0; i < arr_lines.size();i++){
 		int k = line_hash(arr_lines[i]);
 		unsigned long mask_k = 1UL << k; 
 		finalmask = finalmask | mask_k;
@@ -88,7 +88,7 @@ void subway_entrance::convertToMask(string lines){
 int subway_entrance::line_hash(string x){
 	//horner's method of encoding, then simple modulo hashing
 	int hashval = 0;
-	for(int i = 0;i < x.length();i++){
+	for(unsigned int i = 0;i < x.length();i++){
 		hashval = x[i] + 33*hashval;
 	}
 	return hashval%51;
