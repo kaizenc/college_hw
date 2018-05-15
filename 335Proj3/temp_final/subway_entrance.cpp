@@ -64,9 +64,10 @@ subway_entrance::subway_entrance(const string & data){
 	convertToMask(data_arr[4]);
 }
 
+
 void subway_entrance::convertToMask(string lines){
 	string word = "";
-	for(unsigned int i = 0; i<lines.length(); i++){		
+	for(unsigned int i = 0; i<lines.length(); i++){	//Separate the line names at the dashes	
 		if(lines[i] == '-'){
 			arr_lines.push_back(word);
 			word = "";
@@ -76,7 +77,7 @@ void subway_entrance::convertToMask(string lines){
 	}
 	arr_lines.push_back(word);
 
-	unsigned long finalmask = 0;
+	unsigned long finalmask = 0; //for each line, make a bitmask using its hashed value
 	for(unsigned int i = 0; i < arr_lines.size();i++){
 		int k = line_hash(arr_lines[i]);
 		unsigned long mask_k = 1UL << k; 

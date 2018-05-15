@@ -28,18 +28,19 @@ subway_system::subway_system(){
 
 void subway_system::insert_entrance(subway_entrance e){
 	entrances.push_back(e);
+	//n^2, really bad
 	for(unsigned int i = 0;i<entrances.size()-1;i++){
 		if(is_connected(entrances[i], e)){
 			int act_index = i;
 			while(entrance_p_tree[act_index] > 0){
-				act_index = entrance_p_tree[act_index];
+				act_index = entrance_p_tree[act_index]; //build parent tree as shallowly as possible
 			}
-			entrance_p_tree.push_back(act_index);			
+			entrance_p_tree.push_back(act_index); //pushes back index of entrance that its a union with			
 			return;
 		}
 	}	
-	entrance_p_tree.push_back(-1);
-	stations.push_back(entrance_p_tree.size()-1);
+	entrance_p_tree.push_back(-1); //pushes back a -1, aka a station
+	stations.push_back(entrance_p_tree.size()-1); //pushes index of the entrance in the entrance vector
 }
 
 void subway_system::build_station_hash_table(){
@@ -49,8 +50,21 @@ void subway_system::build_station_hash_table(){
 		while(stations_hash_table[hashval] >= 0){
 			quad_probe(hashval, k);
 		}
-		stations_hash_table[hashval] = stations[i];
-		calculate_centroid(stations[i]);
+		stations_hash_table[hashval] = stations[i]; //store in hashtable at the hash value, stores index only
+		calculate_centroid(stations[i]); //runs for each station, saves longitude and latitude for each station
+	}
+	for(unsigned int i=0;i<stations.size();i++){
+		int index_to_use = stations[i];
+		for(unsigned int j=0;j<entrance_p_tree.size();j++){
+			if(entrance_p_tree[j] == index_to_use){
+				int hashval = station_hash(entrances[j].getName());
+				int k=0;
+				while(stations_hash_table[hashval] >= 0){
+					quad_probe(hashval, k);
+				}
+				stations_hash_table[hashval] = j;
+			}
+		}
 	}
 }
 
@@ -65,6 +79,7 @@ int subway_system::line_hash(string x){
 	return hashval%51;
 }
 unsigned int subway_system::station_hash(string name){
+	//horner's method of encoding, then simple modulo hashing
 	string x = name;
 	sanitize(x);
 	unsigned int hashval = 0;
@@ -74,22 +89,24 @@ unsigned int subway_system::station_hash(string name){
 	return hashval%4001;
 }
 void subway_system::quad_probe(int &hashval, int &k){
+	//uses references, changes the hashvalue and the value of k directly
 	hashval = (hashval + (k*k))%4001;
 	k++;
 }
 
+//Helper Functions
 bool subway_system::is_connected(subway_entrance &e1, subway_entrance &e2){
-	bool a = (e1.getMask() ^ e2.getMask()) == 0;
+	bool a = (e1.getMask() ^ e2.getMask()) == 0; //checks if bitmasks are equal using XOR
 	double distance = haversine(e1.getLat(), e1.getLong(), e2.getLat(), e2.getLong());
-	double limit = 0.28;
+	double limit = 0.28; //can change the limit
 	bool b = (distance <= limit);
-	return a and b;
+	return a and b; //both have to be true
 }
 
 bool subway_system::is_exit_only(string x){
 	string name = x;
 	sanitize(name);
-	return name.find("(exit only)")!=string::npos;
+	return name.find("(exit only)")!=string::npos; //looks for "(exit only)" and returns true if it's there
 }
 
 void subway_system::sanitize(string &x){
@@ -102,7 +119,7 @@ void subway_system::sanitize(string &x){
 		}
 		if (space_seq) new_x+=" ";
 		space_seq = false;
-		new_x +=tolower(x[i]);
+		new_x +=tolower(x[i]); //lowercase each character
 	}
 	x = new_x;
 }
@@ -127,10 +144,10 @@ void subway_system::calculate_centroid(int index_to_use){
 
 /**********Commands Functions**********/
 void subway_system::list_line_stations(string x){
-	unsigned long mask1 = 1UL << (line_hash(x));
+	unsigned long mask1 = 1UL << (line_hash(x)); //create bitmask
 	for (unsigned int i=0;i<stations.size();i++){
 		subway_entrance temp = entrances[stations[i]];
-		long result = mask1 & temp.getMask();
+		long result = mask1 & temp.getMask(); //all 0s if nothing matches
 		if (result > 0){ //match found
 			cout << temp.getName() << endl;
 		}
@@ -138,26 +155,9 @@ void subway_system::list_line_stations(string x){
 }
 
 void subway_system::list_all_stations(){
-	for (unsigned int i=0;i<stations.size();i++){
+	for (unsigned int i=0;i<stations.size();i++){ //iterate through
 		cout << entrances[stations[i]].getName() << endl;
 	}
-}
-
-void subway_system::list_entrances2(string x){
-	for(unsigned int i = 0;i<stations.size();i++){
-		if(entrances[stations[i]].getName() == x){
-			int asdf = stations[i];
-			cout << entrances[asdf].getName() << endl;
-			for(unsigned int j = 0;j<entrance_p_tree.size();j++){
-				if(entrance_p_tree[j] == asdf){
-					if(!is_exit_only(entrances[j].getName()))
-					cout << entrances[j].getName() << endl;
-				}
-			}
-			return;
-		}
-	}
-	cout << "Station Not Found :(" << endl;
 }
 
 void subway_system::list_entrances(string x){
@@ -165,14 +165,16 @@ void subway_system::list_entrances(string x){
 	int k=0;
 	while(entrances[stations_hash_table[hashval]].getName() != x){
 		quad_probe(hashval, k);
-		if(k == 2001 or stations_hash_table[hashval] < 0){
+		if(stations_hash_table[hashval] < 0){ //hits an empty spot
 			cout << "Station Not Found :(" << endl;
 			return;
 		}
 	}
+	//only print if it's not an exit
 	if(!is_exit_only(entrances[stations_hash_table[hashval]].getName())){
 		cout << entrances[stations_hash_table[hashval]].getName() << endl;
 	}
+	//print if it's not an exit
 	int index_to_use = stations_hash_table[hashval];
 	for (unsigned int i=0;i<entrance_p_tree.size();i++){
 		if(entrance_p_tree[i] == index_to_use and !is_exit_only(entrances[i].getName())){
@@ -182,6 +184,7 @@ void subway_system::list_entrances(string x){
 }
 
 void subway_system::nearest_station(double long_, double lat_){
+	//Iterates through stations, if distance is shortest, it's added to the result vector
 	vector<subway_entrance> result;
 	double shortest;
 	for (unsigned int i=0;i<stations.size();i++){
@@ -207,6 +210,7 @@ void subway_system::nearest_station(double long_, double lat_){
 }
 
 void subway_system::nearest_lines(double long_, double lat_){
+	//Same as nearest_station, but prints out the station's lines
 	vector<subway_entrance> result;
 	double shortest;
 	for (unsigned int i=0;i<stations.size();i++){
@@ -238,6 +242,8 @@ void subway_system::nearest_entrance(double long_, double lat_){
 	vector<int> result; //stores stations indices
 	vector<subway_entrance> real_result; //stores entrances
 	double shortest;
+
+	//first pass, looks for closest stations
 	for (unsigned int i=0;i<stations.size();i++){
 		subway_entrance temp = entrances[stations[i]];
 		double lat_check = stations_lat[stations[i]];	
@@ -259,6 +265,7 @@ void subway_system::nearest_entrance(double long_, double lat_){
 			shortest = curr_distance;
 		}
 	}
+	//looks within stations, looks for closest entrances
 	for (unsigned int i=0;i<result.size();i++){
 		int index_to_use = stations[result[i]];
 		for(unsigned int j=0;j<entrance_p_tree.size();j++){

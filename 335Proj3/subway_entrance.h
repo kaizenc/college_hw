@@ -17,10 +17,9 @@
 #include <string>
 using namespace std;
 
-//simply unpack everything into variables
 class subway_entrance{
 private:
-	//sample: 51,http://web.mta.info/nyct/service/,Parsons Blvd & Archer Ave at NE corner, POINT (-73.799784000399 40.70235300071414) ,E-J-Z
+	//Simply stores everything
 	int ObjectID;
 	string URL;
 	string name;
@@ -28,8 +27,8 @@ private:
 	double latitude;
 	vector<string> arr_lines;
 	unsigned long line_mask;
-	void convertToMask(string lines);
-	int line_hash(string x);
+	void convertToMask(string lines); //converts lines into their bitmask counterparts, saves it in line_mask
+	int line_hash(string x); //simple line hash function
 public:
 	//Subway Entrance Constructor
 	subway_entrance(const string & data);

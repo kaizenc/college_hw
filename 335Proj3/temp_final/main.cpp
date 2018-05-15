@@ -37,7 +37,8 @@ int main(int argc, char *argv[]){
 	  	cerr << "Unable to open commands file: " << commands_filename << endl;
 	    exit(1);
 	}
-	//write some code to process csv into the thing
+
+	//processes each line one by one, builds a final hashtable at the end
 	subway_system sub_system;
 	string line = "";
 	while(getline(sub_data, line)){
