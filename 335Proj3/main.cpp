@@ -2,8 +2,8 @@
   Title          : main.cpp
   Author         : Kaizen Castanos
   Created on     : April 29, 2018
-  Description    : 
-  Purpose        : 
+  Description    : Interface for commands to be used
+  Purpose        : Parses csv data and commands, outputs correct output
   Usage          : Include this file with client code
   Build with     : Makefile; type make to compile
   Modifications  : 
